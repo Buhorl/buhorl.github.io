@@ -1,9 +1,12 @@
 
 body{
 	font-family: Consolas;
+	font-size: 14px;
 }
 
 button{
+	font-family: Consolas;
+	font-size: 15px;
 	width: auto;
 	box-shadow: none;
 	border: none;
@@ -40,6 +43,10 @@ a:hover {
 	display: block !important; 
 }
 
+.butt{
+	visibility: hidden;
+}
+
 #story{
 	width: auto;
 	margin-left: 10%;
@@ -61,3 +68,10 @@ a:hover {
 	border: 1px dashed #000000;
 }
 
+#hid{
+	visibility: collapse;
+}
+
+.hid{
+	visibility: collapse;
+}

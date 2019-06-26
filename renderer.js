@@ -3,11 +3,13 @@ https://css-tricks.com/controlling-css-animations-transitions-javascript/
 
 */
 
-var default_text = "__Lorem__ ~~idem~~ --ipsum-- **laboris** %%dominis%% ##nulla##."
+var default_text = "__Lorem__ @1lorem@1 ~~idem~~ --ipsum-- **laboris** %%dominis%% ##nulla##."
 var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 var lots = "Occaecat enim nisi sint aute enim in dolor officia in adipisicing deserunt qui do eiusmod tempor.";
 var bit = "Lorem ipsum voluptate tempor tempor.";
 
+var stage;
+var name;
 var story_inter;
 var actual_text;
 
@@ -24,14 +26,14 @@ function blinkElem(id,times,ms){
 }
 
 function setStory(text){
-	document.getElementById('story').innerHTML = text,1000;
+	document.getElementById('story').innerHTML = text;
 }
 
 // Se rellena el texto que se está leyendo automáticamente (se visualizan efectos) 
 // TO DO: Que cuando acabe de leer no lea efectos
 function stopText(){
 	clearInterval(story_inter);
-	setStory(actual_text);
+	setStory(removeTextEffect(actual_text));
 }
 
 // Se lee el texto='text' con un delay='value_ms' entre letras
@@ -41,6 +43,7 @@ function readText(text,value_ms){
 	// Se hace clear interval para que no se solape un readText con otro
 	clearInterval(story_inter);
 	var i = 0;
+	text = removeTextEffect(text);
 	actual_text = text;
 	//Se realiza cada value_ms ms una actualización del texto que va char a char
 	story_inter = setInterval(function() {
@@ -125,6 +128,17 @@ function readTextEffect(text,value_ms){
 					delimiter = '';
 					current_str = current_str + '</span>';
 				}
+			/* '@num' para designar Color */
+			} else if (text.charAt(i)=='@' & $.isNumeric(text.charAt(i+1))){
+				i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+				if (delimiter=='') {
+					col = getDialogColor(text.charAt(i));
+					delimiter = '</span>';
+					current_str = current_str + '<span style=\'color: '+col+'\'>';
+				} else { 
+					delimiter = '';//delimiter.substr(0,delimiter.length-7);
+					current_str = current_str + '</span>';
+				}
 			} else {
 				current_str = current_str + text.charAt(i);
 			}
@@ -135,9 +149,44 @@ function readTextEffect(text,value_ms){
 			initTarget('.target_pride','effect_pride');
 			initTarget('.target_jit','effect_jit');
 			rainbow(); jumpy(); pride(); jit();
-			//letterEffect('pride',50);
 		} else {clearInterval(story_inter);}
 	}, value_ms);
+}
+
+// Se lee el texto='text' con un delay='value_ms' entre letras y se le aplican efectos (telegram style)
+function removeTextEffect(text){
+	if (text === undefined) {text = default_text}
+	var current_str = '';
+	var i = 0;
+	actual_text = text;
+	//Nos recorremos el texto para quitarle los efectos visuales
+	while (i <= text.length - 1){
+		/* '--' para designar Rainbow */
+		if (text.charAt(i)=='-' & text.charAt(i+1)=='-'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+		/* '%%' para designar Jumpy */
+		} else if (text.charAt(i)=='%' & text.charAt(i+1)=='%'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+		/* '##' para designar Pride */
+		} else if (text.charAt(i)=='#' & text.charAt(i+1)=='#'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+		/* '~~' para designar Jitter */
+		} else if (text.charAt(i)=='~' & text.charAt(i+1)=='~'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+		/* '**' para designar Bold */
+		} else if (text.charAt(i)=='*' & text.charAt(i+1)=='*'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+		/* '__' para designar Italics */
+		} else if (text.charAt(i)=='_' & text.charAt(i+1)=='_'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+		} else if (text.charAt(i)=='@' & $.isNumeric(text.charAt(i+1))){
+			i++;
+		} else {
+			current_str = current_str + text.charAt(i);
+		}
+		i++;
+	};
+	return current_str;
 }
 
 // Función para aplicar la animación='anim_name' a los Doms cuya clase='clase' con un delay='delay'.
@@ -171,6 +220,22 @@ function initTarget(clase,clase_efecto){
 	return;
 }
 
+function init(){
+	stage = 0;
+	setStory("¿Hola, cual es tu nombre?");
+	setTimeout(
+		function(){
+			name = prompt("Mi nombre es:");
+			setStory("Hola, "+name+". ¿Qué tal estás? Espero que te apetezca jugar a un juego.");
+			$('.butt').delay(1000).queue(function(){
+				$('.butt').css("visibility","visible");
+				blinkElem('bot1',10,50);$('#bot1').html('Si');
+				blinkElem('bot2',10,50);$('#bot2').html('Hmm, ok');
+				blinkElem('bot3',10,50);$('#bot3').html('No');
+			});
+		},1000);
+}
+
 function rainbow(){
 	letterEffect('rainbow',30,'.effect_rainbow');
 }
@@ -187,6 +252,55 @@ function jit(){
 	letterEffect('jit',0,'.effect_jit');
 }
 
+function bot1_f(){
+	if (stage==0) {
+		alert("Perfecto!");
+	}
+	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
+}
+
+function bot2_f(){
+	if (stage==0) {
+		alert("Perfecto!");
+	}
+	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
+}
+function bot3_f(){
+	if (stage==0) {
+		alert("Vaya... Ok");
+		window.close();
+	}
+	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
+}
+
+function getDialogColor(numb){
+	switch (numb) {
+		case '1':
+		return 'Crimson';
+		break;
+		case '2':
+		return 'DeepPink';
+		break;
+		case '3':
+		return 'Tomato';
+		break;
+		case '4':
+		return 'Gold';
+		break;
+		case '5':
+		return 'MediumOrchid';
+		break;
+		case '6':
+		return 'SlateBlue';
+		break;
+		case '7':
+		return 'GreenYellow';
+		break;
+		case '8':
+		return 'SpringGreen';
+		break;
+	}
+}
 /*
 Old yet somewhat functional.
 function jump(){
