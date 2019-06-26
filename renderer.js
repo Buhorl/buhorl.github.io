@@ -17,6 +17,18 @@ function blinkElem(id,times,ms){
 	// even to stay, odd to dissappear
 	var i = times;
 	var j = setInterval(function() {
+		if(document.getElementById(id).style.visibility == "hidden"){
+			document.getElementById(id).style.visibility = "visible";
+		} else {document.getElementById(id).style.visibility = "hidden";}
+		i--; 
+		if (i==0) {clearInterval(j);}
+	}, ms);
+}
+
+function blinkElemBW(id,times,ms){
+	// even to stay, odd to dissappear
+	var i = times;
+	var j = setInterval(function() {
 		if(document.getElementById(id).style.color == "white"){
 			document.getElementById(id).style.color = "black";
 		} else {document.getElementById(id).style.color = "white";}
