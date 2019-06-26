@@ -1,0 +1,335 @@
+/* https://codepen.io/kenmarold/pen/dPrQmZ?editors=0100 */
+.target {
+	
+}
+
+/*.effect {
+  font-weight: 100;
+  font-size: 1em;
+}*/
+
+.effect .letter {
+  display: inline-block;
+  line-height: 1em;
+}
+
+.jit {
+	display: inline-block;
+	animation-duration: .4s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: jitter;	
+}
+
+.jumpy {
+	display: inline-block;
+	animation-duration: 6s;
+	animation-timing-function: ease-out;/*ease-in-out;*/
+	animation-fill-mode: forwards;	
+	animation-iteration-count: infinite;
+	animation-name: updown_fhd;
+}
+
+.rainbow {
+	display: inline-block;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
+	animation-name: rainbow;
+}
+
+.pride {
+	display: inline-block;
+	animation-duration: 6s;
+	animation-iteration-count: infinite;
+	animation-name: pride;
+}
+
+@keyframes jitter {
+	10% {
+		transform: translate(-1px, -2px) scale(1.01, 1.01);
+	}
+	20% {
+		transform: translate(2px, 1px) scale(.99, .99);
+	}
+	30% {
+		transform: translate(-2px, -2px) scale(1.01, 1.01);
+	}
+	40% {
+		transform: translate(1px, 2px) scale(1, 1);
+	}
+	50% {
+		transform: translate(-1px, -2px) scale(.99, .99);
+	}
+	60% {
+		transform: translate(0px, 2px) scale(1.01, 1.01);
+	}
+	70% {
+		transform: translate(-2px, -1px) scale(1, 1);
+	}
+	80% {
+		transform: translate(1px, 2px) scale(.99, .99);
+	}
+	90% {
+		transform: translate(-2px, -1px) scale(1.01, 1.01);
+	}
+	100% {
+		transform: translate(0px, 1px) scale(.99, .99);
+	}
+}
+
+@keyframes updown {
+	50% {
+		transform: translate(0px, -10px);
+	}
+	100% {
+		transform: translate(0px, 0px);
+	}
+}
+
+@keyframes rainbow {
+  0% {
+    color: #d65c97;
+  }
+  5% {
+    color: #5cd666;
+  }
+  10% {
+    color: #a55cd6;
+  }
+  15.0% {
+    color: #5c7cd6;
+  }
+  20% {
+    color: #d65c7a;
+  }
+  25% {
+    color: #81d65c;
+  }
+  30.0% {
+    color: #835cd6;
+  }
+  35% {
+    color: #685cd6;
+  }
+  40% {
+    color: #5c9dd6;
+  }
+  45% {
+    color: #5cd670;
+  }
+  50% {
+    color: #d6625c; /*transform: translate(0px, -10px);*/
+  }
+  55.0% {
+    color: #d6835c;
+  }
+  60.0% {
+    color: #d6605c;
+  }
+  65% {
+    color: #be5cd6;
+  }
+  70% {
+    color: #5c8dd6;
+  }
+  75% {
+    color: #95d65c;
+  }
+  80% {
+    color: #d69d5c;
+  }
+  85.0% {
+    color: #d65c81;
+  }
+  90% {
+    color: #5cd666;
+  }
+  95% {
+    color: #d67e5c;
+  }
+  100% {
+    color: #64d65c; /*transform: translate(0px, 0px);*/
+  }
+}
+
+@keyframes pride {
+  0% {
+    color: #d65c97; transform: translate(0px, 0px);
+  }
+  5% {
+    color: #5cd666; transform: translate(0px, -10px);
+  }
+  10% {
+    color: #a55cd6; transform: translate(0px, 0px);
+  }
+  15.0% {
+    color: #5c7cd6; transform: translate(0px, -10px);
+  }
+  20% {
+    color: #d65c7a; transform: translate(0px, 0px);
+  }
+  25% {
+    color: #81d65c; transform: translate(0px, -10px);
+  }
+  30.0% {
+    color: #835cd6; transform: translate(0px, 0px);
+  }
+  35% {
+    color: #685cd6; transform: translate(0px, -10px);
+  }
+  40% {
+    color: #5c9dd6; transform: translate(0px, 0px);
+  }
+  45% {
+    color: #5cd670; transform: translate(0px, -10px);
+  }
+  50% {
+    color: #d6625c; transform: translate(0px, 0px);
+  }
+  55.0% {
+    color: #d6835c; transform: translate(0px, -10px);
+  }
+  60.0% {
+    color: #d6605c; transform: translate(0px, 0px);
+  }
+  65% {
+    color: #be5cd6; transform: translate(0px, -10px);
+  }
+  70% {
+    color: #5c8dd6; transform: translate(0px, 0px);
+  }
+  75% {
+    color: #95d65c; transform: translate(0px, -10px);
+  }
+  80% {
+    color: #d69d5c; transform: translate(0px, 0px);
+  }
+  85.0% {
+    color: #d65c81; transform: translate(0px, -10px);
+  }
+  90% {
+    color: #5cd666; transform: translate(0px, 0px);
+  }
+  95% {
+    color: #d67e5c; transform: translate(0px, -10px);
+  }
+  100% {
+    color: #64d65c; transform: translate(0px, 0px);
+  }
+}
+
+@keyframes updown_fhd {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  5% {
+    transform: translate(0px, -10px);
+  }
+  10% {
+    transform: translate(0px, 0px);
+  }
+  15.0% {
+    transform: translate(0px, -10px);
+  }
+  20% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(0px, -10px);
+  }
+  30.0% {
+    transform: translate(0px, 0px);
+  }
+  35% {
+    transform: translate(0px, -10px);
+  }
+  40% {
+    transform: translate(0px, 0px);
+  }
+  45% {
+    transform: translate(0px, -10px);
+  }
+  50% {
+    transform: translate(0px, 0px);
+  }
+  55.0% {
+    transform: translate(0px, -10px);
+  }
+  60.0% {
+    transform: translate(0px, 0px);
+  }
+  65% {
+    transform: translate(0px, -10px);
+  }
+  70% {
+    transform: translate(0px, 0px);
+  }
+  75% {
+    transform: translate(0px, -10px);
+  }
+  80% {
+    transform: translate(0px, 0px);
+  }
+  85.0% {
+    transform: translate(0px, -10px);
+  }
+  90% {
+    transform: translate(0px, 0px);
+  }
+  95% {
+    transform: translate(0px, -10px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes updown_hd {
+  0% {
+    transform: translate(0px, 0px); 
+  }
+  5% {
+    transform: translate(0px, -5px);
+  }
+  15.0% {
+    transform: translate(0px, 5px);
+  }
+  25% {
+    transform: translate(0px, -5px);
+  }
+  35% {
+    transform: translate(0px, 5px);
+  }
+  45% {
+    transform: translate(0px, -5px);
+  }
+  55.0% {
+    transform: translate(0px, 5px);
+  }
+  65% {
+    transform: translate(0px, -5px);
+  }
+  75% {
+    transform: translate(0px, 5px);
+  }
+  85.0% {
+    transform: translate(0px, -5px);
+  }
+  95% {
+    transform: translate(0px, 5px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+
+
+
+
+
+
+
+
+

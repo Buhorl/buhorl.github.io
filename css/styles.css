@@ -1,0 +1,63 @@
+
+body{
+	font-family: Consolas;
+}
+
+button{
+	width: auto;
+	box-shadow: none;
+	border: none;
+	background: transparent;
+}
+
+table {
+	width: 100%;
+}
+th {
+	width: 1%;
+}
+
+a {	
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	color: gray;
+}
+
+.border{
+	width: auto;
+	margin: .1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	border: 1px dashed #000000;
+}
+
+.target{
+	width: fit-content;
+	display: block !important; 
+}
+
+#story{
+	width: auto;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-bottom: 1%;
+	padding: 1%;
+	padding-left: 2%;
+	padding-right: 2%;
+	border: 1px dashed #000000;
+}
+#response{
+	width: auto;
+	margin-top: 1%;
+	margin-left: 10%;
+	margin-right: 10%;
+	padding: 1%;
+	padding-left: 2%;
+	padding-right: 2%;
+	border: 1px dashed #000000;
+}
+
