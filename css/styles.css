@@ -32,9 +32,9 @@ a:hover {
 
 .border{
 	width: auto;
-	margin: .1%;
-	margin-left: 5%;
-	margin-right: 5%;
+	margin-top: 0%;
+	margin-left: 15%;
+	margin-right: 15%;
 	border: 1px dashed #000000;
 }
 
@@ -49,6 +49,7 @@ a:hover {
 
 #story{
 	width: auto;
+	margin-top: 1%;
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-bottom: 1%;
@@ -57,11 +58,12 @@ a:hover {
 	padding-right: 2%;
 	border: 1px dashed #000000;
 }
-#response{
+#dialog{
 	width: auto;
 	margin-top: 1%;
 	margin-left: 10%;
 	margin-right: 10%;
+	margin-bottom: 1%;
 	padding: 1%;
 	padding-left: 2%;
 	padding-right: 2%;

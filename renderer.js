@@ -1,57 +1,70 @@
 /* IDEAS:
 https://css-tricks.com/controlling-css-animations-transitions-javascript/
-
 */
 
+//Text strings
 var default_text = "__Lorem__ @1lorem@1 ~~idem~~ --ipsum-- **laboris** %%dominis%% ##nulla##."
 var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 var lots = "Occaecat enim nisi sint aute enim in dolor officia in adipisicing deserunt qui do eiusmod tempor.";
 var bit = "Lorem ipsum voluptate tempor tempor.";
 
+//Variable initialization
 var stage;
 var name;
 var story_inter;
 var actual_text;
+var curr_dialog;
 
-function blinkElem(id,times,ms){
-	// even to stay, odd to dissappear
-	var i = times;
-	var j = setInterval(function() {
-		if(document.getElementById(id).style.visibility == "hidden"){
-			document.getElementById(id).style.visibility = "visible";
-		} else {document.getElementById(id).style.visibility = "hidden";}
-		i--; 
-		if (i==0) {clearInterval(j);}
-	}, ms);
-}
+//Other vars
+var reward = "https://open.spotify.com/playlist/1ErhO58OeArSOe6Zmrgbv3?si=Ya_ZLLkGTyOySGe-E5YiZw";
 
-function blinkElemBW(id,times,ms){
-	// even to stay, odd to dissappear
-	var i = times;
-	var j = setInterval(function() {
-		if(document.getElementById(id).style.color == "white"){
-			document.getElementById(id).style.color = "black";
-		} else {document.getElementById(id).style.color = "white";}
-		i--; 
-		if (i==0) {clearInterval(j);}
-	}, ms);
-}
+/* ___ Comienzo del Desarrollo de funciones. Ordenadas según su tipo: ___
+	1. Modificaciones de texto
+	2. Funciones de Efectos
+	3. Funciones de ejecución
+*/
 
+/*******************************/
+/*  1.Modificaciones de Texto  */
+/*******************************/
+
+// Cambia el contenido a "text" del elemento Story
 function setStory(text){
 	document.getElementById('story').innerHTML = text;
 }
 
+// Cambia el contenido a "text" del elemento Dialog
+function setDialog(text){
+	document.getElementById('dialog').innerHTML = text;
+}
+
+// Cambia el contenido a "text" del elemento Dialog
+function setElem(text,elem){
+	document.getElementById(elem).innerHTML = text;
+}
+
 // Se rellena el texto que se está leyendo automáticamente (se visualizan efectos) 
-// TO DO: Que cuando acabe de leer no lea efectos
 function stopText(){
 	clearInterval(story_inter);
 	setStory(removeTextEffect(actual_text));
 }
 
+// Función centrada en Crear un entorno de diálogo
+function readDialog(numb,name,text,value_ms){
+	if (numb === undefined) {numb = 0;}
+	if (name === undefined) {name = '???';}
+	if (text === undefined) {text = default_text;}
+	if (value_ms === undefined) {value_ms = 50;}
+	curr_dialog = '<span style=\'color: '+getDialogColor(numb)+'\'>['+name+'] </span>';
+	setDialog(curr_dialog);
+	readTextEffect(text,value_ms,'dialog');
+}
+
 // Se lee el texto='text' con un delay='value_ms' entre letras
-function readText(text,value_ms){
+function readText(text,value_ms,elem){
 	if (text === undefined) {text = default_text}
 	if (value_ms === undefined) {value_ms = 50;}
+	if (elem === undefined) {elem = 'story';}
 	// Se hace clear interval para que no se solape un readText con otro
 	clearInterval(story_inter);
 	var i = 0;
@@ -61,18 +74,19 @@ function readText(text,value_ms){
 	story_inter = setInterval(function() {
 		if(i <= text.length - 1){
 			i++;
-			setStory(text.substr(0,i));
+			setElem(text.substr(0,i),ele,);
 		} else {clearInterval(story_inter);}
 	}, value_ms);
 }
 
 // Se lee el texto='text' con un delay='value_ms' entre letras y se le aplican efectos (telegram style)
-function readTextEffect(text,value_ms){
+function readTextEffect(text,value_ms,elem){
 	if (text === undefined) {text = default_text}
 	if (value_ms === undefined) {value_ms = 50;}
+	if (elem === undefined) {elem = 'story';}
 	// Se hace clear interval para que no se solape un readText con otro
 	clearInterval(story_inter); 
-	var current_str = '';
+	var current_str = curr_dialog;
 	var delimiter = '';
 	var i = 0;
 	actual_text = text;
@@ -145,17 +159,17 @@ function readTextEffect(text,value_ms){
 				i++; //Nos saltamos una iter porque sabemos que se marca un efecto
 				if (delimiter=='') {
 					col = getDialogColor(text.charAt(i));
-					delimiter = '</span>';
+					delimiter = '</span>'; //delimiter + '</span>';
 					current_str = current_str + '<span style=\'color: '+col+'\'>';
 				} else { 
-					delimiter = '';//delimiter.substr(0,delimiter.length-7);
+					delimiter = '';//delimiter.substr(0,delimiter.length-7); //borrado de '</spam>'
 					current_str = current_str + '</span>';
 				}
 			} else {
 				current_str = current_str + text.charAt(i);
 			}
 			i++;
-			setStory(current_str+delimiter);
+			setElem(current_str+delimiter,elem);
 			initTarget('.target_rainbow','effect_rainbow');
 			initTarget('.target_jumpy','effect_jumpy');
 			initTarget('.target_pride','effect_pride');
@@ -165,7 +179,7 @@ function readTextEffect(text,value_ms){
 	}, value_ms);
 }
 
-// Se lee el texto='text' con un delay='value_ms' entre letras y se le aplican efectos (telegram style)
+// Se lee el texto='text' y se le borran efectos para que solo salga el texto
 function removeTextEffect(text){
 	if (text === undefined) {text = default_text}
 	var current_str = '';
@@ -201,6 +215,10 @@ function removeTextEffect(text){
 	return current_str;
 }
 
+/*****************************/
+/*  2. Funciones de Efectos  */
+/*****************************/
+
 // Función para aplicar la animación='anim_name' a los Doms cuya clase='clase' con un delay='delay'.
 function letterEffect(anim_name,delay,clase){
 	if (delay === undefined) {delay = 100;}
@@ -232,22 +250,6 @@ function initTarget(clase,clase_efecto){
 	return;
 }
 
-function init(){
-	stage = 0;
-	setStory("¿Hola, cual es tu nombre?");
-	setTimeout(
-		function(){
-			name = prompt("Mi nombre es:");
-			setStory("Hola, "+name+". ¿Qué tal estás? Espero que te apetezca jugar a un juego.");
-			$('.butt').delay(1000).queue(function(){
-				$('.butt').css("visibility","visible");
-				blinkElem('bot1',10,50);$('#bot1').html('Si');
-				blinkElem('bot2',10,50);$('#bot2').html('Hmm, ok');
-				blinkElem('bot3',10,50);$('#bot3').html('No');
-			});
-		},1000);
-}
-
 function rainbow(){
 	letterEffect('rainbow',30,'.effect_rainbow');
 }
@@ -264,29 +266,12 @@ function jit(){
 	letterEffect('jit',0,'.effect_jit');
 }
 
-function bot1_f(){
-	if (stage==0) {
-		alert("Perfecto!");
-	}
-	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
-}
-
-function bot2_f(){
-	if (stage==0) {
-		alert("Perfecto!");
-	}
-	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
-}
-function bot3_f(){
-	if (stage==0) {
-		alert("Vaya... Ok");
-		window.close();
-	}
-	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
-}
-
+// Función que devuelve uno de los colores disponibles según el 'numb'
 function getDialogColor(numb){
 	switch (numb) {
+		case '0':
+		return 'Gray';
+		break;
 		case '1':
 		return 'Crimson';
 		break;
@@ -313,6 +298,80 @@ function getDialogColor(numb){
 		break;
 	}
 }
+
+// Parpadeo del elemento con id="id" "times"-veces y con un intervalo de "ms" de separación. EL parpadeo se hace usando la visibilidad
+function blinkElem(id,times,ms){
+	// even to stay, odd to dissappear
+	var i = times;
+	var j = setInterval(function() {
+		if(document.getElementById(id).style.visibility == "hidden"){
+			document.getElementById(id).style.visibility = "visible";
+		} else {document.getElementById(id).style.visibility = "hidden";}
+		i--; 
+		if (i==0) {clearInterval(j);}
+	}, ms);
+}
+
+// Parpadeo del elemento con id="id" "times"-veces y con un intervalo de "ms" de separación. EL parpadeo se hace alternando entre B y N.
+function blinkElemBW(id,times,ms){
+	// even to stay, odd to dissappear
+	var i = times;
+	var j = setInterval(function() {
+		if(document.getElementById(id).style.color == "white"){
+			document.getElementById(id).style.color = "black";
+		} else {document.getElementById(id).style.color = "white";}
+		i--; 
+		if (i==0) {clearInterval(j);}
+	}, ms);
+}
+
+/******************************/
+/*  3.Funciones de ejecución  */
+/******************************/
+
+// Función de comienzo de la aventura!
+function init(){
+	stage = 0;
+	//setStory("@0[???]@0: ¿Hola, cual es tu nombre?");
+	readDialog(0,'???','¿Hola, cual es tu nombre?')
+	setTimeout(
+		function(){
+			name = prompt("Mi nombre es:");
+			readDialog(0,'???',"Hola, "+name+". ¿Qué tal estás? Espero que te apetezca jugar a un juego.");
+			$('.butt').delay(1000).queue(function(){
+				$('.butt').css("visibility","visible");
+				blinkElem('bot1',10,50);$('#bot1').html('Si');
+				blinkElem('bot2',10,50);$('#bot2').html('Hmm, ok');
+				blinkElem('bot3',10,50);$('#bot3').html('No');
+			});
+		},1000);
+}
+
+// Función para el botón en la pos 1
+function bot1_f(){
+	if (stage==0) {
+		alert("Perfecto!");
+	}
+	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
+}
+
+// Función para el botón en la pos 2
+function bot2_f(){
+	if (stage==0) {
+		alert("Perfecto!");
+	}
+	else {alert("Warning: Stage"+stage+" for bot2 not found.");}
+}
+
+// Función para el botón en la pos 3
+function bot3_f(){
+	if (stage==0) {
+		alert("Vaya... Ok");
+		window.close();
+	}
+	else {alert("Warning: Stage"+stage+" for bot3 not found.");}
+}
+
 /*
 Old yet somewhat functional.
 function jump(){
