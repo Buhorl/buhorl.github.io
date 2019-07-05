@@ -9,6 +9,7 @@ https://ozh.github.io/ascii-tables/
 <script src="anime-master\lib\anime.min.js"></script>
 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>
 <script src="renderer.js" type="text/javascript"></script>
 
 <html>
@@ -34,9 +35,9 @@ https://ozh.github.io/ascii-tables/
 	</tr>
 	<tr>
 	  	<th><button onclick="readText()">Sin Efecto</button>/<button onclick="readTextEffect()">Con Efecto</button></th>
-		<th><button onclick="readText(lorem,50)">Fast</button></th>
-		<th><button onclick="readText(lots,200)">Normal</button></th>
-		<th><button onclick="readText(bit,400)">Slow</button></th>
+		<th><button onclick="readTextEffect(lorem,50,'story')">Fast</button></th>
+		<th><button onclick="readTextEffect(lots,200)">Normal</button></th>
+		<th><button onclick="readTextEffect(bit,400)">Slow</button></th>
 	</tr>
 </table>
 <p>Estas son las funciones que aplican al texto inferior.</p>

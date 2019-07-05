@@ -13,10 +13,37 @@ var stage;
 var name;
 var story_inter;
 var actual_text;
-var curr_dialog;
+var curr_dialog = '';
 
 //Other vars
 var reward = "https://open.spotify.com/playlist/1ErhO58OeArSOe6Zmrgbv3?si=Ya_ZLLkGTyOySGe-E5YiZw";
+
+// Sounds
+// Buzz: http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Bazzline-Mach_New-7663/Bazzline-Mach_New-7663_hifi.mp3
+// Bip : http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Electron-wwwbeat-8521/Electron-wwwbeat-8521_hifi.mp3
+// Beep: http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Cyberia-Mach_New-7660/Cyberia-Mach_New-7660_hifi.mp3
+// Bop : http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/idg-beep-intermed-1550/idg-beep-intermed-1550_hifi.mp3
+var sound_1 = new Howl({
+  src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Electron-wwwbeat-8521/Electron-wwwbeat-8521_hifi.mp3'], 
+  volume: 0.2,
+  loop: false,
+});
+var sound_2 = new Howl({
+  src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Bazzline-Mach_New-7663/Bazzline-Mach_New-7663_hifi.mp3'], 
+  volume: 0.2,
+  loop: false,
+});
+var sound_3 = new Howl({
+  src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Cyberia-Mach_New-7660/Cyberia-Mach_New-7660_hifi.mp3'], 
+  volume: 0.4,
+  loop: false,
+});
+var sound_4 = new Howl({
+  src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/idg-beep-intermed-1550/idg-beep-intermed-1550_hifi.mp3'], 
+  volume: 0.4,
+  loop: false,
+});
+var sound_default = sound_1;
 
 /* ___ Comienzo del Desarrollo de funciones. Ordenadas según su tipo: ___
 	1. Modificaciones de texto
@@ -49,13 +76,36 @@ function stopText(){
 	setStory(removeTextEffect(actual_text));
 }
 
+// Suena el sonido="sound_id" con una modularidad de sonido de "rand" y "value_ms"
+function makeSound(value_ms,rand,sound_id){
+	if (value_ms === undefined) {value_ms = 50;}
+	if (sound_id === undefined) {sound_id = sound_default;}
+	if (rand === undefined) {rand = 11;}
+	var context = new AudioContext();
+	//console.log((value_ms/(sound_id.duration()*(90+Math.floor(Math.random()*rand)))));
+	dur = sound_id.duration();
+	sound_id.rate(
+		100/value_ms//(value_ms/(dur*(90+Math.floor(Math.random()*rand))))
+		,sound_id.play()
+	);
+}
+
+// TODO
+function readStory(text,value_ms){
+	if (text === undefined) {text = default_text;}
+	if (value_ms === undefined) {value_ms = 50;}
+	curr_dialog = '';
+	setDialog(curr_dialog);
+	readTextEffect(text,value_ms,'story');
+}
+
 // Función centrada en Crear un entorno de diálogo
 function readDialog(numb,name,text,value_ms){
-	if (numb === undefined) {numb = 0;}
+	if (numb === undefined) {numb = '0';}
 	if (name === undefined) {name = '???';}
 	if (text === undefined) {text = default_text;}
 	if (value_ms === undefined) {value_ms = 50;}
-	curr_dialog = '<span style=\'color: '+getDialogColor(numb)+'\'>['+name+'] </span>';
+	curr_dialog = '<span style=\'color: '+getDialogColor(numb.toString())+'\'>['+name+'] </span>';
 	setDialog(curr_dialog);
 	readTextEffect(text,value_ms,'dialog');
 }
@@ -74,7 +124,7 @@ function readText(text,value_ms,elem){
 	story_inter = setInterval(function() {
 		if(i <= text.length - 1){
 			i++;
-			setElem(text.substr(0,i),ele,);
+			setElem(text.substr(0,i),elem,);
 		} else {clearInterval(story_inter);}
 	}, value_ms);
 }
@@ -86,14 +136,15 @@ function readTextEffect(text,value_ms,elem){
 	if (elem === undefined) {elem = 'story';}
 	// Se hace clear interval para que no se solape un readText con otro
 	clearInterval(story_inter); 
-	var current_str = curr_dialog;
+	var current_str = '';
+	current_str = curr_dialog;
 	var delimiter = '';
 	var i = 0;
 	actual_text = text;
 	//Se realiza cada value_ms ms una actualización del texto que va char a char
 	//Pero al mismo tiempo se busca para aplicar efectos
 	story_inter = setInterval(function() {
-		if(i <= text.length - 1){
+		if (i <= text.length - 1){
 			/* '--' para designar Rainbow */
 			if (text.charAt(i)=='-' & text.charAt(i+1)=='-'){
 				i++; //Nos saltamos una iter porque sabemos que se marca un efecto
@@ -167,14 +218,15 @@ function readTextEffect(text,value_ms,elem){
 				}
 			} else {
 				current_str = current_str + text.charAt(i);
+				if(text.charAt(i)!=' '){makeSound(value_ms,100);}
 			}
-			i++;
 			setElem(current_str+delimiter,elem);
 			initTarget('.target_rainbow','effect_rainbow');
 			initTarget('.target_jumpy','effect_jumpy');
 			initTarget('.target_pride','effect_pride');
 			initTarget('.target_jit','effect_jit');
 			rainbow(); jumpy(); pride(); jit();
+			i++;	
 		} else {clearInterval(story_inter);}
 	}, value_ms);
 }
@@ -269,31 +321,31 @@ function jit(){
 // Función que devuelve uno de los colores disponibles según el 'numb'
 function getDialogColor(numb){
 	switch (numb) {
-		case '0':
-		return 'Gray';
+		case "0":
+		return 'Silver';
 		break;
-		case '1':
+		case "1":
 		return 'Crimson';
 		break;
-		case '2':
+		case "2":
 		return 'DeepPink';
 		break;
-		case '3':
+		case "3":
 		return 'Tomato';
 		break;
-		case '4':
+		case "4":
 		return 'Gold';
 		break;
-		case '5':
+		case "5":
 		return 'MediumOrchid';
 		break;
-		case '6':
+		case "6":
 		return 'SlateBlue';
 		break;
-		case '7':
+		case "7":
 		return 'GreenYellow';
 		break;
-		case '8':
+		case "8":
 		return 'SpringGreen';
 		break;
 	}
@@ -329,48 +381,7 @@ function blinkElemBW(id,times,ms){
 /*  3.Funciones de ejecución  */
 /******************************/
 
-// Función de comienzo de la aventura!
-function init(){
-	stage = 0;
-	//setStory("@0[???]@0: ¿Hola, cual es tu nombre?");
-	readDialog(0,'???','¿Hola, cual es tu nombre?')
-	setTimeout(
-		function(){
-			name = prompt("Mi nombre es:");
-			readDialog(0,'???',"Hola, "+name+". ¿Qué tal estás? Espero que te apetezca jugar a un juego.");
-			$('.butt').delay(1000).queue(function(){
-				$('.butt').css("visibility","visible");
-				blinkElem('bot1',10,50);$('#bot1').html('Si');
-				blinkElem('bot2',10,50);$('#bot2').html('Hmm, ok');
-				blinkElem('bot3',10,50);$('#bot3').html('No');
-			});
-		},1000);
-}
-
-// Función para el botón en la pos 1
-function bot1_f(){
-	if (stage==0) {
-		alert("Perfecto!");
-	}
-	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
-}
-
-// Función para el botón en la pos 2
-function bot2_f(){
-	if (stage==0) {
-		alert("Perfecto!");
-	}
-	else {alert("Warning: Stage"+stage+" for bot2 not found.");}
-}
-
-// Función para el botón en la pos 3
-function bot3_f(){
-	if (stage==0) {
-		alert("Vaya... Ok");
-		window.close();
-	}
-	else {alert("Warning: Stage"+stage+" for bot3 not found.");}
-}
+// Funciones encontradas en el archivo index.js
 
 /*
 Old yet somewhat functional.
