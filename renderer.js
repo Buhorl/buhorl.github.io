@@ -107,7 +107,10 @@ function readDialog(numb,name,text,value_ms){
 	if (value_ms === undefined) {value_ms = 50;}
 	curr_dialog = '<span style=\'color: '+getDialogColor(numb.toString())+'\'>['+name+'] </span>';
 	setDialog(curr_dialog);
-	readTextEffect(text,value_ms,'dialog');
+	setTimeout(
+		function(){
+			readTextEffect(text,value_ms,'dialog');
+		},500);	
 }
 
 // Se lee el texto='text' con un delay='value_ms' entre letras

@@ -1,9 +1,31 @@
+window.onload = function() {
+  $('body').append("<span class=\"overlay\"> Por favor, abre este enlace en un Ordenador </span>");
+};
+
 /******************************/
 /*  3.Funciones de ejecución  */
 /******************************/
 
-// Función de comienzo de la aventura!
 function init(){
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		$('body').append("<span class=\"overlay\"> Por favor, abre este enlace en un Ordenador </span>");
+	} else {
+		$('body').append("<span class=\"overlay\"><button onclick=\"start_framework();\"> Haz click aquí para comenzar </button></span>");
+		//start_story();
+	}
+}
+
+// Función para borrar el overlay y lanzar todos los comandos necesarios para que empiece la historia
+function start_framework(){
+	$('.overlay').remove();
+	setTimeout(
+		function(){
+			start_story();
+		},500);
+}
+
+// Función de comienzo de la aventura!
+function start_story(){
 	stage = 0;
 	var time = 0;
 	var text = 'Estás en el interior de una casa abandonada. En frente tuya tienes a una persona con un aspecto siniestro.';
@@ -12,7 +34,7 @@ function init(){
 	text = '¿Hola, cómo te llamas?';
 	setTimeout(
 		function(){
-		readDialog(0,'???',text);
+			readDialog(0,'???',text);
 		},time);
 	time = time+1000+(text.length*50);
 	setTimeout(
