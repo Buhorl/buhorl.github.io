@@ -43,6 +43,7 @@ var sound_4 = new Howl({
   volume: 0.4,
   loop: false,
 });
+var sound_array = [sound_1,sound_2,sound_3,sound_4];
 var sound_default = sound_1;
 
 /* ___ Comienzo del Desarrollo de funciones. Ordenadas según su tipo: ___
@@ -74,6 +75,23 @@ function setElem(text,elem){
 function stopText(){
 	clearInterval(story_inter);
 	setStory(removeTextEffect(actual_text));
+}
+
+// Cambia el estado de mute de todos los elementos de sonido del array.
+function soundState(){
+	sound_array.forEach(function(element){
+		if(element.volume()!=0){ /*!element.mute()*/
+			//element.mute(true);
+			//$('#muter').css("text-decoration","line-through");
+			element.volume(0);
+			$('#muter').html('🔈');
+		} else {
+			//element.mute(false);
+			//$('#muter').css("text-decoration","none");
+			element.volume(0.2);
+			$('#muter').html('🔊');
+		}
+	})
 }
 
 // Suena el sonido="sound_id" con una modularidad de sonido de "rand" y "value_ms"
