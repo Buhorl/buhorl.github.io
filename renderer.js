@@ -11,7 +11,10 @@ var bit = "Lorem ipsum voluptate tempor tempor.";
 //Variable initialization
 var stage;
 var name;
+var target;
 var story_inter;
+var story_timer;
+var story_funct;
 var actual_text;
 var curr_dialog = '';
 
@@ -56,6 +59,11 @@ var sound_default = sound_1;
 /*  1.Modificaciones de Texto  */
 /*******************************/
 
+// ¡Boop!
+function boop(){
+	console.log("boop");
+}
+
 // Cambia el contenido a "text" del elemento Story
 function setStory(text){
 	document.getElementById('story').innerHTML = text;
@@ -66,15 +74,20 @@ function setDialog(text){
 	document.getElementById('dialog').innerHTML = text;
 }
 
-// Cambia el contenido a "text" del elemento Dialog
+// Cambia el contenido a "text" del elemento="elem"
 function setElem(text,elem){
 	document.getElementById(elem).innerHTML = text;
 }
 
-// Se rellena el texto que se está leyendo automáticamente (se visualizan efectos) 
+// Se rellena el texto que se está renderizando automáticamente (sin visualizar efectos) 
 function stopText(){
 	clearInterval(story_inter);
-	setStory(removeTextEffect(actual_text));
+	setElem(removeTextEffect(actual_text),target);
+	setTimeout(
+		function(){
+			clearTimeout(story_timer);
+			window[story_funct]();
+		},500);
 }
 
 // Cambia el estado de mute de todos los elementos de sonido del array.
@@ -108,8 +121,9 @@ function makeSound(value_ms,rand,sound_id){
 	);
 }
 
-// TODO
+// Renderiza el "text" con una f="value_ms" en el campo de Story
 function readStory(text,value_ms){
+	target = 'story';
 	if (text === undefined) {text = default_text;}
 	if (value_ms === undefined) {value_ms = 50;}
 	curr_dialog = '';
@@ -117,8 +131,9 @@ function readStory(text,value_ms){
 	readTextEffect(text,value_ms,'story');
 }
 
-// Función centrada en Crear un entorno de diálogo
+// Renderiza el "text" con una f="value_ms" en el campo de Dialogo poniendo primero el diálogo con color="numb" y el nombre="name"
 function readDialog(numb,name,text,value_ms){
+	target = 'dialog';
 	if (numb === undefined) {numb = '0';}
 	if (name === undefined) {name = '???';}
 	if (text === undefined) {text = default_text;}
@@ -131,7 +146,7 @@ function readDialog(numb,name,text,value_ms){
 		},500);	
 }
 
-// Se lee el texto='text' con un delay='value_ms' entre letras
+// Se lee el texto='text' con un delay='value_ms' entre letras y lo renderiza en "elem"
 function readText(text,value_ms,elem){
 	if (text === undefined) {text = default_text}
 	if (value_ms === undefined) {value_ms = 50;}
@@ -150,7 +165,7 @@ function readText(text,value_ms,elem){
 	}, value_ms);
 }
 
-// Se lee el texto='text' con un delay='value_ms' entre letras y se le aplican efectos (telegram style)
+// Se lee el texto='text' con un delay='value_ms' entre letras y lo renderiza en "elem" y se le aplican efectos (telegram style)
 function readTextEffect(text,value_ms,elem){
 	if (text === undefined) {text = default_text}
 	if (value_ms === undefined) {value_ms = 50;}
@@ -161,7 +176,7 @@ function readTextEffect(text,value_ms,elem){
 	current_str = curr_dialog;
 	var delimiter = '';
 	var i = 0;
-	actual_text = text;
+	actual_text = curr_dialog + text;
 	//Se realiza cada value_ms ms una actualización del texto que va char a char
 	//Pero al mismo tiempo se busca para aplicar efectos
 	story_inter = setInterval(function() {

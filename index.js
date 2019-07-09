@@ -32,27 +32,33 @@ function start_story(){
 	var text = 'Estás en el interior de una casa abandonada. En frente tuya tienes a una persona con un aspecto siniestro.';
 	readStory(text,65);
 	time = time+1000+(text.length*65);
-	text = '¿Hola, cómo te llamas?';
-	setTimeout(
-		function(){
-			blinkElem('dialog',9,50);
-			readDialog(0,'???',text);
-		},time);
-	time = time+1000+(text.length*50);
-	setTimeout(
-		function(){
-			name = prompt("Mi nombre es:");
-			readDialog(0,'???',"Hola, "+name+". ¿Qué tal estás? Espero que te apetezca jugar a un juego.");
-			$('.butt').delay(2000).queue(function(){
-				$('.butt').css("visibility","visible");
-				blinkElem('bots',9,50);
-				blinkElem('bot1',10,50);$('#bot1').html('Si');
-				blinkElem('bot2',10,50);$('#bot2').html('Hmm, ok');
-				blinkElem('bot3',10,50);$('#bot3').html('No');
-			});
-		},time);
+	story_funct = "story_stage_1";
+	story_timer = setTimeout(story_stage_1,time);
 }
 
+function story_stage_1(){
+	var text = '¿Hola, cómo te llamas?';
+	blinkElem('dialog',9,50);
+	readDialog(0,'???',text);
+	var time = /*time+*/1000+(text.length*50);
+	story_funct = "story_stage_2";
+	story_timer = setTimeout(
+		story_stage_2,time);
+}
+
+function story_stage_2(){
+	name = prompt("Mi nombre es:");
+	readDialog(0,'???',"Hola, "+name+". ¿Qué tal estás? Espero que te apetezca jugar a un juego.");
+	$('.butt').delay(2000).queue(function(){
+		$('.butt').css("visibility","visible");
+		blinkElem('bots',9,50);
+		blinkElem('bot1',10,50);$('#bot1').html('Si');
+		blinkElem('bot2',10,50);$('#bot2').html('Hmm, ok');
+		blinkElem('bot3',10,50);$('#bot3').html('No');
+	});
+	story_funct = "boop";
+	story_timer = '';
+}
 // Función para el botón en la pos 1
 function bot1_f(){
 	if (stage==0) {

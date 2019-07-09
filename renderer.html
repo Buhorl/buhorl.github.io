@@ -24,8 +24,8 @@ https://ozh.github.io/ascii-tables/
 <body onload="initTarget()" >
 <!-- <h1>This is a Heading</h1> -->
 <h1 class="effect">Text Effect Test</h1>
+<button id="muter" onclick="soundState();">🔊</button>
 <p>Bienvenido al entorno de pruebas del renderer.</p>
-<button id="muter" onclick="soundState();">Mute</button>
 <p>Esta es la lista de textos a mostrar y su característica:</p>
 <table class='border'>
 	<tr>
@@ -43,7 +43,7 @@ https://ozh.github.io/ascii-tables/
 </table>
 <p>Estas son las funciones que aplican al texto inferior.</p>
 <span class='border'>
-	<button onclick="stopText(bit)">Stop</button>
+	<button onclick="stopText('story')">Stop</button>
 	<button onclick="blinkElem('story',10,50);">Blink</button>/
 	<button onclick="blinkElem('story',9,50);">Snap</button>
 	<button onclick="blinkElemBW('story',10,50);">Blink BnW</button>/
