@@ -11,6 +11,9 @@ https://ozh.github.io/ascii-tables/
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>
 <script src="renderer.js" type="text/javascript"></script>
+<script type="text/javascript">
+	target='story'; story_funct = 'boop';
+</script>
 
 <html>
 <link rel="stylesheet" type="text/css" href="css/ascii_table.css">
@@ -35,10 +38,10 @@ https://ozh.github.io/ascii-tables/
 		<th><span>A bit</span></th>
 	</tr>
 	<tr>
-	  	<th><button onclick="readText()">Sin Efecto</button>/<button onclick="readTextEffect()">Con Efecto</button></th>
-		<th><button onclick="readTextEffect(lorem,50,'story')">Fast</button></th>
-		<th><button onclick="readTextEffect(lots,200)">Normal</button></th>
-		<th><button onclick="readTextEffect(bit,400)">Slow</button></th>
+	  	<th><button onclick="renderText()">Sin Efecto</button>/<button onclick="renderTextEffect();">Con Efecto</button></th>
+		<th><button onclick="renderTextEffect(lorem,50,'story')">Fast</button></th>
+		<th><button onclick="renderTextEffect(lots,200)">Normal</button></th>
+		<th><button onclick="renderTextEffect(bit,400)">Slow</button></th>
 	</tr>
 </table>
 <p>Estas son las funciones que aplican al texto inferior.</p>

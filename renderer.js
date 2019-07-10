@@ -38,12 +38,12 @@ var sound_2 = new Howl({
 });
 var sound_3 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Cyberia-Mach_New-7660/Cyberia-Mach_New-7660_hifi.mp3'], 
-  volume: 0.4,
+  volume: 0.2,
   loop: false,
 });
 var sound_4 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/idg-beep-intermed-1550/idg-beep-intermed-1550_hifi.mp3'], 
-  volume: 0.4,
+  volume: 0.2,
   loop: false,
 });
 var sound_array = [sound_1,sound_2,sound_3,sound_4];
@@ -82,12 +82,14 @@ function setElem(text,elem){
 // Se rellena el texto que se está renderizando automáticamente (sin visualizar efectos) 
 function stopText(){
 	clearInterval(story_inter);
-	setElem(removeTextEffect(actual_text),target);
+	setElem(parseTextEffect(actual_text),target);
+	// Se para el último timeout cargado y se re-ejecuta la función que tenía asignada
 	setTimeout(
 		function(){
 			clearTimeout(story_timer);
 			window[story_funct]();
 		},500);
+	initEffects();
 }
 
 // Cambia el estado de mute de todos los elementos de sonido del array.
@@ -128,7 +130,7 @@ function readStory(text,value_ms){
 	if (value_ms === undefined) {value_ms = 50;}
 	curr_dialog = '';
 	setDialog(curr_dialog);
-	readTextEffect(text,value_ms,'story');
+	renderTextEffect(text,value_ms,'story');
 }
 
 // Renderiza el "text" con una f="value_ms" en el campo de Dialogo poniendo primero el diálogo con color="numb" y el nombre="name"
@@ -142,16 +144,16 @@ function readDialog(numb,name,text,value_ms){
 	setDialog(curr_dialog);
 	setTimeout(
 		function(){
-			readTextEffect(text,value_ms,'dialog');
+			renderTextEffect(text,value_ms,'dialog',getNameSound(name));
 		},500);	
 }
 
-// Se lee el texto='text' con un delay='value_ms' entre letras y lo renderiza en "elem"
-function readText(text,value_ms,elem){
+// Se lee el texto='text' con un delay='value_ms' entre letras y lo renderiza en "elem". El id del sonido será='sound_id' 
+function renderText(text,value_ms,elem,sound_id){
 	if (text === undefined) {text = default_text}
 	if (value_ms === undefined) {value_ms = 50;}
 	if (elem === undefined) {elem = 'story';}
-	// Se hace clear interval para que no se solape un readText con otro
+	// Se hace clear interval para que no se solape un renderText con otro
 	clearInterval(story_inter);
 	var i = 0;
 	text = removeTextEffect(text);
@@ -162,15 +164,16 @@ function readText(text,value_ms,elem){
 			i++;
 			setElem(text.substr(0,i),elem,);
 		} else {clearInterval(story_inter);}
+		if(text.charAt(i)!=' '){makeSound(value_ms,100,sound_id);}
 	}, value_ms);
 }
 
-// Se lee el texto='text' con un delay='value_ms' entre letras y lo renderiza en "elem" y se le aplican efectos (telegram style)
-function readTextEffect(text,value_ms,elem){
+// Se lee el texto='text' con un delay='value_ms' entre letras y lo renderiza en 'elem' y se le aplican efectos (telegram style). El id del sonido será='sound_id' 
+function renderTextEffect(text,value_ms,elem,sound_id){
 	if (text === undefined) {text = default_text}
 	if (value_ms === undefined) {value_ms = 50;}
 	if (elem === undefined) {elem = 'story';}
-	// Se hace clear interval para que no se solape un readText con otro
+	// Se hace clear interval para que no se solape un renderText con otro
 	clearInterval(story_inter); 
 	var current_str = '';
 	current_str = curr_dialog;
@@ -254,7 +257,7 @@ function readTextEffect(text,value_ms,elem){
 				}
 			} else {
 				current_str = current_str + text.charAt(i);
-				if(text.charAt(i)!=' '){makeSound(value_ms,100);}
+				if(text.charAt(i)!=' '){makeSound(value_ms,100,sound_id);}
 			}
 			setElem(current_str+delimiter,elem);
 			initTarget('.target_rainbow','effect_rainbow');
@@ -267,12 +270,98 @@ function readTextEffect(text,value_ms,elem){
 	}, value_ms);
 }
 
+// Se lee el texto='text' y se parsean los efectos para que aparezcan en el texto
+function parseTextEffect(text){
+	if (text === undefined) {text = default_text}
+	var current_str = '';
+	var i = 0;
+	var delimiter = '';
+	//Nos recorremos el texto para aplicar los efectos visuales
+	while (i <= text.length - 1){
+		/* '--' para designar Rainbow */
+		if (text.charAt(i)=='-' & text.charAt(i+1)=='-'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+			if (delimiter=='') {
+				delimiter = '</span>';
+				current_str = current_str + '<span class=\'target_rainbow\'>';
+			} else { 
+				delimiter = '';
+				current_str = current_str + '</span>';
+			}
+		/* '%%' para designar Jumpy */
+		} else if (text.charAt(i)=='%' & text.charAt(i+1)=='%'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+			if (delimiter=='') {
+				delimiter = '</span>';
+				current_str = current_str + '<span class=\'target_jumpy\'>';
+			} else { 
+				delimiter = '';
+				current_str = current_str + '</span>';
+			}
+		/* '##' para designar Pride */
+		} else if (text.charAt(i)=='#' & text.charAt(i+1)=='#'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+			if (delimiter=='') {
+				delimiter = '</span>';
+				current_str = current_str + '<span class=\'target_pride\'>';
+			} else { 
+				delimiter = '';
+				current_str = current_str + '</span>';
+			}
+		/* '~~' para designar Jitter */
+		} else if (text.charAt(i)=='~' & text.charAt(i+1)=='~'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+			if (delimiter=='') {
+				delimiter = '</span>';
+				current_str = current_str + '<span class=\'target_jit\'>';
+			} else { 
+				delimiter = '';
+				current_str = current_str + '</span>';
+			}
+		/* '**' para designar Bold */
+		} else if (text.charAt(i)=='*' & text.charAt(i+1)=='*'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+			if (delimiter=='') {
+				delimiter = '</span>';
+				current_str = current_str + '<span style=\'font-weight: bold\'>';
+			} else { 
+				delimiter = '';
+				current_str = current_str + '</span>';
+			}
+		/* '__' para designar Italics */
+		} else if (text.charAt(i)=='_' & text.charAt(i+1)=='_'){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+			if (delimiter=='') {
+				delimiter = '</span>';
+				current_str = current_str + '<span style=\'font-style: italic\'>';
+			} else { 
+				delimiter = '';
+				current_str = current_str + '</span>';
+			}
+		/* '@num' para designar Color */
+		} else if (text.charAt(i)=='@' & $.isNumeric(text.charAt(i+1))){
+			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+			if (delimiter=='') {
+				col = getDialogColor(text.charAt(i));
+				delimiter = '</span>'; //delimiter + '</span>';
+				current_str = current_str + '<span style=\'color: '+col+'\'>';
+			} else { 
+				delimiter = '';//delimiter.substr(0,delimiter.length-7); //borrado de '</spam>'
+				current_str = current_str + '</span>';
+			}
+		} else {
+			current_str = current_str + text.charAt(i);
+		}
+		i++;
+	};
+	return current_str;
+}
+
 // Se lee el texto='text' y se le borran efectos para que solo salga el texto
 function removeTextEffect(text){
 	if (text === undefined) {text = default_text}
 	var current_str = '';
 	var i = 0;
-	actual_text = text;
 	//Nos recorremos el texto para quitarle los efectos visuales
 	while (i <= text.length - 1){
 		/* '--' para designar Rainbow */
@@ -338,21 +427,75 @@ function initTarget(clase,clase_efecto){
 	return;
 }
 
-function rainbow(){
-	letterEffect('rainbow',30,'.effect_rainbow');
+// Activa el efecto rainbow con un delay="n" entre letras.
+function rainbow(n){
+	if (n === undefined) {clase = 30;}
+	letterEffect('rainbow',n,'.effect_rainbow');
 }
 
-function jumpy(){
-	letterEffect('jumpy',30,'.effect_jumpy');
+// Activa el efecto jumpy con un delay="n" entre letras.
+function jumpy(n){
+	if (n === undefined) {clase = 30;}
+	letterEffect('jumpy',n,'.effect_jumpy');
 }
 
-function pride(){
-	letterEffect('pride',30,'.effect_pride');
+// Activa el efecto pride con un delay="n" entre letras.
+function pride(n){
+	if (n === undefined) {clase = 30;}
+	letterEffect('pride',n,'.effect_pride');
 }
 
-function jit(){
-	letterEffect('jit',0,'.effect_jit');
+// Activa el efecto jit con un delay="n" entre letras.
+function jit(n){
+	if (n === undefined) {clase = 0;}
+	letterEffect('jit',n,'.effect_jit');
 }
+
+// Inicia todos los efectos y los activa (con los valores por defecto)
+function initEffects(){
+	initTarget('.target_rainbow','effect_rainbow');
+	initTarget('.target_jumpy','effect_jumpy');
+	initTarget('.target_pride','effect_pride');
+	initTarget('.target_jit','effect_jit');
+	rainbow(); jumpy(); pride(); jit();
+}
+
+
+// Parpadeo del elemento con id="id" "times"-veces y con un intervalo de "ms" de separación. EL parpadeo se hace usando la visibilidad
+function blinkElem(id,times,ms){
+	// even to stay, odd to dissappear
+	var i = times;
+	var j = setInterval(function() {
+		if(document.getElementById(id).style.visibility == "hidden"){
+			document.getElementById(id).style.visibility = "visible";
+		} else {document.getElementById(id).style.visibility = "hidden";}
+		i--; 
+		if (i==0) {clearInterval(j);}
+	}, ms);
+}
+
+// Parpadeo del elemento con id="id" "times"-veces y con un intervalo de "ms" de separación. EL parpadeo se hace alternando entre B y N.
+function blinkElemBW(id,times,ms){
+	// even to stay, odd to dissappear
+	var i = times;
+	var j = setInterval(function() {
+		if(document.getElementById(id).style.color == "white"){
+			document.getElementById(id).style.color = "black";
+		} else {document.getElementById(id).style.color = "white";}
+		i--; 
+		if (i==0) {clearInterval(j);}
+	}, ms);
+}
+
+/******************************/
+/*  3.Funciones de ejecución  */
+/******************************/
+
+// Funciones encontradas en el archivo index.js
+
+/*******************************/
+/*  4.Funciones de la historia */
+/*******************************/
 
 // Función que devuelve uno de los colores disponibles según el 'numb'
 function getDialogColor(numb){
@@ -387,37 +530,19 @@ function getDialogColor(numb){
 	}
 }
 
-// Parpadeo del elemento con id="id" "times"-veces y con un intervalo de "ms" de separación. EL parpadeo se hace usando la visibilidad
-function blinkElem(id,times,ms){
-	// even to stay, odd to dissappear
-	var i = times;
-	var j = setInterval(function() {
-		if(document.getElementById(id).style.visibility == "hidden"){
-			document.getElementById(id).style.visibility = "visible";
-		} else {document.getElementById(id).style.visibility = "hidden";}
-		i--; 
-		if (i==0) {clearInterval(j);}
-	}, ms);
+// Funciones RE-definidas en el archivo index.js
+
+function specialName(name){
+	return name;
 }
 
-// Parpadeo del elemento con id="id" "times"-veces y con un intervalo de "ms" de separación. EL parpadeo se hace alternando entre B y N.
-function blinkElemBW(id,times,ms){
-	// even to stay, odd to dissappear
-	var i = times;
-	var j = setInterval(function() {
-		if(document.getElementById(id).style.color == "white"){
-			document.getElementById(id).style.color = "black";
-		} else {document.getElementById(id).style.color = "white";}
-		i--; 
-		if (i==0) {clearInterval(j);}
-	}, ms);
+function getNameNum(name){
+	return 0;
 }
 
-/******************************/
-/*  3.Funciones de ejecución  */
-/******************************/
-
-// Funciones encontradas en el archivo index.js
+function getNameSound(name){
+	return 'sound_2';
+}
 
 /*
 Old yet somewhat functional.

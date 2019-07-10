@@ -2,6 +2,7 @@
 body{
 	font-family: Consolas;
 	font-size: 14px;
+	background-color: #eee;
 }
 
 button{
@@ -49,6 +50,7 @@ a:hover {
 	margin-left: 15%;
 	margin-right: 15%;
 	border: 1px dashed #000000;
+	background-color: white;
 }
 
 .target{
@@ -70,6 +72,7 @@ a:hover {
 	padding-left: 2%;
 	padding-right: 2%;
 	border: 1px dashed #000000;
+	background-color: white;
 }
 #dialog{
 	width: auto;
@@ -81,6 +84,7 @@ a:hover {
 	padding-left: 2%;
 	padding-right: 2%;
 	border: 1px dashed #000000;
+	background-color: white;
 }
 
 #hid{

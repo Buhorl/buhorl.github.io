@@ -1,6 +1,29 @@
-window.onload = function() {
-  $('body').append("<span class=\"overlay\"> Por favor, abre este enlace en un Ordenador </span>");
-};
+/*******************************/
+/*  4.Funciones de la historia */
+/*******************************/
+
+function specialName(name){
+	return newname;
+}
+
+function getNameNum(name){
+	return namenum;
+}
+
+function getNameSound(name){
+	switch (name) {
+	case "K":
+	return sound_1;
+	break;
+	case "G":
+	return sound_2;
+	break;
+	case "???":
+	return sound_3;
+	break;
+	}
+	//return namesound;
+}
 
 /******************************/
 /*  3.Funciones de ejecución  */
