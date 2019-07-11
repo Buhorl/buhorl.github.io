@@ -37,6 +37,10 @@ a:hover {
 	color: gray;
 }
 
+p{
+	text-indent: 5%;
+}
+
 .overlay{
 	line-height: 5;
 	text-align: center;

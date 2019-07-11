@@ -120,21 +120,6 @@ function soundState(){
 	})
 }
 
-$(document).ready(function(){
-	$("select").change(function(){
-    switch($(this).children("option:selected").val()){
-        case "sineWave": sound_default = "sineWave"; break;
-        case "squareWave": sound_default = "squareWave"; break;
-        case "triangleWave": sound_default = "triangleWave"; break;
-        case "sawtoothWave": sound_default = "sawtoothWave"; break;
-        case "sound_1": sound_default =  sound_1; break;
-        case "sound_2": sound_default =  sound_2; break;
-        case "sound_3": sound_default =  sound_3; break;
-        case "sound_4": sound_default =  sound_4; break;
-	}
-	});
-});
-
 // Suena el sonido="sound_id" con una modularidad de sonido de "rand" y "value_ms"
 function makeSound(value_ms,rand,sound_id){
 	if (value_ms === undefined) {value_ms = 50;}

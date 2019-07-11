@@ -14,6 +14,22 @@ https://ozh.github.io/ascii-tables/
 <script src="renderer.js" type="text/javascript"></script>
 <script type="text/javascript">
 	target='story'; story_funct = 'boop';
+	// Función del documento para actualizar qué sonido se usa según el valor en el switch de selección 
+	$(document).ready(function(){
+		$("select").change(function(){
+	    switch($(this).children("option:selected").val()){
+	        case "sineWave": sound_default = "sineWave"; break;
+	        case "squareWave": sound_default = "squareWave"; break;
+	        case "triangleWave": sound_default = "triangleWave"; break;
+	        case "sawtoothWave": sound_default = "sawtoothWave"; break;
+	        case "sound_1": sound_default =  sound_1; break;
+	        case "sound_2": sound_default =  sound_2; break;
+	        case "sound_3": sound_default =  sound_3; break;
+	        case "sound_4": sound_default =  sound_4; break;
+		}
+		});
+});
+
 </script>
 
 <html>
@@ -27,7 +43,7 @@ https://ozh.github.io/ascii-tables/
 
 <body onload="init()" >
 <!-- <h1>This is a Heading</h1> -->
-<h1 class="effect">Text Effect Test</h1>
+<h1 class="effect">Text Effect Test <a href="https://github.com/Buhorl/buhorl.github.io">(Source)</a></h1>
 <button id="muter" onclick="soundState();">🔊</button>
 <p>Bienvenido al entorno de pruebas del renderer.</p>
 <p>Esta es la lista de textos a mostrar y su característica:</p>
