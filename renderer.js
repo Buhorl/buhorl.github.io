@@ -1,5 +1,6 @@
 /* IDEAS:
 https://css-tricks.com/controlling-css-animations-transitions-javascript/
+http://acedio.github.io/animalese.js/
 */
 
 //Text strings
@@ -28,26 +29,38 @@ var reward = "https://open.spotify.com/playlist/1ErhO58OeArSOe6Zmrgbv3?si=Ya_ZLL
 // Bop : http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/idg-beep-intermed-1550/idg-beep-intermed-1550_hifi.mp3
 var sound_1 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Electron-wwwbeat-8521/Electron-wwwbeat-8521_hifi.mp3'], 
-  volume: 0.2,
-  loop: false,
+  volume: 0.2, loop: false,
 });
 var sound_2 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Bazzline-Mach_New-7663/Bazzline-Mach_New-7663_hifi.mp3'], 
-  volume: 0.2,
-  loop: false,
+  volume: 0.2, loop: false,
 });
 var sound_3 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Cyberia-Mach_New-7660/Cyberia-Mach_New-7660_hifi.mp3'], 
-  volume: 0.2,
-  loop: false,
+  volume: 0.2, loop: false,
 });
 var sound_4 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/idg-beep-intermed-1550/idg-beep-intermed-1550_hifi.mp3'], 
-  volume: 0.2,
-  loop: false,
+  volume: 0.2, loop: false,
 });
+
 var sound_array = [sound_1,sound_2,sound_3,sound_4];
 var sound_default = sound_1;
+
+//Picciccato lib generated sound(waves).
+// Piccicato.sound = 0.1;
+var sineWave = new Pizzicato.Sound({ 
+    source: 'wave', options: {type: 'sine', frequency: 450/*, volume: 0.05*/}
+}); 
+var squareWave = new Pizzicato.Sound({ 
+    source: 'wave', options: {type: 'square', frequency: 350/*, volume: 0.05*/}
+});
+var triangleWave = new Pizzicato.Sound({ 
+    source: 'wave', options: {type: 'triangle', frequency: 600/*, volume: 0.05*/}
+});
+var sawtoothWave = new Pizzicato.Sound({ 
+    source: 'wave', options: {type: 'sawtooth', frequency: 480/*, volume: 0.05*/}
+});
 
 /* ___ Comienzo del Desarrollo de funciones. Ordenadas según su tipo: ___
 	1. Modificaciones de texto
@@ -96,31 +109,51 @@ function stopText(){
 function soundState(){
 	sound_array.forEach(function(element){
 		if(element.volume()!=0){ /*!element.mute()*/
-			//element.mute(true);
-			//$('#muter').css("text-decoration","line-through");
-			element.volume(0);
+			Pizzicato.volume = 0; //element.mute(true);
+			element.volume(0); //$('#muter').css("text-decoration","line-through");
 			$('#muter').html('🔈');
 		} else {
-			//element.mute(false);
-			//$('#muter').css("text-decoration","none");
-			element.volume(0.2);
-			$('#muter').html('🔊');
+			Pizzicato.volume = 0.05;
+			element.volume(0.2); //element.mute(false);
+			$('#muter').html('🔊'); //$('#muter').css("text-decoration","none");
 		}
 	})
 }
+
+$(document).ready(function(){
+	$("select").change(function(){
+    switch($(this).children("option:selected").val()){
+        case "sineWave": sound_default = "sineWave"; break;
+        case "squareWave": sound_default = "squareWave"; break;
+        case "triangleWave": sound_default = "triangleWave"; break;
+        case "sawtoothWave": sound_default = "sawtoothWave"; break;
+        case "sound_1": sound_default =  sound_1; break;
+        case "sound_2": sound_default =  sound_2; break;
+        case "sound_3": sound_default =  sound_3; break;
+        case "sound_4": sound_default =  sound_4; break;
+	}
+	});
+});
 
 // Suena el sonido="sound_id" con una modularidad de sonido de "rand" y "value_ms"
 function makeSound(value_ms,rand,sound_id){
 	if (value_ms === undefined) {value_ms = 50;}
 	if (sound_id === undefined) {sound_id = sound_default;}
 	if (rand === undefined) {rand = 11;}
-	var context = new AudioContext();
+	//var context = new AudioContext();
 	//console.log((value_ms/(sound_id.duration()*(90+Math.floor(Math.random()*rand)))));
-	dur = sound_id.duration();
-	sound_id.rate(
-		100/value_ms//(value_ms/(dur*(90+Math.floor(Math.random()*rand))))
-		,sound_id.play()
-	);
+	switch(sound_id){
+        case "sineWave": sineWave.play();	setTimeout(function(){sineWave.stop()},Math.floor(value_ms*0.9)); break;
+        case "squareWave": squareWave.play();	setTimeout(function(){squareWave.stop()},Math.floor(value_ms*0.9)); break;
+        case "triangleWave": triangleWave.play();	setTimeout(function(){triangleWave.stop()},Math.floor(value_ms*0.9)); break;
+        case "sawtoothWave": sawtoothWave.play();	setTimeout(function(){sawtoothWave.stop()},Math.floor(value_ms*0.9)); break;
+        default:
+		dur = sound_id.duration();
+		sound_id.rate(
+			100/value_ms//(value_ms/(dur*(90+Math.floor(Math.random()*rand))))
+			,sound_id.play()
+		);
+	};
 }
 
 // Renderiza el "text" con una f="value_ms" en el campo de Story
@@ -544,99 +577,17 @@ function getNameSound(name){
 	return 'sound_2';
 }
 
-/*
-Old yet somewhat functional.
-function jump(){
-	$('.letter').each(function(index){
-		if ($(this).hasClass('jumpy')){
-			$(this).removeClass('jumpy');
-		} else {
-			$(this).delay(30*(index+1)).queue(function(){
-				$(this).addClass('jumpy');
-			});
-		}
-	});
-	return;
+function init(){
+	boop();
+	Pizzicato.volume = 0.05;
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("demo");
+	output.innerHTML = slider.value; // Display the default slider value
+	slider.oninput = function() {
+		output.innerHTML = this.value;
+		sineWave.frequency = this.value;
+		squareWave.frequency = this.value;
+		triangleWave.frequency = this.value;
+		sawtoothWave.frequency = this.value;
+	}
 }
-
-function rainbow(){
-	$('.letter').each(function(index){
-		$(this).delay(30*index).queue(function(){
-			$(this).toggleClass('rainbow');
-			//$(this).addClass('jumpy');
-			//$(this).addClass('pride');
-		});
-	});
-	return;
-}
-
-function pride(){
-	$('.letter').each(function(index){
-		$(this).delay(30*index).queue(function(){
-			$(this).toggleClass('pride');
-		});
-	});
-	return;
-}
-*/
-
-/*
-function rainbow(){
-	$('.letter').each($).wait(20,function(index){
-		anime({
-		  	targets: $(this).get(),
-		  	translateY: [
-			    { value: 10, duration: 100, delay: 0},
-			    { value: 0, duration: 100, delay: 0}
-			],
-			//translateY:  10,
-			direction: 'alternate',
-		    easing: 'easeInOutSine',
-	  		loop: true,
-		});
-		$(this).addClass('rainbow');
-	});
-	return;
-}
-*/
-
-/*
-function rainbow2(){
-	$('.letter').each(function(index){
-		$(this).delay(30*index).queue(function(){
-		anime({
-		  	targets: $(this).get(),
-		  	translateY: [
-				{ value: 10, duration: 100, background: '#FFF'},
-			    { value: 0, duration: 100, background: '#000'}
-			],
-			//translateY:  10,
-			direction: 'alternate',
-		    easing: 'easeInOutSine',
-	  		loop: true,
-		});
-		//$(this).addClass('rainbow');
-		});
-	});
-	return;
-}
-*/
-/*	anime({
-	  	targets: '.letter',
-	  	translateY: [
-		    { value: 9, duration: 30, delay: function(el, i) {return 30*i;}},
-		    { value: 0, duration: 30, delay: function(el, i) {return 30*i;}}
-		],
-	    easing: 'easeInOutSine',
-	  	loop: true,
-	  	delay: function(el, i, l) {return i*50;}
-	});*/
-
-	/*		anime({
-	  	targets: $(this).get(),
-	  	translateY: [
-		    { value: 9, duration: 1000, delay: function(el, i) {return 300*(index%5);}},
-		    { value: 0, duration: 1000, delay: 0}
-		],
-	    easing: 'easeInOutSine',
-	  	loop: true*/

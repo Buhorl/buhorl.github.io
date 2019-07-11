@@ -31,9 +31,13 @@ function getNameSound(name){
 
 function init(){
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		$('body').append("<span class=\"overlay\"> Por favor, abre este enlace en un Ordenador </span>");
+		$('body').append("<span class=\"overlay\"> Por favor, abre este enlace en un Ordenador </span>"+
+			"<br><a href=\"./renderer.html\"> O haz click aquí para ir al entorno de pruenas </a>");
 	} else {
-		$('body').append("<span class=\"overlay\"><button onclick=\"start_framework();\"> Haz click aquí para comenzar </button></span>");
+		$('body').append("<span class=\"overlay\">"+
+			"<button onclick=\"start_framework();\"> Haz click aquí para comenzar </button>"+
+			"<br><a href=\"./renderer.html\"> O aquí para ir al entorno de pruenas </a>"+
+			"</span>");
 		//start_story();
 	}
 }
