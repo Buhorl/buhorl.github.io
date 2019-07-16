@@ -10,17 +10,20 @@ var lots = "Occaecat enim nisi sint aute enim in dolor officia in adipisicing de
 var bit = "Lorem ipsum voluptate tempor tempor.";
 
 //Variable initialization
-var stage;
-var name;
-var target;
-var story_inter;
-var story_timer;
-var story_funct;
-var actual_text;
-var curr_dialog = '';
+var stage;		//Usado para identificar en qué momento de la Historia se encuentran los diálogos
+var sub_stage_1;	//Lo mismo que 'stage' pero con más detalle
+var sub_stage_2;	//Lo mismo que 'stage' pero con más detalle
+var sub_stage_3;	//Lo mismo que 'stage' pero con más detalle
+var name;		//Nombre del aventurero!
+var target;		//Recurso al que "atacar" cuando hay que parar el diálogo
+var story_inter;	//variable que tiene el Intervalo que se está ejecutando. Usado para pararlo 
+var story_timer;	//variable que tiene el último Timeout que se está ejecutando. Usado para pararlo
+var story_funct;	//variable que tiene el nombre de la última función ejecutada (normalmente por un Timeout). Usado para reejecutarlo
+var actual_text = '';	//variable que contiene el texto y el diálogo que se está mostrando en ese instante. Usado para parar el render.
+var curr_dialog = '';	//variable que contiene el texto que se está mostrando en ese instante. Usado para parar el render.
 
 //Other vars
-var reward = "https://open.spotify.com/playlist/1ErhO58OeArSOe6Zmrgbv3?si=Ya_ZLLkGTyOySGe-E5YiZw";
+var reward = "https://open.spotify.com/playlist/1ErhO58OeArSOe6Zmrgbv3?si=Ya_ZLLkGTyOySGe-E5YiZw";	//<3
 
 // Sounds
 // Buzz: http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Bazzline-Mach_New-7663/Bazzline-Mach_New-7663_hifi.mp3
@@ -276,13 +279,8 @@ function renderTextEffect(text,value_ms,elem,sound_id){
 				if(text.charAt(i)!=' '){makeSound(value_ms,100,sound_id);}
 			}
 			setElem(current_str+delimiter,elem);
-			if (i == text.length -1 ) {
-				initTarget('.target_rainbow','effect_rainbow');
-				initTarget('.target_jumpy','effect_jumpy');
-				initTarget('.target_pride','effect_pride');
-				initTarget('.target_jit','effect_jit');
-				rainbow(); jumpy(); pride(); jit();
-			}
+			// Si es la úlltima iter entonces lanzar los efectos
+			if (i == text.length -1 ) {initEffects();}
 			i++;	
 		} else {clearInterval(story_inter);}
 	}, value_ms);

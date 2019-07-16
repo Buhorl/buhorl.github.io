@@ -4,20 +4,27 @@
 
 function specialName(name){
 	switch (name) {
+		case "Karencita":
 		case "Karen":
-		return "##Karen##";
+		case "K":
+		return "##"+name+"##";
 		break;
+		case "Guillermo":
 		case "Guille":
-		return "%%Guille%%";
+		case "G":
+		return "%%"+name+"%%";
 		break;
 		case "Cristina":
-		return "--Cristina--";
+		case "Cris":
+		return "--"+name+"--";
 		break;
 		case "???":
 		return "__???__";
 		break;
 		case "!!!":
-		return "~~!!!~~";
+		case "David":
+		case "david":
+		return "~~"+name+"~~";
 		break;
 		default:
 		return name;
@@ -74,7 +81,7 @@ function getNameSound(name){
 	return "sawtoothWave";
 	break;
 	case "Karen":
-	return sound_1;
+	return sound_2;
 	break;
 	case "Guille":
 	return sound_2;
@@ -97,8 +104,9 @@ function getNameSound(name){
 
 function init(){
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		$('body').append("<span class=\"overlay\" style> Por favor, abre este enlace en un Ordenador </span>"+
-			"<br><a href=\"./renderer.html\"> O haz click aquí para ir al entorno de pruebas </a>");
+		$('body').append("<span class=\"overlay\" style><p> Por favor, abre este enlace en un Ordenador </p>"+
+			"<button onclick=\"start_framework();\"> O pasa de mi y abrelo en el movil. Solo soy un botón, no un policía </button>"+
+			"<br><a href=\"./renderer.html\"> O haz click aquí para ir al entorno de pruebas </a> </span>");
 	} else {
 		$('body').append("<span class=\"overlay\">"+
 			"<button onclick=\"start_framework();\"> Haz click aquí para comenzar </button>"+
@@ -224,6 +232,8 @@ function bot1_f(){
 					story_timer = setTimeout(function(){start_story();},time);
 				}
 			},time);	
+	} else if (stage == 1){
+		//Abrir la carpeta
 	}
 	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
 }
@@ -248,6 +258,8 @@ function bot2_f(){
 					story_timer = setTimeout(function(){start_story();},time);
 				}
 			},time);
+	} else if (stage == 1){
+		//Abrir la nevera
 	}
 	else {alert("Warning: Stage"+stage+" for bot2 not found.");}
 }
@@ -260,6 +272,8 @@ function bot3_f(){
 		$('.butt').attr("disabled", true);
 		alert("Vaya... Ok");
 		window.close();
+	} else if (stage == 1){
+		//Ir a la puerta
 	}
 	else {alert("Warning: Stage"+stage+" for bot3 not found.");}
 }
