@@ -47,8 +47,6 @@ var sound_4 = new Howl({
 var sound_array = [sound_1,sound_2,sound_3,sound_4];
 var sound_default = sound_1;
 
-//Picciccato lib generated sound(waves).
-// Piccicato.sound = 0.1;
 var sineWave = new Pizzicato.Sound({ 
     source: 'wave', options: {type: 'sine', frequency: 450/*, volume: 0.05*/}
 }); 
@@ -105,7 +103,7 @@ function stopText(){
 	initEffects();
 }
 
-// Cambia el estado de mute de todos los elementos de sonido del array.
+// Cambia el estado de mute de todos los elementos de sonido del array y para Pizzicato pone el volumen a 0;
 function soundState(){
 	sound_array.forEach(function(element){
 		if(element.volume()!=0){ /*!element.mute()*/
@@ -147,7 +145,7 @@ function readStory(text,value_ms){
 	if (text === undefined) {text = default_text;}
 	if (value_ms === undefined) {value_ms = 50;}
 	curr_dialog = '';
-	setDialog(curr_dialog);
+	setStory(curr_dialog);
 	renderTextEffect(text,value_ms,'story');
 }
 
@@ -158,7 +156,7 @@ function readDialog(numb,name,text,value_ms){
 	if (name === undefined) {name = '???';}
 	if (text === undefined) {text = default_text;}
 	if (value_ms === undefined) {value_ms = 50;}
-	curr_dialog = '<span style=\'color: '+getDialogColor(numb.toString())+'\'>['+name+'] </span>';
+	curr_dialog = '<span style=\'color: '+getDialogColor(numb.toString())+'\'>['+parseTextEffect(name)+']: </span>';
 	setDialog(curr_dialog);
 	setTimeout(
 		function(){
@@ -278,11 +276,13 @@ function renderTextEffect(text,value_ms,elem,sound_id){
 				if(text.charAt(i)!=' '){makeSound(value_ms,100,sound_id);}
 			}
 			setElem(current_str+delimiter,elem);
-			initTarget('.target_rainbow','effect_rainbow');
-			initTarget('.target_jumpy','effect_jumpy');
-			initTarget('.target_pride','effect_pride');
-			initTarget('.target_jit','effect_jit');
-			rainbow(); jumpy(); pride(); jit();
+			if (i == text.length -1 ) {
+				initTarget('.target_rainbow','effect_rainbow');
+				initTarget('.target_jumpy','effect_jumpy');
+				initTarget('.target_pride','effect_pride');
+				initTarget('.target_jit','effect_jit');
+				rainbow(); jumpy(); pride(); jit();
+			}
 			i++;	
 		} else {clearInterval(story_inter);}
 	}, value_ms);
@@ -437,35 +437,35 @@ function letterEffect(anim_name,delay,clase){
 // Función para dividir el texto de los Doms con clase='clase' en letras individuales con clase='clase_efecto' 
 function initTarget(clase,clase_efecto){
 	if (clase === undefined) {clase = '.effect';}
-	if (clase_efecto === undefined) {clase = 'letter';}
+	if (clase_efecto === undefined) {clase_efecto = 'letter';}
 	// Wrap every letter in a span
 	$(clase).each(function(){
-	  	$(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='"+clase_efecto+"'>$&</span>"))
+	  	$(this).html($(this).text().replace(/([^\x00-\x80]|[\!\+\&]|\w)/g, "<span class='"+clase_efecto+"'>$&</span>"))
 	});
 	return;
 }
 
 // Activa el efecto rainbow con un delay="n" entre letras.
 function rainbow(n){
-	if (n === undefined) {clase = 30;}
+	if (n === undefined) {n = 30;}
 	letterEffect('rainbow',n,'.effect_rainbow');
 }
 
 // Activa el efecto jumpy con un delay="n" entre letras.
 function jumpy(n){
-	if (n === undefined) {clase = 30;}
+	if (n === undefined) {n = 30;}
 	letterEffect('jumpy',n,'.effect_jumpy');
 }
 
 // Activa el efecto pride con un delay="n" entre letras.
 function pride(n){
-	if (n === undefined) {clase = 30;}
+	if (n === undefined) {n = 30;}
 	letterEffect('pride',n,'.effect_pride');
 }
 
 // Activa el efecto jit con un delay="n" entre letras.
 function jit(n){
-	if (n === undefined) {clase = 0;}
+	if (n === undefined) {n = 0;}
 	letterEffect('jit',n,'.effect_jit');
 }
 
@@ -540,10 +540,10 @@ function getDialogColor(numb){
 		return 'SlateBlue';
 		break;
 		case "7":
-		return 'GreenYellow';
+		return 'YellowGreen';
 		break;
 		case "8":
-		return 'SpringGreen';
+		return 'ForestGreen';
 		break;
 	}
 }
@@ -562,7 +562,7 @@ function getNameSound(name){
 	return 'sound_2';
 }
 
-function init(){
+function initR(){
 	boop();
 	Pizzicato.volume = 0.05;
 	var slider = document.getElementById("myRange");

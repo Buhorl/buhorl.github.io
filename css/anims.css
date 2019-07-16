@@ -28,7 +28,7 @@
 	animation-timing-function: ease-out;/*ease-in-out;*/
 	animation-fill-mode: forwards;	
 	animation-iteration-count: infinite;
-	animation-name: updown_fhd;
+	animation-name: updown_fhd_small;
 }
 
 .rainbow {
@@ -42,7 +42,7 @@
 	display: inline-block;
 	animation-duration: 6s;
 	animation-iteration-count: infinite;
-	animation-name: pride;
+	animation-name: pride_small;
 }
 
 @keyframes jitter {
@@ -219,6 +219,72 @@
   }
 }
 
+@keyframes pride_small {
+  0% {
+    color: #d65c97; transform: translate(0px, 0px);
+  }
+  5% {
+    color: #5cd666; transform: translate(0px, -5px);
+  }
+  10% {
+    color: #a55cd6; transform: translate(0px, 0px);
+  }
+  15.0% {
+    color: #5c7cd6; transform: translate(0px, -5px);
+  }
+  20% {
+    color: #d65c7a; transform: translate(0px, 0px);
+  }
+  25% {
+    color: #81d65c; transform: translate(0px, -5px);
+  }
+  30.0% {
+    color: #835cd6; transform: translate(0px, 0px);
+  }
+  35% {
+    color: #685cd6; transform: translate(0px, -5px);
+  }
+  40% {
+    color: #5c9dd6; transform: translate(0px, 0px);
+  }
+  45% {
+    color: #5cd670; transform: translate(0px, -5px);
+  }
+  50% {
+    color: #d6625c; transform: translate(0px, 0px);
+  }
+  55.0% {
+    color: #d6835c; transform: translate(0px, -5px);
+  }
+  60.0% {
+    color: #d6605c; transform: translate(0px, 0px);
+  }
+  65% {
+    color: #be5cd6; transform: translate(0px, -5px);
+  }
+  70% {
+    color: #5c8dd6; transform: translate(0px, 0px);
+  }
+  75% {
+    color: #95d65c; transform: translate(0px, -5px);
+  }
+  80% {
+    color: #d69d5c; transform: translate(0px, 0px);
+  }
+  85.0% {
+    color: #d65c81; transform: translate(0px, -5px);
+  }
+  90% {
+    color: #5cd666; transform: translate(0px, 0px);
+  }
+  95% {
+    color: #d67e5c; transform: translate(0px, -5px);
+  }
+  100% {
+    color: #64d65c; transform: translate(0px, 0px);
+  }
+}
+
 @keyframes updown_fhd {
   0% {
     transform: translate(0px, 0px);
@@ -285,44 +351,73 @@
   }
 }
 
-@keyframes updown_hd {
+@keyframes updown_fhd_small {
   0% {
-    transform: translate(0px, 0px); 
+    transform: translate(0px, 0px);
   }
   5% {
     transform: translate(0px, -5px);
   }
+  10% {
+    transform: translate(0px, 0px);
+  }
   15.0% {
-    transform: translate(0px, 5px);
+    transform: translate(0px, -5px);
+  }
+  20% {
+    transform: translate(0px, 0px);
   }
   25% {
     transform: translate(0px, -5px);
   }
+  30.0% {
+    transform: translate(0px, 0px);
+  }
   35% {
-    transform: translate(0px, 5px);
+    transform: translate(0px, -5px);
+  }
+  40% {
+    transform: translate(0px, 0px);
   }
   45% {
     transform: translate(0px, -5px);
   }
+  50% {
+    transform: translate(0px, 0px);
+  }
   55.0% {
-    transform: translate(0px, 5px);
+    transform: translate(0px, -5px);
+  }
+  60.0% {
+    transform: translate(0px, 0px);
   }
   65% {
     transform: translate(0px, -5px);
   }
+  70% {
+    transform: translate(0px, 0px);
+  }
   75% {
-    transform: translate(0px, 5px);
+    transform: translate(0px, -5px);
+  }
+  80% {
+    transform: translate(0px, 0px);
   }
   85.0% {
     transform: translate(0px, -5px);
   }
+  90% {
+    transform: translate(0px, 0px);
+  }
   95% {
-    transform: translate(0px, 5px);
+    transform: translate(0px, -5px);
   }
   100% {
     transform: translate(0px, 0px);
   }
 }
+
+
 
 
 
