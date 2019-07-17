@@ -10,17 +10,13 @@ var lots = "Occaecat enim nisi sint aute enim in dolor officia in adipisicing de
 var bit = "Lorem ipsum voluptate tempor tempor.";
 
 //Variable initialization
-var stage;		//Usado para identificar en qué momento de la Historia se encuentran los diálogos
-var sub_stage_1;	//Lo mismo que 'stage' pero con más detalle
-var sub_stage_2;	//Lo mismo que 'stage' pero con más detalle
-var sub_stage_3;	//Lo mismo que 'stage' pero con más detalle
-var name;		//Nombre del aventurero!
 var target;		//Recurso al que "atacar" cuando hay que parar el diálogo
 var story_inter;	//variable que tiene el Intervalo que se está ejecutando. Usado para pararlo 
 var story_timer;	//variable que tiene el último Timeout que se está ejecutando. Usado para pararlo
 var story_funct;	//variable que tiene el nombre de la última función ejecutada (normalmente por un Timeout). Usado para reejecutarlo
 var actual_text = '';	//variable que contiene el texto y el diálogo que se está mostrando en ese instante. Usado para parar el render.
-var curr_dialog = '';	//variable que contiene el texto que se está mostrando en ese instante. Usado para parar el render.
+var curr_dialog = '';	//variable que contiene el dialogo que se está mostrando en ese instante. Usado para parar el render.
+var curr_text = '';		//variable que contiene el texto que se está mostrando en ese instante. Usado para parar el render.
 
 //Other vars
 var reward = "https://open.spotify.com/playlist/1ErhO58OeArSOe6Zmrgbv3?si=Ya_ZLLkGTyOySGe-E5YiZw";	//<3
@@ -93,15 +89,25 @@ function setElem(text,elem){
 	document.getElementById(elem).innerHTML = text;
 }
 
+function exec(fun,par1,par2,par3){
+	if (fun === undefined) {fun = 'boop';}
+	if (Array.isArray(fun)) {window[fun[0]](fun[1],fun[2],fun[3])}
+	else {window[fun](par1,par2,par3);}
+}
+
 // Se rellena el texto que se está renderizando automáticamente (sin visualizar efectos) 
 function stopText(){
 	clearInterval(story_inter);
 	setElem(parseTextEffect(actual_text),target);
 	// Se para el último timeout cargado y se re-ejecuta la función que tenía asignada
+	var temp_story_funct = story_funct;
+	var temp_story_timer = story_timer;
+	story_funct = "boop";
+	story_timer = '';
 	setTimeout(
 		function(){
-			clearTimeout(story_timer);
-			window[story_funct]();
+			clearTimeout(temp_story_timer);
+			exec(temp_story_funct);	//window[story_funct]();
 		},500);
 	initEffects();
 }
@@ -140,6 +146,15 @@ function makeSound(value_ms,rand,sound_id){
 			,sound_id.play()
 		);
 	};
+}
+
+// Renderiza un string="text" en el elemento="target" con una f="value_ms" después del texto que ya hubiera.
+function readMore(target,text,value_ms){
+	if (target === undefined) {target = 'story';}
+	if (text === undefined) {text = default_text;}
+	if (value_ms === undefined) {value_ms = 50;}
+	curr_dialog = $('#'+target).html();
+	renderTextEffect(text,value_ms,target);
 }
 
 // Renderiza el "text" con una f="value_ms" en el campo de Story
@@ -194,8 +209,7 @@ function renderTextEffect(text,value_ms,elem,sound_id){
 	if (elem === undefined) {elem = 'story';}
 	// Se hace clear interval para que no se solape un renderText con otro
 	clearInterval(story_inter); 
-	var current_str = '';
-	current_str = curr_dialog;
+	var current_str = curr_dialog;
 	var delimiter = '';
 	var i = 0;
 	actual_text = curr_dialog + text;

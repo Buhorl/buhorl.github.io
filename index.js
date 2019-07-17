@@ -2,28 +2,38 @@
 /*  4.Funciones de la historia */
 /*******************************/
 
+//Variables de la ejecución.
+var name;		//Nombre del aventurero!
+var stage;		//Usado para identificar en qué momento de la Historia se encuentran los diálogos
+var sub_stage_1 = 0;	//Lo mismo que 'stage' pero con más detalle
+var sub_stage_2 = 0;	//Lo mismo que 'stage' pero con más detalle
+var sub_stage_3 = 0;	//Lo mismo que 'stage' pero con más detalle
+
+function currentStage(){
+	return [stage, sub_stage_1, sub_stage_2, sub_stage_3];
+}
+
 function specialName(name){
-	switch (name) {
-		case "Karencita":
-		case "Karen":
+	switch (name.toUpperCase()) {
+		case "KARENCITA":
+		case "KAREN":
 		case "K":
 		return "##"+name+"##";
 		break;
-		case "Guillermo":
-		case "Guille":
+		case "GUILLERMO":
+		case "GUILLE":
 		case "G":
 		return "%%"+name+"%%";
 		break;
-		case "Cristina":
-		case "Cris":
+		case "CRISTINA":
+		case "CRIS":
 		return "--"+name+"--";
 		break;
 		case "???":
 		return "__???__";
 		break;
 		case "!!!":
-		case "David":
-		case "david":
+		case "DAVID":
 		return "~~"+name+"~~";
 		break;
 		default:
@@ -102,6 +112,8 @@ function getNameSound(name){
 /*  3.Funciones de ejecución  */
 /******************************/
 
+
+
 function init(){
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		$('body').append("<span class=\"overlay\" style><p> Por favor, abre este enlace en un Ordenador </p>"+
@@ -129,7 +141,6 @@ function start_framework(){
 
 // Función de comienzo de la aventura!
 function start_story(){
-	//stage = 0;
 	var time = 0;
 	var text = '';
 	if (stage == -1){
@@ -145,8 +156,8 @@ function start_story(){
 		story_timer = setTimeout(story_funct_1,time);
 	} else if (stage == 1){ 
 		//$('body').append("<span class=\"overlay\"> Gracias por jugar la demo! :) </span>");
-		text = 'Cuando despiertas, estás en la misma casa de antes. Sin embargo, no tiene la misma pinta de estar abandonada'+
-		' y ahora parece ser de día. Sientes un ligero dolor en la cabeza y notas unas gotas de sangre seca en la frente.';
+		text = 'Cuando despiertas, aún estas dentro de la siniestra casa, sin embargo, no tiene el mismo aspecto de estar abandonada'+
+		' y parece que es de día. Sientes un ligero dolor en la cabeza y notas unas gotas de sangre seca en la frente.';
 		readStory(text,65);
 		time = time+1500+(text.length*65);
 		story_funct = "story_funct_1";
@@ -156,6 +167,7 @@ function start_story(){
 	}
 }
 
+// Función auxiliar 1
 function story_funct_1(){
 	var time = 0;
 	var text = '';
@@ -163,19 +175,20 @@ function story_funct_1(){
 		text = '¿Hola, cómo te llamas?';
 		blinkElem('dialog',9,50);
 		readDialog(0,'???',text);
-		time = /*time+*/1500+(text.length*50);
+		time = time+1500+(text.length*50);
 		story_funct = "story_funct_2";
 		story_timer = setTimeout(story_funct_2,time);
 	} else if (stage == 1){ 
 		text = 'Ugghhh... ¿Dónde estoy?';
 		readDialog(getNameNum(name),name,text,100);
-		time = /*time+*/1500+(text.length*100);
+		time = time+1500+(text.length*100);
 		story_funct = "story_funct_2";
 		story_timer = setTimeout(story_funct_2,time);
 	}
 	else {alert("Warning: Stage"+stage+" for start_story not found.");}
 }
 
+// Función auxiliar 2
 function story_funct_2(){
 	var time = 0;
 	var text = '';
@@ -183,7 +196,6 @@ function story_funct_2(){
 		name = prompt("Mi nombre es:");
 		name = specialName(name);
 		readDialog(0,'???',"Hola, "+name+". ¿Qué tal estás? Espero que te apetezca jugar a un juego.");
-		//$('.butt').delay(2000).queue(function(){
 		setTimeout(function(){
 			$('.butt').css("visibility","visible");
 			blinkElem('bots',9,50);
@@ -194,15 +206,15 @@ function story_funct_2(){
 		story_funct = "boop";
 		story_timer = '';
 	} else if (stage == 1){ 
-		text = 'Después de echar una mirada rápida a la habitación, encuentras una carpeta en una mesa que hay a un lado, '+
-		' una nevera con unos imanes de letras de colores y la única puerta que da al exterior con un candado de combinación.';
+		text = 'Tras echar una ojeada rápida a la habitación, descubres a tu izquierda una mesa sobre la que hay una carpeta, '+
+		'a la derecha una nevera con imanes de letras de colores y, al lado de esta, una puerta que da al exterior con un candado de combinación.';
 		readStory(text,65);
 		time = time+(text.length*65);
 		setTimeout(function(){
 			$('.butt').attr("disabled", false);
-			blinkElem('bot1',6,50);$('#bot1').html('Abrir la carpeta');
-			blinkElem('bot2',6,50);$('#bot2').html('Inspeccionar la nevera');
-			blinkElem('bot3',6,50);$('#bot3').html('Ir a la puerta');
+			blinkElem('bot1',6,50);$('#bot1').html('Ir a la mesa de la carpeta');
+			blinkElem('bot2',6,50);$('#bot2').html('Acercarse a la nevera');
+			blinkElem('bot3',6,50);$('#bot3').html('Avanzar hacia la puerta');
 		},4000);
 		story_funct = "boop";
 		story_timer = '';
@@ -233,7 +245,31 @@ function bot1_f(){
 				}
 			},time);	
 	} else if (stage == 1){
-		//Abrir la carpeta
+		if (sub_stage_1 == 0){
+			// m - Acercarse a la carpeta
+			sub_stage_1 = 1;
+			$('.butt').attr("disabled", true);
+			text = 'Te acercas a la mesita en la que está la carpeta y te das cuenta de que tiene pinta de ser un expediente policial. '+
+			'Hay algo que te da mala espina de todo esto';
+			readStory(text,65);
+			time = time+(text.length*65)+300;
+			story_timer = setTimeout(function(){readMore('story','...',200)},time); 
+			console.log(story_timer);
+			story_funct = ['readMore','story','...',200];
+			console.log(story_funct);
+			setTimeout(function(){
+				$('.butt').attr("disabled", false);
+				blinkElem('bot1',6,50);$('#bot1').html('Abrir la carpeta');
+				blinkElem('bot2',6,50);$('#bot2').html('Levantar la carpeta');
+				blinkElem('bot3',6,50);$('#bot3').html('Volver');
+			},2000);
+			//story_funct = "boop";
+			//story_timer = '';
+		} else if (sub_stage_1 == 1){	//En la Carpeta
+			// i- Abrir la carpeta
+			alert('Wip');// TODO
+		}
+		else {alert("Warning: Sub_stage_1 "+stage+" for bot1 not found.");}
 	}
 	else {alert("Warning: Stage"+stage+" for bot1 not found.");}
 }
@@ -259,7 +295,16 @@ function bot2_f(){
 				}
 			},time);
 	} else if (stage == 1){
-		//Abrir la nevera
+		if (sub_stage_1 == 0){
+			// m - Abrir la nevera
+			alert('Wip');// TODO
+			sub_stage_1 = 2;
+			$('.butt').attr("disabled", true);
+		} else if (sub_stage_1 == 1){	//En la Carpeta
+			// i - Levantar carpeta
+			alert('Wip');// TODO
+		}
+		else {alert("Warning: Sub_stage_1 "+stage+" for bot1 not found.");}
 	}
 	else {alert("Warning: Stage"+stage+" for bot2 not found.");}
 }
@@ -273,7 +318,17 @@ function bot3_f(){
 		alert("Vaya... Ok");
 		window.close();
 	} else if (stage == 1){
-		//Ir a la puerta
+		if (sub_stage_1 == 0){
+			// m - Ir a la puerta
+			sub_stage_1 = 3;
+			alert('Wip');// TODO
+			$('.butt').attr("disabled", true);
+		} else if (sub_stage_1 == 1){	//En la Carpeta
+			// R - Volver
+			sub_stage_1 = 0;
+			story_funct_2();
+		}
+		else {alert("Warning: Sub_stage_1 "+stage+" for bot1 not found.");}
 	}
 	else {alert("Warning: Stage"+stage+" for bot3 not found.");}
 }
