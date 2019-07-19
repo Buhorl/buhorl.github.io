@@ -46,3 +46,4 @@ Capítulo 1: Casa
 |2,0,0|bot3_f|R: Volver|
 |3,0,0|bot1_f|i: Forzarla|
 |3,0,0|bot2_f|a: Abrir el candado|
+|3,0,0|bot2_f|R: Volver|
