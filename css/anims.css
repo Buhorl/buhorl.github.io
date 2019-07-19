@@ -13,6 +13,10 @@
   line-height: 1em;
 }
 
+.rotated {
+  transform:rotate(-180deg);
+}
+
 .jit {
 	display: inline-block;
 	animation-duration: .4s;

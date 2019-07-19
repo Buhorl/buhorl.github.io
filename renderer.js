@@ -4,7 +4,7 @@ http://acedio.github.io/animalese.js/
 */
 
 //Text strings
-var default_text = "__Lorem__ @1lorem@1 ~~idem~~ --ipsum-- **laboris** %%dominis%% ##nulla##."
+var default_text = "__Lorem__ @1lorem@1 ~~idem~~ --ipsum-- **laboris** %%dominis%% ##nulla## @1==totallem==@1."
 var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 var lots = "Occaecat enim nisi sint aute enim in dolor officia in adipisicing deserunt qui do eiusmod tempor.";
 var bit = "Lorem ipsum voluptate tempor tempor.";
@@ -91,7 +91,7 @@ function setElem(text,elem){
 
 function exec(fun,par1,par2,par3){
 	if (fun === undefined) {fun = 'boop';}
-	if (Array.isArray(fun)) {window[fun[0]](fun[1],fun[2],fun[3])}
+	if (Array.isArray(fun)) {window[fun[0]](fun[1],fun[2],fun[3],fun[4])}
 	else {window[fun](par1,par2,par3);}
 }
 
@@ -277,15 +277,27 @@ function renderTextEffect(text,value_ms,elem,sound_id){
 					delimiter = '';
 					current_str = current_str + '</span>';
 				}
+			/* == para designar rotated*/
+			} else if (text.charAt(i)=='=' & text.charAt(i+1)=='='){
+				i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+				if (delimiter=='') {
+					delimiter = '</span>';
+					current_str = current_str + '<span style=\'transform:rotate(-180deg);\'>';
+				} else { 
+					delimiter = '';
+					current_str = current_str + '</span>';
+				}
 			/* '@num' para designar Color */
 			} else if (text.charAt(i)=='@' & $.isNumeric(text.charAt(i+1))){
 				i++; //Nos saltamos una iter porque sabemos que se marca un efecto
 				if (delimiter=='') {
 					col = getDialogColor(text.charAt(i));
-					delimiter = '</span>'; //delimiter + '</span>';
+					delimiter = //'</span>'; 
+					delimiter + '</span>';
 					current_str = current_str + '<span style=\'color: '+col+'\'>';
 				} else { 
-					delimiter = '';//delimiter.substr(0,delimiter.length-7); //borrado de '</spam>'
+					delimiter = //'';
+					delimiter.substr(0,delimiter.length-7); //borrado de '</spam>'
 					current_str = current_str + '</span>';
 				}
 			} else {
@@ -368,6 +380,16 @@ function parseTextEffect(text){
 				delimiter = '';
 				current_str = current_str + '</span>';
 			}
+		/* == para designar rotated*/
+			} else if (text.charAt(i)=='=' & text.charAt(i+1)=='='){
+				i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+				if (delimiter=='') {
+					delimiter = '</span>';
+					current_str = current_str + '<span style=\'transform:rotate(-180deg);display: inline-block\'>';
+				} else { 
+					delimiter = '';
+					current_str = current_str + '</span>';
+				}
 		/* '@num' para designar Color */
 		} else if (text.charAt(i)=='@' & $.isNumeric(text.charAt(i+1))){
 			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
@@ -436,7 +458,9 @@ function letterEffect(anim_name,delay,clase){
 	$(clase).each(function(index){
 		if ($(this).hasClass(anim_name)){
 			$(this).removeClass(anim_name);
-			initTarget(clase,'effect_'+anim_name);
+			initTarget(clase,clase);	//Duplicamos los elementos clase para que la queue funcione
+			initEffect(clase,'effect_'+anim_name);	//Y les damos la misma clase
+			//$(clase).addClass('effect_'+anim_name);
 		} else {
 			$(this).delay(delay*(index+1)).queue(function(){
 				$(this).addClass(anim_name);
@@ -452,7 +476,18 @@ function initTarget(clase,clase_efecto){
 	if (clase_efecto === undefined) {clase_efecto = 'letter';}
 	// Wrap every letter in a span
 	$(clase).each(function(){
-	  	$(this).html($(this).text().replace(/([^\x00-\x80]|[\!\+\&]|\w)/g, "<span class='"+clase_efecto+"'>$&</span>"))
+	  	$(this).html($(this).text().replace(/([^\x00-\x80]|[\!\+\&]|\w)/g, "<span>$&</span>"))//"<span class='"+clase_efecto+"'>$&</span>"))
+	});
+	return;
+}
+
+//
+function initEffect(clase,clase_efecto){
+	if (clase === undefined) {clase = '.effect';}
+	if (clase_efecto === undefined) {clase_efecto = 'letter';}
+	// Wrap every letter in a span
+	$(clase).each(function(){
+	  	$(this).children().addClass(clase_efecto)
 	});
 	return;
 }
@@ -487,6 +522,10 @@ function initEffects(){
 	initTarget('.target_jumpy','effect_jumpy');
 	initTarget('.target_pride','effect_pride');
 	initTarget('.target_jit','effect_jit');
+	initEffect('.target_rainbow','effect_rainbow');
+	initEffect('.target_jumpy','effect_jumpy');
+	initEffect('.target_pride','effect_pride');
+	initEffect('.target_jit','effect_jit');
 	rainbow(); jumpy(); pride(); jit();
 }
 
