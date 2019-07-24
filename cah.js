@@ -36,6 +36,8 @@ function set_cards(n,m){
 	});
 }
 
+var song = "https://soundcloud.com/cards-against-humanity/a-good-game-of-cards"
+
 /* Sección de las cartas*/
 var entradas_blancas = [
 "No reconocerias la dignidad aunque la tuvieses delante",
@@ -86,6 +88,8 @@ var entradas_blancas = [
 "Una patada voladora a Echenique",
 "Una peli porno de teletubies protagonizada por Carmen de Mairena y Paquirrin",
 "“La manada” justo detrás de ti",
+"Un buen bukkake",
+"La santa inquisición.",
 ];
 var entradas_negras = [ 
 "He creado una playlist en spotify para follar que se llama: ___",
@@ -98,4 +102,6 @@ var entradas_negras = [
 "Venderia mi alma al diablo por un puñado de ___",
 "¿Es un pajaro? ¿Es un avión? No, es ___",
 "¿Porque no pudiste venir a funeral? ___",
+"¿Trabajo estable y una casa? Déjate de gilipolleces tu lo que necesitas es ___",
+"Arturo Pérez-Reverte acaba de publicar su nuevo libro titulado ___",
 ];
