@@ -18,7 +18,7 @@
 
 <body onload="init()">
 <button id="muter" onclick="soundState();">🔊</button>
-<button onclick="stopText('story')">Skip</button>
+<button onclick="stopText('story')">Pasar diálogo</button>
 <button onclick="demo = 0" hidden="true">Demo Off</button>
 <p id="story" style="visibility: hidden;"><!-- <span class="target"></span> --></p>
 <p id="dialog" style="visibility: hidden;"></p>
@@ -30,39 +30,5 @@
 	</tr>
 </table>
 <br>
-<!-- --------------------------------------------------------------------------------------------------------- -->
-<!-- <span class='hid'>
-	<p>Bienvenido al entorno de pruebas del renderer.</p>
-	<p>Esta es la lista de textos a mostrar y su característica:</p>
-	<table class='border'>
-		<tr>
-		  	<th><a href="">Default Text</a></th>
-			<th><a href="">Lorem Ipsum</a></th>
-			<th><a href="">Lots</a></th>
-			<th><a href="">A bit</a></th>
-		</tr>
-		<tr>
-		  	<th><button onclick="renderText()">Sin Efecto</button>/<button onclick="renderTextEffect()">Con Efecto</button></th>
-			<th><button onclick="renderText(lorem,50)">Fast</button></th>
-			<th><button onclick="renderText(lots,200)">Normal</button></th>
-			<th><button onclick="renderText(bit,400)">Slow</button></th>
-		</tr>
-	</table>
-	<p>Estas son las funciones que aplican al texto inferior.</p>
-	<span class='border'>
-		<button onclick="stopText(bit)">Stop</button>
-		<button onclick="blinkElem('story',10,50);">Blink</button>/
-		<button onclick="blinkElem('story',9,50);">Snap</button>
-	</span>
-	<p>Estos son las funciones para activar/desactivar los efectos (en textos con efectos).</p>
-	<table class='border'>
-		<tr>
-			<th><button onclick="letterEffect('jumpy',30,'.effect_jumpy')">Jumpy</button></th>
-			<th><button onclick="letterEffect('pride',30,'.effect_pride')">Pride</button></th>
-			<th><button onclick="letterEffect('rainbow',30,'.effect_rainbow')">Rainbow</button></th>
-			<th><button onclick="letterEffect('jit',0,'.effect_jit')">Scream</button><br></th>
-		</tr>
-	</table>
-</span> -->
 </body>
 </html>

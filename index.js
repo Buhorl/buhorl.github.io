@@ -42,32 +42,43 @@ function specialName(name){
 }
 
 function getNameNum(name){
-	switch (name) {
-	case "Reid":
+	switch (name.toUpperCase()) {
+	case "REID":
 	return 2;
 	break;
-	case "Morgan":
+	case "MORGAN":
 	return 6
 	break;
-	case "Penelope":
+	case "PENELOPE":
 	return 5;
 	break;
-	case "Aaron":
+	case "AARON":
 	return 4;
 	break;
-	case "Karen":
-	case "##Karen##":
+	case "KARENCITA":
+	case "KAREN":
+	case "K":
+	case "##KARENCITA##":
+	case "##KAREN##":
+	case "##K##":
 	return 3;
 	break;
-	case "Guille":
-	case "%%Guille%%":
+	case "GUILLERMO":
+	case "GUILLE":
+	case "G":
+	case "%%GUILLERMO%%":
+	case "%%GUILLE%%":
+	case "%%G%%":
 	return 7;
 	break;
-	case "Cristina":
-	case "--Cristina--":
+	case "CRISTINA":
+	case "CRIS":
+	case "--CRISTINA--":
+	case "--CRIS--":
 	return 1;
 	break;
 	case "???":
+	case "__???__":
 	return 0;
 	break;
 	default:
@@ -77,29 +88,42 @@ function getNameNum(name){
 }
 
 function getNameSound(name){
-	switch (name) {
-	case "Reid":
+	switch (name.toUpperCase()) {
+	case "REID":
 	return "sineWave";
 	break;
-	case "Morgan":
+	case "MORGAN":
 	return "squareWave";
 	break;
-	case "Penelope":
+	case "PENELOPE":
 	return "triangleWave";
 	break;
-	case "Aaron":
+	case "AARON":
 	return "sawtoothWave";
 	break;
-	case "Karen":
+	case "KARENCITA":
+	case "KAREN":
+	case "K":
+	case "##KARENCITA##":
+	case "##KAREN##":
+	case "##K##":
 	return sound_2;
 	break;
-	case "Guille":
+	case "GUILLERMO":
+	case "GUILLE":
+	case "G":
+	case "%%GUILLERMO%%":
+	case "%%GUILLE%%":
+	case "%%G%%":
 	return sound_2;
-	break;
-	case "Cristina":
+	case "CRISTINA":
+	case "CRIS":
+	case "--CRISTINA--":
+	case "--CRIS--":
 	return sound_3;
 	break;
 	case "???":
+	case "__???__":
 	return sound_4;
 	break;
 	default:
@@ -117,12 +141,13 @@ function getNameSound(name){
 function init(){
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		$('body').append("<span class=\"overlay\" style><p> Por favor, abre este enlace en un Ordenador </p>"+
-			"<button onclick=\"start_framework();\"> O pasa de mi y abrelo en el movil. Solo soy un botón, no un policía </button>"+
-			"<br><a href=\"./renderer.html\"> O haz click aquí para ir al entorno de pruebas </a> </span>");
+			/*"<button onclick=\"start_framework();\"> O pasa de mi y abrelo en el movil. Solo soy un botón, no un policía </button>"+
+			"<br><a href=\"./renderer.html\"> O haz click aquí para ir al entorno de pruebas </a> "+*/
+			"</span>");
 	} else {
 		$('body').append("<span class=\"overlay\">"+
 			"<button onclick=\"start_framework();\"> Haz click aquí para comenzar </button>"+
-			"<br><a href=\"./renderer.html\"> O aquí para ir al entorno de pruebas </a>"+
+			//"<br><a href=\"./renderer.html\"> O aquí para ir al entorno de pruebas </a>"+
 			"</span>");
 		//start_story();
 	} 	
@@ -382,10 +407,17 @@ function bot2_f(){
 			setTimeout(function(){
 				code = prompt("Poner el código en el candado:");
 				if (code == '2816'){
-					readDialog(getNameNum(name),name,'¡Ayy, era ese, %%siiiiiii%%!',80);
+					readDialog(getNameNum(name),name,'¡Ayy, esa era la combinación , %%siiiiiii%%!',80);
 					setTimeout(function(){
-					$('body').append("<span class=\"overlay\">Felicidades, has conseguido escapar! Pero ese solo era el principio...</span>");
-					},2000);
+						if(getNameNum(name)==3){
+							$('body').append("<span class=\"overlay\">"+
+							"Felicidades, has conseguido escapar! Pero ese solo era el principio..."+
+							"<br><a href=\""+reward+"\"> Haz click aquí para recibir tu premio, Karencita ;) </button>"+
+							"</span>");
+						} else {
+							$('body').append("<span class=\"overlay\">Felicidades, has conseguido escapar! Pero ese solo era el principio...</span>");
+						}
+					},4000);
 				} else {readDialog(getNameNum(name),name,'Vaya, tendré que volver a intentarlo...'+
 					' A ver si encuentro algo por aquí que me ayude a ver cual es el número.',80);}
 				$('#bot2').attr("disabled", false);
