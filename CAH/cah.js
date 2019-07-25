@@ -1,7 +1,7 @@
 var card_w;
 var card_b;
 
-function get_black(m){
+function get_white(m){
 	if (n === undefined) {
 		m = Math.random()*entradas_blancas.length
 		return entradas_blancas[Math.floor(Math.random()*entradas_blancas.length)];
@@ -27,12 +27,12 @@ function generate_combo(n,m,o){
 	card_b = get_black(n);
 	//Vemos si la carta tiene 1 o + huecos
 	if (card_b[2]>1){
-		card_w = [get_black(m),get_white(o)];
+		card_w = [get_white(m),get_white(o)];
 		result = ("<div class=\"card black\"><txt>"+card_b[0]+"</txt></div>").replace
 			(/(([\_]{3}))/g, "</txt></div><div class=\"card white\"><txt>"+card_w[0][0]+"</txt></div><br><div class=\"card black\"><txt>").replace
 			(/(([\=]{3}))/g, "</txt></div><div class=\"card white\"><txt>"+card_w[1][0]+"</txt></div><br><div class=\"card black\"><txt>");
 	} else {
-		card_w = [get_black(m)];
+		card_w = [get_white(m)];
 		result = ("<div class=\"card black\"><txt>"+card_b[0]+"</txt></div>").replace
 			(/(([\_]{3}))/g, "</txt></div><div class=\"card white\"><txt>"+card_w[0][0]+"</txt></div><br><div class=\"card black\"><txt>");
 	}	
