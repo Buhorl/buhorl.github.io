@@ -1,7 +1,7 @@
 var card_w;
 var card_b;
 
-function get_white(m){
+function get_white(n){
 	if (n === undefined) {
 		m = Math.random()*entradas_blancas.length
 		return entradas_blancas[Math.floor(Math.random()*entradas_blancas.length)];
