@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Criso contra la Humanidad</title>
+  <link rel="shortcut icon" href="logo2.png">
+</head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="cah.js" type="text/javascript"></script>
+<body onload="init()">
+	<table>
+    <!-- Botones -->
+	<tr height="65px">
+    <th>
+      <button id="L" onclick="go_left()"><</button>
+    </th>
+    <th width="350px">
+      <button id="C" onclick="bot()">Generar Combinación</button>
+    </th>
+    <th>  
+    <button id="R" onclick="go_right()">></button>
+    </th>
+  </tr>
+  <!-- ID: 1 - Ediciones -->
+  <tr id="1" hidden="true">
+  <th > </th>
+	<th class="light" style="text-align: left"><p class="w3">
+      <h2>Selección de Ediciones</h2><br>
+      <txt>Número de Cartas Blancas: </txt><txt class="bold" id="n_blancas">0</txt><br>
+      <txt>Número de Cartas Negras: </txt><txt class="bold" id="n_negras">0</txt><br><br>
+      <input type="checkbox" id="E1" value="0" checked>Edición 1</input><br>
+      <input type="checkbox" id="E2" value="1" checked>Edición 2</input><br>
+      <input type="checkbox" id="E3" value="2" checked>Edición 3</input><br>
+      <!-- <input type="checkbox" id="E4" value="3" checked>Edición 4</input><br> -->
+      <br><button onclick="change_editions();set_list();">Guardar Cambios</button>
+  </p></th>
+  <th> </th>
+  </tr>
+  <!-- ID: 2 - Juego-->
+  <tr id="2">
+    <th> </th>
+    <th align="center"><p class="w3"><span id="text"></span></p></th>
+    <th> </th>
+  </tr>
+  <!-- ID: 3 - Selector -->
+  <tr id="3" hidden>
+  <th><font face="wingdings" hidden="true">B</font></th>
+  <th align="left"><p class="w3 light">
+      <h2>Generar carta manualmente</h2><br><br>
+      <txt>Lista de Cartas Negras</txt>
+      <select id="lista_n" class="w3">
+        <option>Uno</option>
+      </select><br><br>
+      <txt>Lista de Cartas Blancas</txt>
+      <select id="lista_b" class="w3">
+        <option>Dos</option>
+      </select>
+      <p><span id="text2"></span></p>
+  </p></th>
+  <th><font face="wingdings" hidden="true">B</font></th>
+  </tr>
+	<tr id="4" hidden><th>
+		<div class="submit subsection" hidden>
+		<h2>Suggest a card.</h2>
+        <form class="ideas">
+          <textarea placeholder="Anonymously suggest a card, or a list of several cards separated by commas."></textarea><br>
+          <button class="btn">Submit bad idea</button>
+        </form>
+    	</div>
+    </th></tr>
+	</table>
+
+</body>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+</html>
