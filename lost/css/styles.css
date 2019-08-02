@@ -1,0 +1,27 @@
+
+@font-face {
+    font-family: "Futura Bold Italic";
+    src: url("../font/Futura Bold Italic.otf");
+}
+
+.h2 {
+    font-family: "Futura Bold Italic";
+    letter-spacing: -0.1em;
+    font-size: 8em;
+    font-size: 6vw;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    color: white;
+}
+
+.big{
+    font-size: 10em;
+}
+
+.target_gameboy{
+    color: white
+}
+

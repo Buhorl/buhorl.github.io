@@ -1,0 +1,746 @@
+.gameboy {
+    display: inline-block;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-name: gameboy_em;
+    animation-timing-function: linear;
+    color: #0000FF !important;
+}
+
+effect_gameboy {
+    color: #0000FF;
+}
+
+.final_gboy {
+    color: #0000FF;
+    transform: translate(0px, 0px) scale(1, 1);
+}
+
+@keyframes gameboy2 {
+    0% {
+        color: #F90000;
+        transform: translate(-50px, 10px) scale(2, 2);
+    }
+
+    5% {
+        color: #F94700;
+        transform: translate(-40px, 10px) scale(1.9, 1.9);
+    }
+
+    10% {
+        color: #F98E00;
+        transform: translate(-30px, 70px) scale(1.8, 1.8);
+    }
+
+    15% {
+        color: #F9D600;
+        transform: translate(-20px, 70px) scale(1.7, 1.7);
+    }
+
+    20% {
+        color: #D6F900;
+        transform: translate(-10px, 60px) scale(1.6, 1.6);
+    }
+
+    25% {
+        color: #8FF900;
+        transform: translate(-10px, 60px) scale(1.6, 1.6);
+    }
+
+    30% {
+        color: #47F900;
+        transform: translate(-0px, 40px) scale(1.5, 1.5);
+    }
+
+    35% {
+        color: #00F900;
+        transform: translate(10px, 30px) scale(1.4, 1.4);
+    }
+
+    40% {
+        color: #00F947;
+        transform: translate(20px, 20px) scale(1.3, 1.3);
+    }
+
+    45% {
+        color: #00F98E;
+        transform: translate(30px, 10px) scale(1.2, 1.2);
+    }
+
+    50% {
+        color: #00F9D5;
+        transform: translate(40px, 0px) scale(1.1, 1.1);
+    }
+
+    55% {
+        color: #00D6F9;
+        transform: translate(50px, -10px) scale(1, 1);
+    }
+
+    60% {
+        color: #008FF9;
+        transform: translate(40px, -20px);
+    }
+
+    65% {
+        color: #0048F9;
+        transform: translate(30px, -10px);
+    }
+
+    70% {
+        color: #0000F9;
+        transform: translate(20px, 0px);
+    }
+
+    75% {
+        color: #4600F9;
+        transform: translate(10px, 0px);
+    }
+
+    80% {
+        color: #8E00F9;
+        transform: translate(10px, 0px);
+    }
+
+    85% {
+        color: #D500F9;
+        transform: translate(10px, 20px);
+    }
+
+    90% {
+        color: #F900D7;
+        transform: translate(10px, 0px);
+    }
+
+    95% {
+        color: #F9008F;
+        transform: translate(10px, 0px);
+    }
+
+    100% {
+        color: #F90048;
+        transform: translate(10px, 0px);
+    }
+}
+
+@keyframes gameboy_big {
+    0% {
+        color: #FF00FF;
+        transform: translate(-53px, 6px) scale(33.8, 34);
+    }
+
+    2.5% {
+        color: #FF00BB;
+        transform: translate(-39px, 10px) scale(32.1, 32.3);
+    }
+
+    5% {
+        color: #FF0078;
+        transform: translate(-27px, 19px) scale(28.8, 29.1);
+    }
+
+    7.5% {
+        color: #FF0035;
+        transform: translate(-16px, 26px) scale(25.8, 26);
+    }
+
+    10% {
+        color: #FF0D00;
+        transform: translate(-9px, -31px) scale(23.6, 23.9);
+    }
+
+    12.5% {
+        color: #FF5000;
+        transform: translate(-2px, -33px) scale(22.1, 21.8);
+    }
+
+    15% {
+        color: #FF9300;
+        transform: translate(3px, -33px) scale(20.2, 20.4);
+    }
+
+    17.5% {
+        color: #FFD600;
+        transform: translate(6px, -35px) scale(19.7, 19.8);
+    }
+
+    20% {
+        color: #E4FF00;
+        transform: translate(8px, -33px) scale(18.1, 18.2);
+    }
+
+    22.5% {
+        color: #A1FF00;
+        transform: translate(10px, -31px) scale(17.7, 17.8);
+    }
+
+    25% {
+        color: #5DFF00;
+        transform: translate(13px, -29px) scale(16.1, 16.1);
+    }
+
+    27.5% {
+        color: #1AFF00;
+        transform: translate(13px, -25px) scale(15.3, 15.3);
+    }
+
+    30% {
+        color: #00FF28;
+        transform: translate(14px, -22px) scale(15.3, 15.3);
+    }
+
+    32.5% {
+        color: #00FF6B;
+        transform: translate(14px, -17px) scale(14.3, 14.4);
+    }
+
+    35% {
+        color: #00FFAE;
+        transform: translate(14px, -12px) scale(13.5, 13.5);
+    }
+
+    37.5% {
+        color: #00FFF1;
+        transform: translate(13px, -7px) scale(13, 12.8);
+    }
+
+    40% {
+        color: #00C9FF;
+        transform: translate(11px, -7px) scale(12.5, 12.3);
+    }
+
+    42.5% {
+        color: #0086FF;
+        transform: translate(11px, -5px) scale(11.8, 11.8);
+    }
+
+    45% {
+        color: #0043FF;
+        transform: translate(10px, -4px) scale(11.6, 11.6);
+    }
+
+    47.5% {
+        color: #0000FF;
+        transform: translate(8px, -3px) scale(11, 10.9);
+    }
+    /* Ya no se cambia la escala*/
+    50% {
+        color: #0000FF;
+        transform: translate(6px, -2px) scale(10.8, 10.8);
+    }
+
+    52.5% {
+        color: #0000FF;
+        transform: translate(4px, -2px) scale(10.5, 10.5);
+    }
+
+    55% {
+        color: #0000FF;
+        transform: translate(1px, -1px) scale(10.3, 10.3);
+    }
+
+    57.5% {
+        color: #0000FF;
+        transform: translate(0px, -2px) scale(10, 10);
+    }
+
+    60% {
+        color: #0000FF;
+        transform: translate(0px, -4px) scale(10, 10);
+    }
+
+    62.5% {
+        color: #0000FF;
+        transform: translate(0px, -2px) scale(10, 10);
+    }
+
+    65% {
+        color: #0000FF;
+        transform: translate(0px, -4px) scale(10, 10);
+    }
+
+    67.5% {
+        color: #0000FF;
+        transform: translate(0px, -6px) scale(10, 10);
+    }
+
+    70% {
+        color: #0000FF;
+        transform: translate(0px, -6px) scale(10, 10);
+    }
+
+    72.5% {
+        color: #0000FF;
+        transform: translate(0px, -7px) scale(10, 10);
+    }
+
+    75% {
+        color: #0000FF;
+        transform: translate(0px, -6px) scale(10, 10);
+    }
+
+    77.5% {
+        color: #0000FF;
+        transform: translate(0px, -6px) scale(10, 10);
+    }
+
+    80% {
+        color: #0000FF;
+        transform: translate(0px, -4px) scale(10, 10);
+    }
+
+    82.5% {
+        color: #0000FF;
+        transform: translate(0px, -2px) scale(10, 10);
+    }
+
+    85% {
+        color: #0000FF;
+        transform: translate(0px, -1px) scale(10, 10);
+    }
+
+    87.5% {
+        color: #0000FF;
+        transform: translate(0px, -2px) scale(10, 10);
+    }
+
+    90% {
+        color: #0000FF;
+        transform: translate(0px, -2px) scale(10, 10);
+    }
+
+    92.5% {
+        color: #0000FF;
+        transform: translate(0px, -2px) scale(10, 10);
+    }
+
+    95% {
+        color: #0000FF;
+        transform: translate(0px, -1px) scale(10, 10);
+    }
+
+    97.5% {
+        color: #0000FF;
+        transform: translate(0px, 0px) scale(10, 10);
+    }
+
+    100% {
+        color: #0000FF;
+        transform: translate(0px, 0px) scale(10, 10);
+    }
+}
+
+@keyframes gameboy {
+    0% {
+        color: #FF00FF;
+        transform: translate(-53px,6px) scale(3.4, 3.4);
+    }
+
+    2.5% {
+        color: #FF00BB;
+        transform: translate(-39px,-10px) scale(3.23, 3.23);
+    }
+
+    5% {
+        color: #FF0078;
+        transform: translate(-27px,-19px) scale(2.91, 2.91);
+    }
+
+    7.5% {
+        color: #FF0035;
+        transform: translate(-16px,-26px) scale(2.6, 2.6);
+    }
+
+    10% {
+        color: #FF0D00;
+        transform: translate(-9px,-31px) scale(2.39, 2.39);
+    }
+
+    12.5% {
+        color: #FF5000;
+        transform: translate(-2px,-33px) scale(2.21, 2.21);
+    }
+
+    15% {
+        color: #FF9300;
+        transform: translate(3px,-34px) scale(2.04, 2.04);
+    }
+
+    17.5% {
+        color: #FFD600;
+        transform: translate(6px,-34px) scale(1.98, 1.98);
+    }
+
+    20% {
+        color: #E4FF00;
+        transform: translate(8px,-33px) scale(1.82, 1.82);
+    }
+
+    22.5% {
+        color: #A1FF00;
+        transform: translate(10px,-31px) scale(1.78, 1.78);
+    }
+
+    25% {
+        color: #5DFF00;
+        transform: translate(12px,-28px) scale(1.61, 1.61);
+    }
+
+    27.5% {
+        color: #1AFF00;
+        transform: translate(13px,-25px) scale(1.56, 1.56);
+    }
+
+    30% {
+        color: #00FF28;
+        transform: translate(14px,-21px) scale(1.53, 1.53);
+    }
+
+    32.5% {
+        color: #00FF6B;
+        transform: translate(14px,-16px) scale(1.44, 1.44);
+    }
+
+    35% {
+        color: #00FFAE;
+        transform: translate(14px,-12px) scale(1.35, 1.35);
+    }
+
+    37.5% {
+        color: #00FFF1;
+        transform: translate(13px,-9px) scale(1.3, 1.3);
+    }
+
+    40% {
+        color: #00C9FF;
+        transform: translate(12px,-7px) scale(1.25, 1.25);
+    }
+
+    42.5% {
+        color: #0086FF;
+        transform: translate(11px,-5px) scale(1.18, 1.18);
+    }
+
+    45% {
+        color: #0043FF;
+        transform: translate(10px,-4px) scale(1.16, 1.16);
+    }
+
+    47.5% {
+        color: #0000FF;
+        transform: translate(8px,-3px) scale(1.1, 1.1);
+    }
+    /* Ya no se cambia la escala*/
+    50% {
+        color: #0000FF;
+        transform: translate(6px,-2px) scale(1.08, 1.08);
+    }
+
+    52.5% {
+        color: #0000FF;
+        transform: translate(4px,-2px) scale(1.05, 1.05);
+    }
+
+    55% {
+        color: #0000FF;
+        transform: translate(1px,-3px) scale(1.03, 1.03);
+    }
+
+    57.5% {
+        color: #0000FF;
+        transform: translate(0px,-3px) scale(1, 1);
+    }
+
+    60% {
+        color: #0000FF;
+        transform: translate(0px,-4px) scale(1, 1);
+    }
+
+    62.5% {
+        color: #0000FF;
+        transform: translate(0px,-5px) scale(1, 1);
+    }
+
+    65% {
+        color: #0000FF;
+        transform: translate(0px,-7px) scale(1, 1);
+    }
+
+    67.5% {
+        color: #0000FF;
+        transform: translate(0px,-5px) scale(1, 1);
+    }
+
+    70% {
+        color: #0000FF;
+        transform: translate(0px,-4px) scale(1, 1);
+    }
+
+    72.5% {
+        color: #0000FF;
+        transform: translate(0px,-3px) scale(1, 1);
+    }
+
+    75% {
+        color: #0000FF;
+        transform: translate(0px,-4px) scale(1, 1);
+    }
+
+    77.5% {
+        color: #0000FF;
+        transform: translate(0px,-5px) scale(1, 1);
+    }
+
+    80% {
+        color: #0000FF;
+        transform: translate(0px,-4px) scale(1, 1);
+    }
+
+    82.5% {
+        color: #0000FF;
+        transform: translate(0px,-3px) scale(1, 1);
+    }
+
+    85% {
+        color: #0000FF;
+        transform: translate(0px,-2px) scale(1, 1);
+    }
+
+    87.5% {
+        color: #0000FF;
+        transform: translate(0px,-3px) scale(1, 1);
+    }
+
+    90% {
+        color: #0000FF;
+        transform: translate(0px,-4px) scale(1, 1);
+    }
+
+    92.5% {
+        color: #0000FF;
+        transform: translate(0px,-3px) scale(1, 1);
+    }
+
+    95% {
+        color: #0000FF;
+        transform: translate(0px,-2px) scale(1, 1);
+    }
+
+    97.5% {
+        color: #0000FF;
+        transform: translate(0px,-1px) scale(1, 1);
+    }
+
+    100% {
+        color: #0000FF;
+        transform: translate(0px,0px) scale(1, 1);
+    }
+}
+
+
+@keyframes gameboy_em {
+    0% {
+        color: #FF00FF;
+        transform: translate(-5.3em,0.6em) scale(3.4, 3.4);
+    }
+
+    2.5% {
+        color: #FF00BB;
+        transform: translate(-3.89em,-1em) scale(3.23, 3.23);
+    }
+
+    5% {
+        color: #FF0078;
+        transform: translate(-2.69em,-1.9em) scale(2.91, 2.91);
+    }
+
+    7.5% {
+        color: #FF0035;
+        transform: translate(-1.51em,-2.6em) scale(2.6, 2.6);
+    }
+
+    10% {
+        color: #FF0D00;
+        transform: translate(-0.84em,-3.05em) scale(2.39, 2.39);
+    }
+
+    12.5% {
+        color: #FF5000;
+        transform: translate(-0.18em,-3.26em) scale(2.21, 2.21);
+    }
+
+    15% {
+        color: #FF9300;
+        transform: translate(0.33em,-3.38em) scale(2.04, 2.04);
+    }
+
+    17.5% {
+        color: #FFD600;
+        transform: translate(0.63em,-3.35em) scale(1.98, 1.98);
+    }
+
+    20% {
+        color: #E4FF00;
+        transform: translate(0.88em,-3.21em) scale(1.82, 1.82);
+    }
+
+    22.5% {
+        color: #A1FF00;
+        transform: translate(1.08em,-3.03em) scale(1.78, 1.78);
+    }
+
+    25% {
+        color: #5DFF00;
+        transform: translate(1.27em,-2.78em) scale(1.61, 1.61);
+    }
+
+    27.5% {
+        color: #1AFF00;
+        transform: translate(1.38em,-2.41em) scale(1.56, 1.56);
+    }
+
+    30% {
+        color: #00FF28;
+        transform: translate(1.43em,-2.1em) scale(1.53, 1.53);
+    }
+
+    32.5% {
+        color: #00FF6B;
+        transform: translate(1.45em,-1.6em) scale(1.44, 1.44);
+    }
+
+    35% {
+        color: #00FFAE;
+        transform: translate(1.41em,-1.14em) scale(1.35, 1.35);
+    }
+
+    37.5% {
+        color: #00FFF1;
+        transform: translate(1.35em,-0.9em) scale(1.3, 1.3);
+    }
+
+    40% {
+        color: #00C9FF;
+        transform: translate(1.25em,-0.61em) scale(1.25, 1.25);
+    }
+
+    42.5% {
+        color: #0086FF;
+        transform: translate(1.15em,-0.5em) scale(1.18, 1.18);
+    }
+
+    45% {
+        color: #0043FF;
+        transform: translate(1.04em,-0.4em) scale(1.16, 1.16);
+    }
+
+    47.5% {
+        color: #0000FF;
+        transform: translate(0.85em,-0.26em) scale(1.1, 1.1);
+    }
+    /* Ya no se cambia la escala*/
+    50% {
+        color: #0000FF;
+        transform: translate(0.65em,-0.2em) scale(1.08, 1.08);
+    }
+
+    52.5% {
+        color: #0000FF;
+        transform: translate(0.44em,-0.14em) scale(1.05, 1.05);
+    }
+
+    55% {
+        color: #0000FF;
+        transform: translate(0.18em,-0.27em) scale(1.03, 1.03);
+    }
+
+    57.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.25em) scale(1, 1);
+    }
+
+    60% {
+        color: #0000FF;
+        transform: translate(0em,-0.35em) scale(1, 1);
+    }
+
+    62.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.5em) scale(1, 1);
+    }
+
+    65% {
+        color: #0000FF;
+        transform: translate(0em,-0.61em) scale(1, 1);
+    }
+
+    67.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.48em) scale(1, 1);
+    }
+
+    70% {
+        color: #0000FF;
+        transform: translate(0em,-0.35em) scale(1, 1);
+    }
+
+    72.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.21em) scale(1, 1);
+    }
+
+    75% {
+        color: #0000FF;
+        transform: translate(0em,-0.35em) scale(1, 1);
+    }
+
+    77.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.5em) scale(1, 1);
+    }
+
+    80% {
+        color: #0000FF;
+        transform: translate(0em,-0.35em) scale(1, 1);
+    }
+
+    82.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.22em) scale(1, 1);
+    }
+
+    85% {
+        color: #0000FF;
+        transform: translate(0em,-0.13em) scale(1, 1);
+    }
+
+    87.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.22em) scale(1, 1);
+    }
+
+    90% {
+        color: #0000FF;
+        transform: translate(0em,-0.35em) scale(1, 1);
+    }
+
+    92.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.22em) scale(1, 1);
+    }
+
+    95% {
+        color: #0000FF;
+        transform: translate(0em,-0.13em) scale(1, 1);
+    }
+
+    97.5% {
+        color: #0000FF;
+        transform: translate(0em,-0.05em) scale(1, 1);
+    }
+
+    100% {
+        color: #0000FF;
+        transform: translate(0em,0em) scale(1, 1);
+    }
+}

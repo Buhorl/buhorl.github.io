@@ -26,6 +26,8 @@ var reward = "https://open.spotify.com/playlist/1ErhO58OeArSOe6Zmrgbv3?si=Ya_ZLL
 // Bip : http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Electron-wwwbeat-8521/Electron-wwwbeat-8521_hifi.mp3
 // Beep: http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Cyberia-Mach_New-7660/Cyberia-Mach_New-7660_hifi.mp3
 // Bop : http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/idg-beep-intermed-1550/idg-beep-intermed-1550_hifi.mp3
+// Gba : https://www.myinstants.com/media/sounds/original-game-boy-advance-startup-www_flvto_com.mp3
+
 var sound_1 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/Electron-wwwbeat-8521/Electron-wwwbeat-8521_hifi.mp3'], 
   volume: 0.2, loop: false,
@@ -42,8 +44,12 @@ var sound_4 = new Howl({
   src: ['http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Electronic/Beeps/idg-beep-intermed-1550/idg-beep-intermed-1550_hifi.mp3'], 
   volume: 0.2, loop: false,
 });
+var sound_5 = new Howl({
+    src: ['https://www.myinstants.com/media/sounds/original-game-boy-advance-startup-www_flvto_com.mp3'],
+    volume: 0.7, loop: false,
+});
 
-var sound_array = [sound_1,sound_2,sound_3,sound_4];
+var sound_array = [sound_1, sound_2, sound_3, sound_4, sound_5];
 var sound_default = sound_1;
 
 var sineWave = new Pizzicato.Sound({ 
@@ -226,7 +232,17 @@ function renderTextEffect(text,value_ms,elem,sound_id){
 				} else { 
 					delimiter = '';
 					current_str = current_str + '</span>';
-				}
+                }
+             /* 'ºº' para designar GBOY */
+            } else if (text.charAt(i) == 'º' & text.charAt(i + 1) == 'º') {
+                i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+                if (delimiter == '') {
+                    delimiter = '</span>';
+                    current_str = current_str + '<span class=\'target_gameboy\'>';
+                } else {
+                    delimiter = '';
+                    current_str = current_str + '</span>';
+                }
 			/* '%%' para designar Jumpy */
 			} else if (text.charAt(i)=='%' & text.charAt(i+1)=='%'){
 				i++; //Nos saltamos una iter porque sabemos que se marca un efecto
@@ -329,7 +345,17 @@ function parseTextEffect(text){
 			} else { 
 				delimiter = '';
 				current_str = current_str + '</span>';
-			}
+            }
+        /* 'ºº' para designar GBOY */
+        } else if (text.charAt(i) == 'º' & text.charAt(i + 1) == 'º') {
+            i++; //Nos saltamos una iter porque sabemos que se marca un efecto
+            if (delimiter == '') {
+                delimiter = '</span>';
+                current_str = current_str + '<span class=\'target_gameboy\'>';
+            } else {
+                delimiter = '';
+                current_str = current_str + '</span>';
+            }
 		/* '%%' para designar Jumpy */
 		} else if (text.charAt(i)=='%' & text.charAt(i+1)=='%'){
 			i++; //Nos saltamos una iter porque sabemos que se marca un efecto
@@ -516,17 +542,25 @@ function jit(n){
 	letterEffect('jit',n,'.effect_jit');
 }
 
+// Activa el efecto jit con un delay="n" entre letras.
+function gboy(n) {
+    if (n === undefined) { n = 50; }
+    letterEffect('gameboy', n, '.effect_gameboy');
+}
+
 // Inicia todos los efectos y los activa (con los valores por defecto)
 function initEffects(){
 	initTarget('.target_rainbow','effect_rainbow');
 	initTarget('.target_jumpy','effect_jumpy');
 	initTarget('.target_pride','effect_pride');
-	initTarget('.target_jit','effect_jit');
+    initTarget('.target_jit', 'effect_jit');
+    initTarget('.target_gameboy', 'effect_gameboy');
 	initEffect('.target_rainbow','effect_rainbow');
 	initEffect('.target_jumpy','effect_jumpy');
 	initEffect('.target_pride','effect_pride');
-	initEffect('.target_jit','effect_jit');
-	rainbow(); jumpy(); pride(); jit();
+    initEffect('.target_jit', 'effect_jit');
+    initEffect('.target_gameboy', 'effect_gameboy');
+    rainbow(); jumpy(); pride(); jit(); gboy();
 }
 
 
@@ -610,7 +644,7 @@ function getNameNum(name){
 }
 
 function getNameSound(name){
-	return 'sound_2';
+	return sound_2;
 }
 
 function initR(){
