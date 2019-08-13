@@ -160,24 +160,28 @@ function generate_combo(n,m,o){
 function render_cards(){
 	//Se mueven las cartas para que estén una encuma de otra 
 	var sep = 0;
+	var card_height_px = $('.white').outerHeight() - Number($('.white').css('padding').replace(/[^0-9\.]+/g, ""))*2;
 	$('#text').children('.card').each(function (index){
-		$(this).css("top",(sep-(350*index))+"px");
+		$(this).css("top",(sep-(card_height_px*index))+"px");
 		$(this).css("z-index",(index));
 		//Borramos ahora los vacíos.
 		if($(this).children('txt').html().length<1){
 			$(this).remove();
-			sep = sep + 350;
+			sep = sep + card_height_px;
 		} else {
 			sep = sep + $(this).children('txt').outerHeight();
 			console.log(sep+' - '+$(this).children('txt').html());
 		}
 	});
 	// Se le añaden las florituras
-	$('.card').append('<br><img class="logo" src="logo.png">');
-	$('.card').append('<span class="logo">Criso contra la Humanidad</span>');
-	$('.black').append('<txt class="logo" style="color: black">'+card_b[2]+'</txt>');
+	$('.card').append('<br><img class="logo" src="logo.png">'); //El icono
+	$('.card').append('<span class="logo">Criso contra la Humanidad</span>'); //El texto
+	$('.black').append('<txt class="logo" style="color: black">'+card_b[2]+'</txt>'); //El nº de ed negro
 	$('.white').each(function (index){
-		$(this).append('<txt class="logo" style="color: black">'+card_w[index][1]+'</txt>');
+		$(this).append('<txt class="logo" style="color: black">'+card_w[index][1]+'</txt>'); //Los nº de ed blancos
+	});
+	$('txt.logo').each(function (){
+		if($(this).html()==3){$(this).addClass('rainbow');} //Arcoiris a las del pack LGTB+
 	});
 }
 
@@ -288,11 +292,12 @@ var deck_white = [
 	["Rick Astley",2],
 	["No sé, yo voté a Kodos",2],
 	["Un Frigopié de 2005",2],
-	["Heteros™",2],
+	["Deus Vult",2],
 ],
 [ /* 3er elem - Edición LGTB */
 	["Dos tíos en un Jacuzzi a dos metros de distancia porque no son Gay",3],
 	["Un pansexual enamorado de un alien",3],
+	["Heteros™",3],
 ],
 [ /* OG! */
 	["Coat hanger abortions",1],
@@ -798,7 +803,9 @@ var deck_black = [
 	["Me he quedado embarazada de ___",2,1],
 	["Para cuando la economía flaquee, tengo guardado debajo del colchón ___",2,1],
 	["La app de Picolo se actualiza para incluir la siguiente prueba: ___",2,1],
-	["Me llamo María José me gustan los libros, soy taciturna, vegetariana ___",2,1]
+	["Me llamo María José me gustan los libros, soy taciturna, vegetariana ___",2,1],
+	["Cuando estoy triste pienso en ___ y se me pasa",2,1],
+	["Si tanto te gusta ___ ¿Porqué no lo metes en tu casa?",2,1],
 ],
 [ /* 3er elem - Edición LGTB */
 	["Dentro de LGTB+, el + incluye a ___",3,1],

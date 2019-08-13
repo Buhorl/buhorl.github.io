@@ -19,9 +19,11 @@
       <button id="C" onclick="bot()">Generar Combinación</button>
     </th>
     <th class="w1">  
-    <button id="R" onclick="go_right()">></button>
+      <button id="R" onclick="go_right()">></button>
     </th>
   </tr>
+</table>
+<table>
   <!-- ID: 1 - Ediciones -->
   <tr id="1" hidden="true">
     <th class="w1"> </th>
@@ -39,16 +41,16 @@
   </tr>
   <!-- ID: 2 - Juego-->
   <tr id="2">
-    <th class="w1"> </th>
-    <th align="center"><p class="w3"><span id="text"></span></p></th>
-    <th class="w1"> </th>
+    <!-- <th class="w1"> </th> -->
+    <th align="center"><p class=""><span id="text"></span></p></th>
+    <!-- <th class="w1"> </th> -->
   </tr>
   <!-- ID: 3 - Selector -->
   <tr id="3" hidden>
     <th class="w1"> </th>
     <th class="light" align="left">
       <p class="w3">
-        <h2>Generar carta manualmente</h2><br><br>
+        <h2>Generar carta manualmente</h2><br>
         <txt>Lista de Cartas Negras</txt>
         <select id="lista_n" class="w3">
           <option>Uno</option>
@@ -64,7 +66,7 @@
   </tr>
   <!-- ID: 4 - WIP -->
 	<tr id="4" hidden>
-    <th class="w1"> </th>
+    <!-- <th class="w1"> </th> -->
     <th><div class="submit subsection" hidden>
 		<h2>Suggest a card.</h2>
         <form class="ideas">
@@ -73,7 +75,7 @@
         </form>
     	</div>
     </th>
-    <th class="w1"> </th>
+    <!-- <th class="w1"> </th> -->
   </tr>
 	</table>
 </body>

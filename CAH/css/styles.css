@@ -1,53 +1,55 @@
+
+
 .w1{
-  width: 100px;
+  width: 10rem;
 }
 
 .w3{
-  width: 350px
+  width: 35rem
 }
 
 textarea{ /*copiado de la página de CAH*/
-	text-align: left; 
+  text-align: left; 
   height: auto; 
-  min-height: 112px; 
-  margin-bottom: 25px; 
+  min-height: 11.2rem; 
+  margin-bottom: 2.5rem; 
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 100%;
   color: ;
   font-weight: bold;
   background: ;
-  border: 1px solid ;
+  border: 0.1rem solid ;
   text-align: center;
   outline: 0;
-  padding: 15px;
-  font-size: 18px;
-  line-height: 18px;
+  padding: 1.5rem;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
   -webkit-appearance: none;
 }
 
 button{ /*copiado de la página de CAH*/
-	position: relative;
+  position: relative;
   display: inline-block;
   text-decoration: none;
   text-align: center;
   font-weight: bold;
   color: ;
   outline: none;
-  border: 2px solid ;
+  border: 0.2rem solid ;
   background-color: white;
   white-space: nowrap;
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
-  -moz-box-shadow: inset 0 -4px 0 0 ;
-  -webkit-box-shadow: inset 0 -4px 0 0 ;
-  box-shadow: inset 0 -4px 0 0 ;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  border-radius: 7px;
-  font-size: 18px;
-  line-height: 18px;
-  padding: 14px 20px 18px;
+  -moz-box-shadow: inset 0 -0.4rem 0 0 ;
+  -webkit-box-shadow: inset 0 -0.4rem 0 0 ;
+  box-shadow: inset 0 -0.4rem 0 0 ;
+  -moz-border-radius: 0.7rem;
+  -webkit-border-radius: 0.7rem;
+  border-radius: 0.7rem;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  padding: 1.4rem 2rem 1.8rem;
   -moz-transition: width 0.2s ease, color 0.3s ease, border-color 0.3s ease;
   -o-transition: width 0.2s ease, color 0.3s ease, border-color 0.3s ease;
   -webkit-transition: width 0.2s ease, color 0.3s ease, border-color 0.3s ease;
@@ -55,15 +57,15 @@ button{ /*copiado de la página de CAH*/
 }
 
 h2{
-  margin: 0px;
+  margin: 0rem;
 }
 
 button:active{
   -moz-box-shadow: none; 
   -webkit-box-shadow: none;
   box-shadow: none;
-  margin-top: 4px;
-  padding-bottom: 14px;
+  margin-top: 0.4rem;
+  padding-bottom: 1.4rem;
 }
 
 button:disabled{
@@ -74,50 +76,53 @@ button:disabled{
   box-shadow: ;
   /*border: ;*/
 }
-	
+
+select{
+  font-size: 1.5rem;
+}
+  
 body{
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: bold;
-	font-size: 18px; /*En el juego original, es 26px*/
-	background-color: #eee;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 50%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 3rem; /*En el juego original, es 26px*/
+  background-color: #eee;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 table{
-    width: auto;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .white{
-	text-align: left;
-	background-color: white;
-	color: black;
-	border-radius: 20px; /*En el juego original, es 10px*/
-	padding: 25px; 
-	width: 63mm; /*En el juego original, es 62mm*/
-	height: 88mm; /*En el juego original, es 90mm*/
-	position: relative;
-	-webkit-box-shadow: 7px 7px 10px 0px rgba(0,0,0,0.43);
-	-moz-box-shadow: 7px 7px 10px 0px rgba(0,0,0,0.43);
-	box-shadow: 7px 7px 10px 0px rgba(0,0,0,0.43);
+  text-align: left;
+  background-color: white;
+  color: black;
+  border-radius: 2.6667rem; /*En el juego original, es 10px*/
+  padding: 3.3333rem; 
+  width: 35.25rem; /*En el juego original, es 62mm*/
+  height: 51rem; /*En el juego original, es 90mm*/
+  position: relative;
+  -webkit-box-shadow: 0.9333rem 0.9333rem 1.3333rem 0rem rgba(0,0,0,0.43);
+  -moz-box-shadow: 0.9333rem 0.9333rem 1.3333rem 0rem rgba(0,0,0,0.43);
+  box-shadow: 0.9333rem 0.9333rem 1.3333rem 0rem rgba(0,0,0,0.43);
 }
 
 .black{
-	text-align: left;
-	background-color: black;
-	color: white;
-	border-radius: 20px;
-	padding: 25px; 
-	width: 63mm;
-	height: 88mm;
-	position: relative;
-	-webkit-box-shadow: 7px 7px 10px 0px rgba(0,0,0,0.43);
-	-moz-box-shadow: 7px 7px 10px 0px rgba(0,0,0,0.43);
-	box-shadow: 7px 7px 10px 0px rgba(0,0,0,0.43);
+  text-align: left;
+  background-color: black;
+  color: white;
+  border-radius: 2.6667rem;
+  padding: 3.3333rem; 
+  width: 35.25rem;
+  height: 51rem;
+  position: relative;
+  -webkit-box-shadow: 0.9333rem 0.9333rem 1.3333rem 0rem rgba(0,0,0,0.43);
+  -moz-box-shadow: 0.9333rem 0.9333rem 1.3333rem 0rem rgba(0,0,0,0.43);
+  box-shadow: 0.9333rem 0.9333rem 1.3333rem 0rem rgba(0,0,0,0.43);
 }
 
 .light{
@@ -129,25 +134,25 @@ table{
 }
 
 img.logo{
-	width: 60px;
+  width: 8.5714rem;
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 1.4286rem;
+  left: 1.4286rem;
 }
 
 span.logo{
-	width: 65mm;
+  width: 32.25rem;
   position: absolute;
-  bottom: 6.5mm;
-  left: 16.5mm/*60px*/;
-  font-size: 12px;
+  bottom: 3.5rem;
+  left: 10rem/*60px*/;
+  font-size: 1.7143rem;
 }
 
 txt.logo{
-  font-size: 11px;
+  font-size: 1.5714rem;
   position: absolute;
-  bottom: 26px;
-  left: 45px;
+  bottom: 3.7143rem;
+  left: 6.4286rem;
   transform: rotate(20deg);
 }
 
@@ -225,4 +230,3 @@ txt.logo{
   color:  #F90048;
   }
 }
-
