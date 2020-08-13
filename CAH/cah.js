@@ -1,6 +1,15 @@
 var card_w;
 var card_b;
 var position = 2;
+var dir = window.location.pathname.split('/');
+
+// Función para cambiar la ruta
+dir.shift();
+while (dir[dir.length - 1] != 'CAH') {
+    dir.pop();
+} dir = dir.join('/');
+dir_logo = dir.concat("/logo.png");
+document.getElementById('icon').href = dir.concat('/icon.png');
 
 // Función para el botón de Generar Combinación
 function bot(){
@@ -174,7 +183,7 @@ function render_cards(){
 		}
 	});
 	// Se le añaden las florituras
-	$('.card').append('<br><img class="logo" src="logo.png">'); //El icono
+    $('.card').append('<br><img class="logo" src="'+dir_logo+'">'); //El logo
 	$('.card').append('<span class="logo">Criso contra la Humanidad</span>'); //El texto
 	$('.black').append('<txt class="logo" style="color: black">'+card_b[2]+'</txt>'); //El nº de ed negro
 	$('.white').each(function (index){
