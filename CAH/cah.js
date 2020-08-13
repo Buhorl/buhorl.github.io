@@ -5,6 +5,7 @@ var dir = window.location.pathname.split('/');
 var fdir = "";
 // Función para cambiar la ruta
 dir = dir.filter(Boolean);
+if (dir[dir.length - 1].includes(".html"){ dir.pop() }
 
 while (dir[dir.length - 1] != 'CAH') {
     dir.pop();
