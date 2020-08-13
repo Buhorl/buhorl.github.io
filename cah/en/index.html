@@ -1,0 +1,83 @@
+﻿<!-- v1.4.1: OG Cards -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Criso against Humanity</title>
+  <link rel="shortcut icon" href="icon.png">
+</head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="cah.js" type="text/javascript"></script>
+<body onload="init()">
+	<table>
+    <!-- Botones -->
+	<tr height="65px">
+    <th class="w1">
+      <button id="L" onclick="go_left()"><</button>
+    </th>
+    <th width="350px">
+      <button id="C" onclick="bot()">Generate Combination</button>
+    </th>
+    <th class="w1">  
+      <button id="R" onclick="go_right()">></button>
+    </th>
+  </tr>
+</table>
+<table>
+  <!-- ID: 1 - Ediciones -->
+  <tr id="1" hidden="true">
+    <th class="w1"> </th>
+  	<th class="light" align="left"><p class="w3">
+    <h2>Select editions</h2><br>
+    <txt>Número de Cartas Blancas: </txt><txt class="bold" id="n_blancas">0</txt><br>
+    <txt>Número de Cartas Negras: </txt><txt class="bold" id="n_negras">0</txt><br><br>
+    <input type="checkbox" id="E1" value="0">Custom Edition 1</input><br>
+    <input type="checkbox" id="E2" value="1">Custom Edition 2</input><br>
+    <input type="checkbox" id="E3" value="2">Custom Edition 3</input><br>
+    <input type="checkbox" id="OG" value="3" checked>Original Cards</input><br>
+    <br><button onclick="change_editions();set_list();">Save Changes</button>
+</p></th>
+    <th class="w1"> </th>
+  </tr>
+  <!-- ID: 2 - Juego-->
+  <tr id="2">
+    <!-- <th class="w1"> </th> -->
+    <th align="center"><p class=""><span id="text"></span></p></th>
+    <!-- <th class="w1"> </th> -->
+  </tr>
+  <!-- ID: 3 - Selector -->
+  <tr id="3" hidden>
+    <th class="w1"> </th>
+    <th class="light" align="left">
+      <p class="w3">
+        <h2>Generate Card manually</h2><br>
+        <txt>Black Card List</txt>
+        <select id="lista_n" class="w3">
+          <option>One</option>
+        </select><br><br>
+        <txt>White Card List</txt>
+        <select id="lista_b" class="w3">
+          <option>Two</option>
+        </select>
+        <!-- <p><span id="text2"></span></p> -->
+      </p>
+    </th>
+    <th class="w1"> </th>
+  </tr>
+  <!-- ID: 4 - WIP -->
+	<tr id="4" hidden>
+    <!-- <th class="w1"> </th> -->
+    <th><div class="submit subsection" hidden>
+		<h2>Suggest a card.</h2>
+        <form class="ideas">
+          <textarea placeholder="Anonymously suggest a card, or a list of several cards separated by commas."></textarea><br>
+          <button class="btn">Submit bad idea</button>
+        </form>
+    	</div>
+    </th>
+    <!-- <th class="w1"> </th> -->
+  </tr>
+	</table>
+</body>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+</html>
