@@ -2,14 +2,16 @@ var card_w;
 var card_b;
 var position = 2;
 var dir = window.location.pathname.split('/');
-
+var fdir = "";
 // Función para cambiar la ruta
-dir.shift();
+dir.filter(Boolean);
+
 while (dir[dir.length - 1] != 'CAH') {
     dir.pop();
-} dir = dir.join('/');
-dir_logo = dir.concat("/logo.png");
-document.getElementById('icon').href = dir.concat('/icon.png');
+    fdir = fdir.concat("../");
+}
+dir_logo = fdir.concat("logo.png");
+document.getElementById('icon').href = fdir.concat('icon.png');
 
 // Función para el botón de Generar Combinación
 function bot(){
