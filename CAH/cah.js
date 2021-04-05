@@ -1,8 +1,14 @@
 var card_w;
 var card_b;
 var position = 2;
+var turno = 0;
 var dir = window.location.pathname.split('/');
 var fdir = "";
+const max_pos = 4;
+const urlParams = new URLSearchParams(window.location.search);
+
+var seed;
+
 // Función para cambiar la ruta
 dir = dir.filter(Boolean);
 if (dir[dir.length - 1].includes(".html")) {
@@ -22,14 +28,62 @@ function bot(){
 	 	set_cards();
 	} else if (position == 3) {
 		set_cards($('#lista_n')[0].value,$('#lista_b')[0].value);
+	} else if (position == 4) {
+		add_anim();
+		draw_deck();
 	}
 }
 
 // Función para el inicio de ejecución
-function init(){
+function init() {
 	change_editions();
+	set_vars();
 	set_list();	
 	set_cards();
+	draw_deck();
+}
+
+// Shuffle: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffle(input_array) {
+	var array = [...input_array];
+	var currentIndex = array.length, temporaryValue, randomIndex;
+
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array;
+}
+
+// Funcion para inicializar el valor de las variables
+function set_vars() {
+	seed = urlParams.get('id');
+	if (!seed || seed.length < 4) {
+		seed = "";
+		for (x of Array(6).keys()) {
+			seed = x % 3 ? seed.concat(String.fromCharCode(65 + Math.floor(Math.random() * 26))) : seed.concat(String.fromCharCode(48 + Math.floor(Math.random() * 10)));
+			seed = x % 2 ? seed.concat(String.fromCharCode(97 + Math.floor(Math.random() * 26))) : seed.concat(String.fromCharCode(48 + Math.floor(Math.random() * 10)));
+		}
+		var rn = Math.floor(Math.random() * 6);
+		seed = seed.substring(rn, rn + 6);
+		urlParams.delete("id");
+		urlParams.append("id", seed);
+		window.location.search = urlParams.toString(); //Redirecting to new URI
+	}
+	Math.seedrandom(seed);
+	//Preparamos la partida de 0 
+	turno = 0;
+	baraja_b = shuffle(entradas_blancas);
+	baraja_n = shuffle(entradas_negras);
 }
 
 // Función para cambiar las cartas que se muestran en los listados
@@ -47,48 +101,74 @@ function set_list(){
 }
 
 // Función para "moverse" a la izquierda de las opciones
-function go_left(){
+function go_left() {
+	//console.log(position + " to " + (position-1));
 	if (position==1){
-		//disabled
-	} else if (position==2){
-		$('*[id=1]').each(function(){$(this).attr("hidden", false)});
-		//$('*[id=2]').each(function(){$(this).attr("hidden", true)});
-		$('*[id=2]').each(function(){$(this).css("position", "absolute")});
-		$('*[id=2]').each(function(){$(this).css("top", "9000px")});
+		//disabled, it shouldn't change anything
+	} else
+	  if (position == 2) { //2nd to first pos
+		$('*[id='+(position-1)+']').each(function(){$(this).css("position", "inherit")});
+		$('*[id='+(position-1)+']').each(function(){$(this).attr("hidden", false)});
+		$('*[id='+(position)+']').each(function(){$(this).css("position", "absolute")});
+		$('*[id='+(position)+']').each(function(){$(this).css("top", "9000px")});
+		$('*[id='+(position)+']').each(function(){$(this).attr("hidden", true)});
 		$('*[id=L]').each(function(){$(this).attr("disabled", true)});
 		$('*[id=C]').each(function(){$(this).attr("disabled", true)});
-		position = 1;
-	} else /*position==3*/ {
-		//$('*[id=2]').each(function(){$(this).attr("hidden", false)});
-		//$('*[id=2]').each(function(){$(this).css("display", "inline-block")});
-		$('*[id=2]').each(function(){$(this).css("position", "inherit")});
-		$('*[id=3]').each(function(){$(this).attr("hidden", true)});
+		position -= 1;
+	} else /*position==3,4... etc*/ {
+		$('*[id='+(position-1)+']').each(function(){$(this).css("position", "inherit")});
+		$('*[id='+(position-1)+']').each(function(){$(this).attr("hidden", false)});
+		$('*[id='+(position)+']').each(function(){$(this).css("position", "absolute")});
+		$('*[id='+(position)+']').each(function(){$(this).css("top", "9000px")});
+		$('*[id='+(position)+']').each(function(){$(this).attr("hidden", true)});
 		$('*[id=R]').each(function(){$(this).attr("disabled", false)});
-		position = 2;
+		position -= 1;
 	}
+	position_tracker();
 }
 
 // Función para "moverse" a la derecha de las opciones
-function go_right(){
-	if (position==1){
-		$('*[id=1]').each(function(){$(this).attr("hidden", true)});
-		//$('*[id=2]').each(function(){$(this).attr("hidden", false)});
-		//$('*[id=2]').each(function(){$(this).css("display", "inline-block")});
-		$('*[id=2]').each(function(){$(this).css("position", "inherit")});
-		$('*[id=L]').each(function(){$(this).attr("disabled", false)});
-		$('*[id=C]').each(function(){$(this).attr("disabled", false)});
-		position = 2;
-	} else if (position==2){
-		//$('*[id=2]').each(function(){$(this).attr("hidden", true)});
-		//$('*[id=2]').each(function(){$(this).css("display", "none")});
-		$('*[id=2]').each(function(){$(this).css("position", "absolute")});
-		$('*[id=2]').each(function(){$(this).css("top", "9000px")});
-		$('*[id=3]').each(function(){$(this).attr("hidden", false)});
+function go_right() {
+	//console.log(position + " to " + (position + 1 ));
+	if (position == max_pos) {
+		//disabled, it shouldn't change anything
+	} else if (position==max_pos-1){ //2nd to last pos
+		$('*[id='+(position+1)+']').each(function(){$(this).css("position", "inherit")});
+		$('*[id='+(position+1)+']').each(function(){$(this).attr("hidden", false)});
+		$('*[id='+(position)+']').each(function(){$(this).css("position", "absolute")});
+		$('*[id='+(position)+']').each(function(){$(this).css("top", "9000px")});
+		$('*[id='+(position)+']').each(function(){$(this).attr("hidden", true)});
 		$('*[id=R]').each(function(){$(this).attr("disabled", true)});
-		position = 3;
-	} else /*position==3*/ {
-		//disabled
+		position += 1;
+	} else /*position=1*/ {
+		$('*[id='+(position+1)+']').each(function(){$(this).css("position", "inherit")});
+		$('*[id='+(position+1)+']').each(function(){$(this).attr("hidden", false)});
+		$('*[id='+(position)+']').each(function(){$(this).css("position", "absolute")});
+		$('*[id='+(position)+']').each(function(){$(this).css("top", "9000px")});
+		$('*[id='+(position)+']').each(function(){$(this).attr("hidden", true)});
+		$('*[id=L]').each(function () { $(this).attr("disabled", false) });
+		$('*[id=C]').each(function () { $(this).attr("disabled", false) });
+		position += 1;
 	}
+	position_tracker();
+}
+
+function position_tracker() {
+	$('#C').html(butt_text[position-1])
+	switch (position) {
+		case 1:
+			break;
+		case 2:
+			render_cards();
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		default:
+			console.log("Out of position!");
+	}
+	//TODO
 }
 
 // Función que devuelve en array los valores de las ediciones que están marcadas
@@ -170,33 +250,113 @@ function generate_combo(n,m,o){
 	return result;
 }
 
-// Función para renderizar las cartas que haya en el elemento con id = 'text'
-function render_cards(){
+// Función para generar las cartas negras por separado (para la sim)
+function generate_deck() {
+	card_b = baraja_n[turno];
+	//Vemos si la carta tiene 1 o + huecos
+	if (card_b[2] == 2) {
+		result = ("<div class=\"card black\"><txt>" + card_b[0] + "</txt></div>").replace
+			(/(([\_]{3}))/g, "_____").replace
+			(/(([\=]{3}))/g, "_____");
+	} else if (card_b[2] == 3) {
+		result = ("<div class=\"card black\"><txt>" + card_b[0] + "</txt></div>").replace
+			(/(([\_]{3}))/g, "_____").replace
+			(/(([\=]{3}))/g, "_____").replace
+			(/(([\+]{3}))/g, "_____");
+	} else {
+		result = ("<div class=\"card black\"><txt>" + card_b[0] + "</txt></div>").replace
+			(/(([\_]{3}))/g, "_____");
+	}
+	turno = turno == baraja_n.length - 1 ? 0 : turno + 1;
+	return result;
+}
+
+// Función para renderizar las cartas que haya en el elemento con id 'trgt'
+function render_cards(trgt) {
+	if (trgt === undefined) {
+		trgt = 'text';
+	} trgt = '#' + trgt;
 	//Se mueven las cartas para que estén una encuma de otra 
 	var sep = 0;
-	var card_height_px = $('.white').outerHeight() - Number($('.white').css('padding').replace(/[^0-9\.]+/g, ""))*2;
-	$('#text').children('.card').each(function (index){
-		$(this).css("top",(sep-(card_height_px*index))+"px");
-		$(this).css("z-index",(index));
+	var card_height_px = $('.white').outerHeight() - Number($('.white').css('padding').replace(/[^0-9\.]+/g, "")) * 2;
+	$(trgt).children('.card').each(function (index) {
+		$(this).css("top", (sep - (card_height_px * index)) + "px");
+		$(this).css("z-index", (index));
 		//Borramos ahora los vacíos.
-		if($(this).children('txt').html().length<1){
+		if ($(this).children('txt').html().length < 1) {
 			$(this).remove();
 			sep = sep + card_height_px;
 		} else {
 			sep = sep + $(this).children('txt').outerHeight();
-			console.log(sep+' - '+$(this).children('txt').html());
+			//console.log(sep+' - '+$(this).children('txt').html());
 		}
 	});
-	// Se le añaden las florituras
+		// Se le añaden las florituras
     $('.card').append('<br><img class="logo" src="'+dir_logo+'">'); //El logo
 	$('.card').append('<span class="logo">Criso contra la Humanidad</span>'); //El texto
-	$('.black').append('<txt class="logo" style="color: black">'+card_b[2]+'</txt>'); //El nº de ed negro
+	$('.black').append('<txt class="logo" style="color: black">'+card_b[1]+'</txt>'); //El nº de ed negro
 	$('.white').each(function (index){
-		$(this).append('<txt class="logo" style="color: black">'+card_w[index][1]+'</txt>'); //Los nº de ed blancos
+		$(this).append('<txt class="logo" style="color: black">' + card_w[index][1] + '</txt>'); //Los nº de ed blancos
+		//TODO: Arreglar el fallo cuando se generan 2 cartas identicas
 	});
 	$('txt.logo').each(function (){
 		if($(this).html()==3){$(this).addClass('rainbow');} //Arcoiris a las del pack LGTB+
 	});
+}
+
+// Función para renderizar la baraja de cartas que haya en el elemento con id 'trgt'
+function render_deck(trgt) {
+	if (trgt === undefined) {
+		trgt = 'text';
+	} trgt = '#' + trgt;
+	//Se mueven las cartas para que estén una encuma de otra 
+	var sep = 0;
+	var card_height_px = $('.card').height() + 100;
+	const deck_size = 10;
+	for (x of Array(deck_size).keys()) {
+		$(trgt).append("<div class=\"card black\"><txt>" + card_b[0] + "</txt></div>");
+	}
+
+	$(trgt).children('.card').each(function (index) {
+		$(this).css("top", (sep - (card_height_px * index)) + "px");
+		$(this).css("z-index", -(index));
+		$(this).css("opacity", 1 - (index / deck_size))
+		$(this).css("border", "groove");
+		$(this).css("border-color", "rgb(78, 78, 78, 0.2)");
+		//Borramos ahora los vacíos.
+		if ($(this).children('txt').html().length < 1) {
+			$(this).remove();
+			//sep = sep + card_height_px;
+		} else {
+			sep = sep; 
+			//console.log(sep+' - '+$(this).children('txt').html());
+		}
+	});
+
+	// Se le añaden las florituras
+	$('.card').append('<br><img class="logo" src="' + dir_logo + '">'); //El logo
+	$('.card').append('<span class="logo">Criso contra la Humanidad</span>'); //El texto
+	$('.black').append('<txt class="logo" style="color: black">' + card_b[1] + '</txt>'); //El nº de ed negro
+	$('txt.logo').each(function () {
+		if ($(this).html() == 3) { $(this).addClass('rainbow'); } //Arcoiris a las del pack LGTB+
+	});
+}
+
+function add_anim(card_id) {
+	var top = $("#text2").children().position().top;
+	var left = $("#text2").children().position().left;
+	//$("tr#4").append($(".black").clone()[1]);
+	$("tr#4").append($("#text2").children().clone()[0]);
+	$("tr#4").children(".black").addClass("card_id");
+	$('.card_id').css("left", left+"px");
+	$('.card_id').css("top", top+"px");
+	$('.card_id').css("position", "absolute");
+	$('.card_id').css("z-index", 10);
+	$('.card_id').addClass('slide_out_images')
+	setTimeout(function () {
+		$('.card_id').remove();
+	}, 990);
+	//add the tr
 }
 
 // Función para llamar al generador y al renderizado todo en uno
@@ -205,10 +365,16 @@ function set_cards(n,m,o){
 	render_cards();
 }
 
+function draw_deck() {
+	$('#text2').html(generate_deck());
+	render_deck("text2");
+}
+
 // Canción de CAH ;)
 var song = "https://soundcloud.com/cards-against-humanity/a-good-game-of-cards"
 
 /* Sección de las cartas*/
+// JSON Card format: crhallberg.com/cah/
 
 // [Frase, Edición]
 var deck_white = [
@@ -775,6 +941,405 @@ var deck_white = [
 	["Anal beads",1],
 	["The Make-A-Wish ® Foundation",1],
 ],
+[ /* OG - ESP */
+	["Barack Obama.", 1],
+	["Un sombrero muy guay.", 1],
+	["Pelotas.", 1],
+	["Fuego amigo.", 1],
+	["Christopher Walken.", 1],
+	["Txeroki.", 1],
+	["Auschwitz.", 1],
+	["Rito de apareamiento.", 1],
+	["Frigo pie.", 1],
+	["Sean Connery.", 1],
+	["Esperanza Aguirre.", 1],
+	["Tirarse un pedo e Irse.", 1],
+	["Olor a viejos.", 1],
+	["Keanu Reeves.  ", 1],
+	["Sean Penn.", 1],
+	["Correrse en una piscina llena de lagrimas de niño.", 1],
+	["Un pelo púbico desviado.", 1],
+	["Un terrorista gracioso.", 1],
+	["Carne de vaca loca.", 1],
+	["El huracán Katrina.", 1],
+	["Racismo.", 1],
+	["Esperar hasta el matrimonio.", 1],
+	["Una tortuga mordiendo la punta de tu pene.", 1],
+	["Skeletor.", 1],
+	["El Big Bang.", 1],
+	["El clítoris.", 1],
+	["Pedófilos.", 1],
+	["La canción del Tiburón.", 1],
+	["Bromas sobre el Holocausto en un momento inoportuno. ", 1],
+	["Tocamientos genitales.", 1],
+	["Tíos que no vuelven a llamar.", 1],
+	["Impotencia.", 1],
+	["Chupar un Pirulo.", 1],
+	["El 11-M.", 1],
+	["Toma dos tazas.", 1],
+	["Michael Jackson.", 1],
+	["Natalie Portman.", 1],
+	["Gansos.", 1],
+	["¿Abejas?", 1],
+	["Monaguillos.", 1],
+	["Gary Coleman.", 1],
+	["Menstruación.", 1],
+	["Practicar un aborto usando una percha.", 1],
+	["Los judíos.", 1],
+	["La tuna.", 1],
+	["Una fiesta de cumpleaños decepcionante.", 1],
+	["Tener un gatillazo en los preeliminares.", 1],
+	["La Sagrada Biblia.", 1],
+	["Los gays.", 1],
+	["Sobrecompensación.", 1],
+	["Intercambiar saludos.", 1],
+	["El Teletubby gay.", 1],
+	["Cienciología.", 1],
+	["SIDA.", 1],
+	["Esas veces en las que te entra arena en la vagina.", 1],
+	["Su Alteza Real, la Reina Isabel II.", 1],
+	["Propaganda homosexual.", 1],
+	["Tom Cruise.", 1],
+	["Todas las gambas que puedas comer por 4.99€.", 1],
+	["Protector dental.", 1],
+	["América.", 1],
+	["Un aumento de pechos asimétrico.", 1],
+	["Desodorante Axe.", 1],
+	["Despertarse medio desnudo en el parking del McDonalds.", 1],
+	["Condones de sabores.", 1],
+	["Calentamiento global.", 1],
+	["Hacerlo por el culo.", 1],
+	["Paris Hilton.", 1],
+	["Ana Ros Quintana.", 1],
+	["Abstinencia.", 1],
+	["Ciencia.", 1],
+	["Andar como un borracho.", 1],
+	["Hara-Kiri.", 1],
+	["Ataques de dinosaurios.", 1],
+	["Nazis.", 1],
+	["Chupa Chups.", 1],
+	["Pezones empitonados.", 1],
+	["Bond, James Bond.", 1],
+	["Lamer algo y luego decir que es tuyo.", 1],
+	["Esa cosa que electrocuta tus abdominales.", 1],
+	["Alcoholismo.", 1],
+	["Curar la homosexualidad con la oración.", 1],
+	["Agricultura.", 1],
+	["Comer hasta vomitar.", 1],
+	["Cagar en la sopa.", 1],
+	["Un feto.", 1],
+	["Kanye West.", 1],
+	["Dinámicas de grupo.", 1],
+	["Autocanibalismo.", 1],
+	["Comportarse como un gilipollas con los niños.", 1],
+	["Que entren a robar en tu casa y que mates a los ladrones.", 1],
+	["Pubertad.", 1],
+	["El conejo de Nesquick.", 1],
+	["Piercings genitales.", 1],
+	["Pedofilia.", 1],
+	["Levadura.", 1],
+	["200 gramos de pura heroína mexicana.", 1],
+	["Trolls. ", 1],
+	["Un mar de problemas.", 1],
+	["Un halcón con una gorra en la cabeza.", 1],
+	["El café más caro del Starbucks.", 1],
+	["Gente negra.", 1],
+	["Preguntas de selectividad basadas en la raza.", 1],
+	["Obesidad.", 1],
+	["Fabada Litoral.", 1],
+	["Una ensalada de Telepizza.", 1],
+	["Niños y petas.", 1],
+	["Hombres.", 1],
+	["Polvorones.", 1],
+	["Tinder.", 1],
+	["Eduard Punset.", 1],
+	["Estar a tope.", 1],
+	["Frank de la Jungla.", 1],
+	["Bukkake pixelado.", 1],
+	["Caballerosidad.", 1],
+	["¡¡¡BATMAN!!", 1],
+	["Amigos que se comen todas tus patatas fritas.", 1],
+	["El KKK.", 1],
+	["Lluvia dorada.", 1],
+	["Comerse la Nocilla a cucharadas.", 1],
+	["Un curandero.", 1],
+	["Mi colección de juguetes sexuales japoneses de alta tecnología.", 1],
+	["Dr. Martin Luther King, Jr.", 1],
+	["Selección natural.", 1],
+	["Tiger Woods.", 1],
+	["Hacer pucheritos.", 1],
+	["Huevos de pterodáctilo.", 1],
+	["Esclavitud.", 1],
+	["Espinete.", 1],
+	["El golpe de Estado del 23 de febrero.", 1],
+	["Limpieza étnica.", 1],
+	["Ronald Reagan.", 1],
+	["Jagerbomb.", 1],
+	["Sufragio femenino.", 1],
+	["Gandhi.", 1],
+	["Phoskitos.", 1],
+	["Will Smith.", 1],
+	["Fantasmas.", 1],
+	["Diseño inteligente. ", 1],
+	["Levantar el cuello de la camisa.", 1],
+	["Lactancia.", 1],
+	["Los discapacitados profundos.", 1],
+	["Esta respuesta es post-moderna.", 1],
+	["Hacerlo con otra persona delante de tu novia.", 1],
+	["Las vias del metro.", 1],
+	["Dulce, dulce venganza.", 1],
+	["Profesores sustitutos.", 1],
+	["Dos enanos cagando en un cubo.", 1],
+	["Pasivo-agresividad.", 1],
+	["Necrofilia.", 1],
+	["Minas terrestres.", 1],
+	["Los gitanos.", 1],
+	["Mi alma.", 1],
+	["DogChow.", 1],
+	["Torsión testicular.", 1],
+	["Cabras comiendo latas.", 1],
+	["Elmo cosquillas.", 1],
+	["Mis genitales.", 1],
+	["Transporte de fluidos.", 1],
+	["Combustión humana espontánea.", 1],
+	["Justin Bieber.", 1],
+	["Tensión sexual.", 1],
+	["Viagra.", 1],
+	["Chupar algunas pollas para no ser reclutado.", 1],
+	["La marcha atrás.", 1],
+	["Heath Ledger.", 1],
+	["La sangre de Cristo.", 1],
+	["Ser rico.", 1],
+	["Una pistola de agua llena de pis de gato.", 1],
+	["Otra maldita película de vampiros.", 1],
+	["Tiempo para uno mismo.", 1],
+	["Mahoma.", 1],
+	["Fantasías con lenñadores.", 1],
+	["Poluciones nocturnas.", 1],
+	["El perro de Chocapic.", 1],
+	["Incesto.", 1],
+	["Emociones.", 1],
+	["Padres muertos.", 1],
+	["Ser fabuloso.", 1],
+	["Arnold Schwarzenegger.", 1],
+	["Bob Esponja.", 1],
+	["Lepra.", 1],
+	["Una gran expectativa sobre nada.", 1],
+	["Un agujero del culo blanqueado.", 1],
+	["Esbozar una sonrisa ante la mención de Camboya.", 1],
+	["Atún en lata con extra de delfín.", 1],
+	["Britney Spears a los 55.", 1],
+	["Una rascada clandestina de culo.", 1],
+	["La placenta.", 1],
+	["Motosierras en vez de manos.", 1],
+	["Vikingos.", 1],
+	["Un buen salchichón.", 1],
+	["Polvo de ángel.", 1],
+	["Yo nunca.", 1],
+	["Darth Vader.", 1],
+	["El corazón de un niño.", 1],
+	["Asiáticos que no son muy buenos en mates.", 1],
+	["Decirle adiós a Dios.", 1],
+	["Familias gitanas.", 1],
+	["Cards Against Humanity.", 1],
+	["Un bocata de albóndigas.", 1],
+	["Existencialistas.", 1],
+	["Los niños de la guerra.", 1],
+	["Complejo de Edipo.", 1],
+	["Empollones.", 1],
+	["Idiotas con sus iPhones.", 1],
+	["Baltasar Garzón.", 1],
+	["Soy amigo de tu padre en Facebook.", 1],
+	["Destrucción mutua asegurada.", 1],
+	["Declaración de los Derechos Humanos.", 1],
+	["Esmegma.", 1],
+	["William Shatner.", 1],
+	["Genghis Khan.", 1],
+	["Miedo a los desconocidos.", 1],
+	["Preadolescentes.", 1],
+	["Morir de disentería.", 1],
+	["Envidia de pene.", 1],
+	["Una tortura china.", 1],
+	["Mi vida sexual.", 1],
+	["Dejar un mensaje de voz incómodo.", 1],
+	["Catapultas.", 1],
+	["Comer sandía.", 1],
+	["Una mujer negra descarada.", 1],
+	["Oompa Loompas.", 1],
+	["Hacerse un dedo.", 1],
+	["Semen de ballena.", 1],
+	["Un hombre de mediana edad en patines.", 1],
+	["Peleas de pollos.", 1],
+	["Un giro de guión de M. Night Shyamalan.", 1],
+	["José María Aznar.", 1],
+	["Barón Rojo.", 1],
+	["Artefactos explosivos caseros.", 1],
+	["Manazas.", 1],
+	["Tercera base.", 1],
+	["Gente que huele sus propios calcetines.", 1],
+	["Los Pecos.", 1],
+	["Estrógeno.", 1],
+	["Lesbianas nazis borrachas que dan palizas.", 1],
+	["(Estoy haciendo ejercicios vaginales ahora mismo.)", 1],
+	["Una paja triste.", 1],
+	["Un micropene.", 1],
+	["Un malentendido guarrete.", 1],
+	["Don Limpio justo detrás de ti.", 1],
+	["Porno alemán sadomasoquista.", 1],
+	["Felación al volante.", 1],
+	["Sentir miedo de ti mismo.", 1],
+	["Herpes labial.", 1],
+	["Sexo con señoras gordas.", 1],
+	["Gloryholes.", 1],
+	["La abuelita.", 1],
+	["Pájaros que no pueden volar.", 1],
+	["La trama de una película de Michael Bay.", 1],
+	["Robert Downey, Jr.", 1],
+	["¡Cachorritos!", 1],
+	["Tener la mandíbula inmobilizada.", 1],
+	["Ropa interior comestible.", 1],
+	["Abdominales espectaculares.", 1],
+	["Ir a una orgía sólo por la comida.", 1],
+	["Zorritas.", 1],
+	["Pezones que se escapan del vestido.", 1],
+	["Prepucio.", 1],
+	["Gente pobre.", 1],
+	["Follamigos.", 1],
+	["Una explosión termonuclear.", 1],
+	["Música New Age.", 1],
+	["Quitarte la camiseta.", 1],
+	["Gente sin hogar.", 1],
+	["Gancho de izquierda.", 1],
+	["Un molino lleno de cadáveres.", 1],
+	["Solos de saxofón.", 1],
+	["Tamborileros.", 1],
+	["Arcoiris y rayos de sol.", 1],
+	["Limpiarle el culo.", 1],
+	["El Santiago Bernabeu.", 1],
+	["Masturbación.", 1],
+	["Seducción.", 1],
+	["Una LAN party.", 1],
+	["Focusín.", 1],
+	["Muestras gratuitas.", 1],
+	["Enfermedad de las vacas locas.", 1],
+	["Meterse una buena raya.", 1],
+	["Federico Jiménez Losantos.", 1],
+	["Música turbo-folk de Europa del este.", 1],
+	["Gladiadores Americanos.", 1],
+	["Bolsitas de té.", 1],
+	["Echar un vistazo.", 1],
+	["Un canalillo generoso.", 1],
+	["Cagarse encima.", 1],
+	["Mear una piedra del riñón.", 1],
+	["Paisanos sin culo.", 1],
+	["Piruletas enormes.", 1],
+	["Chester Cheetah.", 1],
+	["Viejos japoneses.", 1],
+	["Accidentes de caza.", 1],
+	["El sur.", 1],
+	["Heineken.", 1],
+	["Aguafiestas.", 1],
+	["Gente blanca.", 1],
+	["Una erección que dura más de cuatro horas.", 1],
+	["El Cascanueces.", 1],
+	["Patinaje artístico sobre hielo con personas del mismo sexo.", 1],
+	["Asaltar tumbas.", 1],
+	["Centauros.", 1],
+	["Pavonearse.", 1],
+	["Barriga en forma de culo.", 1],
+	["El equipo de gimnasia chino.", 1],
+	["Ponerse la ropa interior al revés para no tener que lavarla.", 1],
+	["Bajas civiles.", 1],
+	["Porno con tentáculos.", 1],
+	["“Twitteando”.", 1],
+	["Labios vaginales enormes.", 1],
+	["Sindrome de colon irritable.", 1],
+	["La Macarena.", 1],
+	["El perineo.", 1],
+	["Amputados.", 1],
+	["Una vida de tristeza.", 1],
+	["La paz mundial.", 1],
+	["La carrera de actor de Shaquille O'Neal.", 1],
+	["Judíos con el pelo a lo afro.", 1],
+	["Chicas que no deberían desmadrarse.", 1],
+	["Arcadas.", 1],
+	["Francisco Franco.", 1],
+	["Se ha escrito un crimen.", 1],
+	["Gente cachonda.", 1],
+	["Italianos.", 1],
+	["Represión.", 1],
+	["2 Girls 1 Cup.", 1],
+	["Fricción.", 1],
+	["El testículo perdido de Lance Armstrong.", 1],
+	["Mi relación de pareja.", 1],
+	["Cortar cabelleras.", 1],
+	["Bolas chinas.", 1],
+	["Violar a un conocido.", 1],
+	["Stephen Hawking diciendo guarradas.", 1],
+	["Pilotos kamikaze.", 1],
+	["Trabajar como un chino.", 1],
+	["Concursos de belleza infantil.", 1],
+	["¡¡¡Sexo sorpresa!!!", 1],
+	["Lanzamiento de enanos.", 1],
+	["Actitud.", 1],
+	["Emborracharse con enjuague bucal.", 1],
+	["Constantino Romero durmiendo en un colchón LoMonaco.", 1],
+	["Niños con cáncer de culo.", 1],
+	["Una lobotomía hecha con un picahielos.", 1],
+	["Un camello de dibujos animados disfrutando el fresco sabor de un cigarrillo.", 1],
+	["Esnifar pegamento.", 1],
+	["Bestialidad.", 1],
+	["Cagar y bautizarlo.", 1],
+	["La vagina de Pilar Bardem.", 1],
+	["Acurrucarse con tu pareja.", 1],
+	["Hulk Hogan.", 1],
+	["Colegios tradicionalmente negros.", 1],
+	["Mujeres en anuncios de yogurt.", 1],
+	["Niños con correas.", 1],
+	["Múltiples heridas por apuñalamiento.", 1],
+	["El gay que aparece en todas las series modernas.", 1],
+	["Beber solo.", 1],
+	["Manos de pianista.", 1],
+	["Whiskas Premium.", 1],
+	["Desayunar con la reina.", 1],
+	["Hacer trampas en las Olimpiadas Especiales.", 1],
+	["Dar el 110%.", 1],
+	["Atracar un banco de esperma.", 1],
+	["Un sorteo de bofetadas.", 1],
+	["Ocultar una erección.", 1],
+	["La estupidez del ser humano.", 1],
+	["Robarle la novia a otro.", 1],
+	["Alimentar a Montserrat Caballé.", 1],
+	["Hacer lo correcto.", 1],
+	["Mearse un poquito.", 1],
+	["Desayunar un burrito con olor a culo.", 1],
+	["Enseñarle a un robot a amar.", 1],
+	["Darse por culo debajo de las sabanas.", 1],
+	["World of Warcraft.", 1],
+	["Cuando te tiras un pedo y te cagas un poquito.", 1],
+	["Pedos vaginales.", 1],
+	["Re-regalar.", 1],
+	["Un Tamagotchi abandonado.", 1],
+	["Un mongolo musculado.", 1],
+	["Hacer un reloj de arena.", 1],
+	["Cabrearte tanto que te empalmas.", 1],
+	["Un mono fumando un cigarrillo.", 1],
+	["Un relato erótico de Harry Potter.", 1],
+	["Morir.", 1],
+	["Sexo oral no recíproco.", 1],
+	["Escuchar atentamente.", 1],
+	["Demasiada gomina.", 1],
+	["Peanut Butter Jelly Time.", 1],
+	["Comerse las galletas antes de la venta benéfica.", 1],
+	["Guiñarle el ojo a los viejos.", 1],
+	["Bebés muertos.", 1],
+	["Un mimo teniendo un ataque al corazón.", 1],
+	["Kim Jong-il.", 1],
+	["Comer directamente de la olla.", 1],
+	["Ligar en la clínica de aborción.", 1],
+	["Una carrera de sillas de ruedas hasta la muerte.", 1],
+	["Pacman comiendo corrida descontroládamente.", 1]
+]
 ];
 
 // [Frase,Edición,Número de blanks]
@@ -915,6 +1480,68 @@ var deck_black = [
 	["That's right, I killed ___. How, you ask? ===",1,2],
 	["Make a haiku. ___ === +++",1,3],
 	["___ + === = +++",1,3],
+],
+[ /* OG - ESP */
+	["Bebo para olvidar ___", 1, 1],
+	["Durante el sexo, me gusta pensar en ___", 1, 1],
+	["¿Por qué estoy pegajoso? ___", 1, 1],
+	["___ ¡Chócala! ", 1, 1],
+	["___ ¡Seguro que no puedes comer sólo uno! ", 1, 1],
+	["___ Bueno hasta la última gota. ", 1, 1],
+	["La medicina alternativa ahora usa las propiedades curativa de ___", 1, 1],
+	["Hoy el tio de Bricomanía construirá ___", 1, 1],
+	["Durante el comunmente infravalorado Período Marrón de Picasso, hizo cientos de pinturas de ___", 1, 1],
+	["La guerra sirve para ___", 1, 1],
+	["___ ¿Qué es ese sonido? ", 1, 1],
+	["¿A qué huele? ___", 1, 1],
+	["Por culpa de un error de marketing El Corte Inglés ha dejado de vender ___", 1, 1],
+	["Mientras flipaba con ácido ___ se convirtió en ===", 1, 2],
+	["¿Qué me traje de Marruecos? ___", 1, 1],
+	["¿Qué ayuda a Obama a relajarse? ___", 1, 1],
+	["___ Es una trampa! ", 1, 1],
+	["¿Qué es lo que más le gusta a Aznar? ___", 1, 1],
+	["¿Qué es lo que no te gustaría encontrar en un plato de comida china? ___", 1, 1],
+	["¿Cuál es el proximo juguete del HapyMeal? ___", 1, 1],
+	["Este año, en vez de carbón, Papa Noel traerá ___ a los niños malos. ", 1, 1],
+	["EE.UU. ha empezado a enviar ___ a los niños de Afghanistan.", 1, 1],
+	["¿Qué toma Vin Diesel para cenar? ___", 1, 1],
+	["¿Qué encontraría tu abuela perturbador pero extrañamente encantador? ___", 1, 1],
+	["¿Cuál es mi anti-droga? ___", 1, 1],
+	["¿Cómo mantengo estable mi relación de pareja? ___", 1, 1],
+	["Ojalá no hubiese perdido el manual de ___", 1, 1],
+	["El paraíso está lleno de ___", 1, 1],
+	["En la nueva película original de Disney Chamnel, Hannah Montana se enfrenta por primera vez a ___", 1, 1],
+	["La Liga de Fútbol ha prohibido ___ por dar a los jugadores una ventaja injusta. ", 1, 1],
+	["Cuando sea Presidente, crearé el ministerio de ___", 1, 1],
+	["¿Cuál es mi poder secreto? ___", 1, 1],
+	["Cuando esté en la cárcel, meteré ___ de contrabando", 1, 1],
+	["¿Por qué no puedo dormir por las noches? ___", 1, 1],
+	["Cuando sea millonario, levantaré una estatua de 20 metros enconmemoración de ___", 1, 1],
+	["¿Qué es lo que hay que hacer para llevarte a la cama? ___", 1, 1],
+	["¿Qué me llevaría en un viaje al pasado para convencer a la gente de que soy un poderoso mago? ___", 1, 1],
+	["¿Cuál es el vicio secreto de Batman? ___", 1, 1],
+	["___ ¡Hay una aplicación para eso! ", 1, 1],
+	["¿Qué me produce gases incontrolados? ___", 1, 1],
+	["Así es, yo maté a ___ ¿Que cómo lo hice? ===", 1, 2],
+	["¿Cuál es la próxima pareja de superhéroes? ___ y ===", 1, 2],
+	["___ probado en niños, aprobado por las madres. ", 1, 1],
+	["La vida era difícil para los cavernícolas antes de ___", 1, 1],
+	["La excursión al campo fue completamente arruinada por ___", 1, 1],
+	["Y el premio de la academia por ___ es para ===", 1, 2],
+	["Haz un haiku. ___===+++", 1, 3],
+	["¿Qué mejora con los años? ___", 1, 1],
+	["¿Quién ha robado las galletas del tarro de las galletas? ___", 1, 1],
+	["¿Qué es el mejor amigo de una chica? ___", 1, 1],
+	["En mi próximo truco, sacaré ___ de ===", 1, 2],
+	["¿Qué es lo más crujiente? ___", 1, 1],
+	["Lo siento, acabo de ___", 1, 1],
+	["¿Qué es lo más emo? ___", 1, 1],
+	["Los estudios demuestran que las ratas de laboratorio resuelven laberintos un 50% más rápido tras ser expuestas a ___", 1, 1],
+	["Canal Historia presenta: ___ la historia de ===", 1, 2],
+	["¿A qué huelen las personas mayores? ___", 1, 1],
+	["A los blancos les gusta ___", 1, 1],
+	["Antes de matarle, Señor Bond, me gustaría enseñarle ___", 1, 1],
+	["¿Qué me han estado ocultado mis padres? ___", 1, 1]
 ]
 ];
 
