@@ -1,16 +1,20 @@
-﻿<!-- v1.5.1: Cartas Originales -->
+﻿<!-- v1.6.0: Partidas tokenizadas + Generación de barajas + Esp -->
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>Criso contra la Humanidad</title>
     <link id="icon" rel="shortcut icon" href="">
 </head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js" integrity="sha512-+Ru50BzEpZjlFzVnjSmJfYFPFfY2hS0Kjlu/IvqaJoux7maF5lJrRVUJWJ2LevPls7rd242GLbWEt+zAo4OVVQ==" crossorigin="anonymous"></script>
 <script src="cah.js" type="text/javascript"></script>
+<script>
+    var butt_text = ["Generar Combinación", "Generar Combinación", "Generar esta Combinación", "Sacar una carta negra"];
+</script>
 <script src="https://togetherjs.com/togetherjs-min.js"></script>
 <script>
-    TogetherJSConfig_hubBase = "https://hub.togetherjs.com";
+    TogetherJSConfig_hubBase = "http://hub.togetherjs.com";
 </script>
 <body onload="init()">
 	<table>
@@ -29,65 +33,75 @@
 </table>
     <!-- Testing TogetherJS-->
     <table>
-        <th width="350px">
+        <th width="350px" hidden>
             <button onclick="TogetherJS(this); return false;">Start TogetherJS</button>
         </th>
     </table>
-<table>
-  <!-- ID: 1 - Ediciones -->
-  <tr id="1" hidden="true">
-    <th class="w1"> </th>
-  	<th class="light" align="left"><p class="w3">
-      <h2>Selección de Ediciones</h2><br>
-      <txt>Número de Cartas Blancas: </txt><txt class="bold" id="n_blancas">0</txt><br>
-      <txt>Número de Cartas Negras: </txt><txt class="bold" id="n_negras">0</txt><br><br>
-      <input type="checkbox" id="E1" value="0" checked>Edición 1</input><br>
-      <input type="checkbox" id="E2" value="1" checked>Edición 2</input><br>
-      <input type="checkbox" id="E3" value="2" checked>Edición 3</input><br>
-      <input type="checkbox" id="OG" value="3">Originales</input><br>
-      <br><button onclick="change_editions();set_list();">Guardar Cambios</button>
-    </p></th>
-    <th class="w1"> </th>
-  </tr>
-  <!-- ID: 2 - Juego-->
-  <tr id="2">
-    <!-- <th class="w1"> </th> -->
-    <th align="center"><p class=""><span id="text"></span></p></th>
-    <!-- <th class="w1"> </th> -->
-  </tr>
-  <!-- ID: 3 - Selector -->
-  <tr id="3" hidden>
-    <th class="w1"> </th>
-    <th class="light" align="left">
-      <p class="w3">
-        <h2>Generar carta manualmente</h2><br>
-        <txt>Lista de Cartas Negras</txt>
-        <select id="lista_n" class="w3">
-          <option>Uno</option>
-        </select><br><br>
-        <txt>Lista de Cartas Blancas</txt>
-        <select id="lista_b" class="w3">
-          <option>Dos</option>
-        </select>
-        <!-- <p><span id="text2"></span></p> -->
-      </p>
-    </th>
-    <th class="w1"> </th>
-  </tr>
-  <!-- ID: 4 - WIP -->
-	<tr id="4" hidden>
-    <!-- <th class="w1"> </th> -->
-    <th><div class="submit subsection" hidden>
-		<h2>Suggest a card.</h2>
-        <form class="ideas">
-          <textarea placeholder="Anonymously suggest a card, or a list of several cards separated by commas."></textarea><br>
-          <button class="btn">Submit bad idea</button>
-        </form>
-    	</div>
-    </th>
-    <!-- <th class="w1"> </th> -->
-  </tr>
-	</table>
+    <table>
+        <!-- ID: 1 - Ediciones -->
+        <tr id="1" hidden="true">
+            <th class="w1"> </th>
+            <th class="light" align="left">
+                <p class="w3">
+                    <h2>Selección de Ediciones</h2><br>
+                    <txt>Número de Cartas Blancas: </txt><txt class="bold" id="n_blancas">0</txt><br>
+                    <txt>Número de Cartas Negras: </txt><txt class="bold" id="n_negras">0</txt><br><br>
+                    <input type="checkbox" id="E1" value="0">Edición Criso 1</input><br>
+                    <input type="checkbox" id="E2" value="1">Edición Criso 2</input><br>
+                    <input type="checkbox" id="E3" value="2">Edición Criso 3</input><br>
+                    <input type="checkbox" id="OG_ENG" value="3">Originales (ING)</input><br>
+                    <input type="checkbox" id="OG_ESP" value="4" checked>Originales (ESP)</input><br>
+                    <br><button onclick="init();">Guardar Cambios</button>
+                </p>
+            </th>
+            <th class="w1"> </th>
+        </tr>
+        <!-- ID: 2 - Juego-->
+        <tr id="2">
+            <!-- <th class="w1"> </th> -->
+            <th align="center"><p class=""><span id="text"></span></p></th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+        <!-- ID: 3 - Selector -->
+        <tr id="3" hidden>
+            <th class="w1"> </th>
+            <th class="light" align="left">
+                <p class="w3">
+                    <h2>Generar carta manualmente</h2><br>
+                    <txt>Lista de Cartas Negras</txt>
+                    <select id="lista_n" class="w3">
+                        <option>Uno</option>
+                    </select><br><br>
+                    <txt>Lista de Cartas Blancas</txt>
+                    <select id="lista_b" class="w3">
+                        <option>Dos</option>
+                    </select>
+                    <!-- <p><span id="text2"></span></p> -->
+                </p>
+            </th>
+            <th class="w1"> </th>
+        </tr>
+        <!-- ID: 4 - WIP -->
+        <tr id="4" hidden>
+            <!-- <th class="w1"> </th> -->
+            <th align="center"><p class=""><span id="text2"></span></p></th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+        <!-- ID: 5 - WIP -->
+        <tr id="5" hidden>
+            <!-- <th class="w1"> </th> -->
+            <th>
+                <div class="submit subsection" hidden>
+                    <h2>Suggest a card.</h2>
+                    <form class="ideas">
+                        <textarea placeholder="Anonymously suggest a card, or a list of several cards separated by commas."></textarea><br>
+                        <button class="btn">Submit bad idea</button>
+                    </form>
+                </div>
+            </th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+    </table>
 </body>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 </html>

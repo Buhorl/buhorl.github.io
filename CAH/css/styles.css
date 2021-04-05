@@ -1,11 +1,36 @@
-
-
 .w1{
   width: 10rem;
 }
 
 .w3{
   width: 35rem
+}
+
+/* http://css3.bradshawenterprises.com/sliding/ */
+@keyframes swipe {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1
+    }
+    80% {
+        transform: translate(600px, 0);
+        opacity: 0
+    }
+    100% {
+        transform: translate(750px, 0);
+        opacity: 0
+    }
+}
+
+.slide_out_images {
+    /* This is the bit that moves. It has 4 images, so 4 * 450 = 1800. You could use javascript
+  to work this out instead by counting images. */
+    -webkit-animation: 1.0s ease-in;
+    -moz-animation: 1.0s ease-in;
+    -o-animation: 1.0s ease-in;
+    animation: 1.0s ease-in;
+    animation-name: swipe;
+    animation-fill-mode: forwards;
 }
 
 textarea{ /*copiado de la página de CAH*/
