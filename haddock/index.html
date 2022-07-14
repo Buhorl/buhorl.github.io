@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<script>
+function startTime() {
+  const today = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  
+  text = (today.toLocaleDateString('es-ES', options)) + ' y son las ' +  h + ":" + m /* + ":" + s */;
+  document.getElementById('clock').innerHTML =  text;
+  setTimeout(startTime, 1000);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
+
+<html>
+<link href="http://fonts.cdnfonts.com/css/ds-marker-felt" rel="stylesheet">
+<!-- 
+<link rel="stylesheet" type="text/css" href="../css/ascii_table.css">
+<link rel="stylesheet" type="text/css" href="../css/styles.css">
+<link rel="stylesheet" type="text/css" href="../css/anims.css">
+-->
+
+<head>
+<title>What a week</title>
+<link rel="shortcut icon" href="./icon.png">
+</head>
+
+<style> 
+html body {
+    background-color: lightblue;
+    margin: 0;
+    height: 100%; 
+    width: auto;
+}
+
+p {
+    margin: 0;
+    width: 100%;
+    object-fit: contain;
+}
+
+img {
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.big_bubble {
+    margin: 0;
+    font-family: 'DS Marker Felt', sans-serif;
+    font-size: 3.9vw;
+    padding-left: 29.5%;
+    padding-top: 4.5%;
+    width: 46%;
+    height: 9vw;
+}
+
+.small_bubble {
+    margin: 0;
+    font-family: 'DS Marker Felt', sans-serif;
+    font-size: 3.9vw;
+    padding-left: 23%;
+    padding-top: 6%;
+    width: 36%;
+    height: 4vw;
+}
+
+.clock {
+    margin: 0;
+    font-family: 'DS Marker Felt', sans-serif;
+    font-size: 4vw;
+}
+</style>
+ 
+<body onload="startTime()">
+    <img src="background_t.png">
+    <!-- <p class="small_bubble">What a week, huh?</p> -->
+    <p class="small_bubble">Menuda semana, eh?</p>
+    <p class="big_bubble"> Capitán, estamos a <!--Captain, it's  -->
+        <a id="clock"></a>
+    </p>
+</body>
+</html>
