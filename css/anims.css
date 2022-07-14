@@ -91,6 +91,94 @@
 	}
 }
 
+
+@keyframes bg-rainbow {
+  0% {
+    animation-timing-function: linear;
+    background-color:hsl( 0, 100%, 65% );
+  }
+  5% {
+    animation-timing-function: linear;
+    background-color:hsl( 17.75, 100%, 65% );
+  }
+  10% {
+    animation-timing-function: linear;
+    background-color:hsl( 35.5, 100%, 65% );
+  }
+  15.0% {
+    animation-timing-function: linear;
+    background-color:hsl( 53.25, 100%, 65% );
+  }
+  20% {
+    animation-timing-function: linear;
+    background-color:hsl( 71, 100%, 65% );
+  }
+  25% {
+    animation-timing-function: linear;
+    background-color:hsl( 88.75, 100%, 65% );
+  }
+  30.0% {
+    animation-timing-function: linear;
+    background-color:hsl( 106.5, 100%, 65% );
+  }
+  35% {
+    animation-timing-function: linear;
+    background-color:hsl( 124.25, 100%, 65% );
+  }
+  40% {
+    animation-timing-function: linear;
+    background-color:hsl( 142, 100%, 65% );
+  }
+  45% {
+    animation-timing-function: linear;
+    background-color:hsl( 159.75, 100%, 65% );
+  }
+  50% {
+    animation-timing-function: linear;
+    background-color:hsl( 177.5, 100%, 65% ); /*transform: translate(0px, -10px);*/
+  }
+  55.0% {
+    animation-timing-function: linear;
+    background-color:hsl( 195.25, 100%, 65% );
+  }
+  60.0% {
+    animation-timing-function: linear;
+    background-color:hsl( 213, 100%, 65% );
+  }
+  65% {
+    animation-timing-function: linear;
+    background-color:hsl( 230.75, 100%, 65% );
+  }
+  70% {
+    animation-timing-function: linear;
+    background-color:hsl( 248.5, 100%, 65% );
+  }
+  75% {
+    animation-timing-function: linear;
+    background-color:hsl( 266.25, 100%, 65% );
+  }
+  80% {
+    animation-timing-function: linear;
+    background-color:hsl( 284, 100%, 65% );
+  }
+  85.0% {
+    animation-timing-function: linear;
+    background-color:hsl( 301.75, 100%, 65% );
+  }
+  90% {
+    animation-timing-function: linear;
+    background-color:hsl( 319.5, 100%, 65% );
+  }
+  95% {
+    animation-timing-function: linear;
+    background-color:hsl( 337.25, 100%, 65% );
+  }
+  100% {
+    animation-timing-function: linear;
+    background-color:hsl( 355, 100%, 65% ); /*transform: translate(0px, 0px);*/
+  }
+}
+
 @keyframes rainbow {
   0% {
     color: #d65c97;

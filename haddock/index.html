@@ -1,34 +1,14 @@
 <!DOCTYPE html>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-<script>
-function startTime() {
-  const today = new Date();
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-  let h = today.getHours();
-  let m = today.getMinutes();
-  let s = today.getSeconds();
-  m = checkTime(m);
-  s = checkTime(s);
-  
-  text = (today.toLocaleDateString('es-ES', options)) + ' y son las ' +  h + ":" + m /* + ":" + s */;
-  document.getElementById('clock').innerHTML =  text;
-  setTimeout(startTime, 1000);
-}
-
-function checkTime(i) {
-  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-  return i;
-}
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="./index.js"></script>
 
 <html>
-<link href="http://fonts.cdnfonts.com/css/ds-marker-felt" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/ds-marker-felt" rel="stylesheet">
 <!-- 
 <link rel="stylesheet" type="text/css" href="../css/ascii_table.css">
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
-<link rel="stylesheet" type="text/css" href="../css/anims.css">
 -->
+<link rel="stylesheet" type="text/css" href="../css/anims.css">
 
 <head>
 <title>What a week</title>
@@ -36,7 +16,15 @@ function checkTime(i) {
 </head>
 
 <style> 
+@font-face{
+  font-family: 'DS Marker Felt';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/DSMarkerFelt.ttf') format('truetype');
+}
+
 html body {
+    overflow: hidden;
     background-color: lightblue;
     margin: 0;
     height: 100%; 
@@ -59,9 +47,9 @@ img {
 .big_bubble {
     margin: 0;
     font-family: 'DS Marker Felt', sans-serif;
-    font-size: 3.9vw;
-    padding-left: 29.5%;
-    padding-top: 4.5%;
+    font-size: 3.7vw;
+    padding-left: 30.5%;
+    padding-top: 3.5%;
     width: 46%;
     height: 9vw;
 }
@@ -69,9 +57,9 @@ img {
 .small_bubble {
     margin: 0;
     font-family: 'DS Marker Felt', sans-serif;
-    font-size: 3.9vw;
-    padding-left: 23%;
-    padding-top: 6%;
+    font-size: 3.7vw;
+    padding-left: 24%;
+    padding-top: 5%;
     width: 36%;
     height: 4vw;
 }
@@ -83,8 +71,10 @@ img {
 }
 </style>
  
-<body onload="startTime()">
-    <img src="background_t.png">
+<body onload="init()">
+    <div>
+        <img src="background_t.png">
+    </div>
     <!-- <p class="small_bubble">What a week, huh?</p> -->
     <p class="small_bubble">Menuda semana, eh?</p>
     <p class="big_bubble"> Capitán, estamos a <!--Captain, it's  -->
