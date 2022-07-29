@@ -1,0 +1,213 @@
+﻿<!-- v1.6.0: Partidas tokenizadas + Generación de barajas + Esp -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Pide un deseo...</title>
+    <link id="icon" rel="shortcut icon" href="">
+</head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="index.js" type="text/javascript"></script>
+<script>
+    var butt_text = [" Comenzar! ", "Ver a Mambo", "Ojear a Lucas", "Curiosear sobre Coco" , "Ojear a ¡Oh!" , "Mirar a Mona"];
+    var nombre2 = "Lucas"
+    var texto2 = "En segunda opcion te traemos a Lucas. <br> Tu fiel companero, con estimulacion clitorial mediante su conejito, pero tambien su forma podra llegar a modo de penetracion  a tu punto G vaginal... <br> Es un gran amante a tener en cuenta, que ademas te dara calor, ya que se calienta hasta 39°C para que sientas su ternura hasta debajo del agua... ¡Ya que tambien es sumergible! <br> Llevate a Lucas a la banera, a la cama, al sofa o donde quieras tener un seductor encuentro, lleno de explosiones..."
+    var nombre3 = "Coco"
+    var texto3 = "Por otro lado te presentamos a Coco. <br>¿Estas cansada de que no bajen al pilon, de que tarden poco en esa zona o de que no te den la intensidad necesaria? Con Coco nada sera lo mismo, le encanta el sexo oral, y tiene 9 tipos de movimientos y de vibraciones... <br> ¡Es un gran experimentado en el asunto! <br> Ademas es muy pequeno, facil de portar, sumergible en el agua,  y realmente comodo  de usar por su ergonomica forma... <br> ¡No descartes a un companero tan avanzado en el tema!"
+    var nombre4 = "¡Oh!"
+    var texto4 = "En cuarta posicion tenemos a... ¡Oh! <br> Oh, es muy travieso, te permitira jugar sola o en compania de este huevo vibratorio dentro de ti. Manejalo tu con el control remoto o prueba a que alguien te ayude en el juego...  Tiene 4 intensidades y 7 modos de vibracion y el control remoto alcanza hasta 15 metros. Es especialmente de estimulacion vaginal, pero tampoco descartes a este gran amigo, te puede aportar diferentes experiencias.  <br> ¡Con oh puedes divertirte contigo o con quien tu quieras!"
+    var nombre5 = "Mona"
+    var texto5 = "En quinta posicion te presentamos una companera, Mona. <br> Ella es una bala vibradora, estilosa, pequena y discreta. Con mucho glamour te dara una experiencia de estimulacion tanto en el clitoris  como en cualquier parte erogena de tu cuerpo o el de otra persona. Sola, en compania o durante la penetracion, prueba a anadir a esta companera para estimularte en esos momentos... <br> Tiene dos modos y ocho intensidades de vibracion. <br> Puedes llevarla en tu bolso... Y que nadie se entere de vuestro romance..."
+    
+</script>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<style>
+    html body {
+        /* overflow: hidden; */
+        background: url("background.jpg") no-repeat center fixed;     
+        background-size: cover;
+        
+        /* margin: 0;
+        height: 100%; 
+        width: auto; */
+    }
+
+    .class{
+        align-self: auto;
+        width: auto;
+        height: 90vh;
+    }
+
+    .imagen{
+        width: 60%;
+    }
+
+    h1 {
+        font-family: 'Shrek', sans-serif;
+    }
+
+    txt{
+        /* font-family: 'Shrek', sans-serif; */
+
+        font-family: 'Medieval Sharp', sans-serif;
+        font-weight: 700;
+
+    }
+
+    @font-face{
+        font-family: 'Shrek';
+        font-style: normal;
+        font-weight: 400;
+        src: url('../fonts/Shrek.ttf') format('truetype');
+        }
+
+</style>
+
+<link href="http://fonts.cdnfonts.com/css/medieval-sharp" rel="stylesheet">
+<!-- <script src="https://togetherjs.com/togetherjs-min.js"></script> -->
+<!-- onload="init()" -->
+
+<body > 
+	<table>
+    <!-- Botones -->
+	<tr height="65px">
+    <th class="w1">
+      <button id="L" onclick="go_left()" disabled="true"><</button>
+    </th>
+    <th width="350px">
+      <button id="C" onclick="bot()"> Comenzar! </button>
+    </th>
+    <th class="w1">  
+      <button id="R" onclick="go_right()" disabled="true">></button>
+    </th>
+  </tr>
+</table>
+    <!-- Testing TogetherJS-->
+    <table>
+        <!-- ID: 1 - Ediciones -->
+        <tr id="1" >
+            
+            <th class="w1"> <img class="main" src="espejo.png" align="center"> </th>
+            <!-- <th class="light" align="left">
+                <p class="w3">
+                     <h2>Selección de Ediciones</h2><br>
+                    <txt>Número de Cartas Blancas: </txt><txt class="bold" id="n_blancas">0</txt><br>
+                    <txt>Número de Cartas Negras: </txt><txt class="bold" id="n_negras">0</txt><br><br>
+                    <input type="checkbox" id="E1" value="0">Edición Criso 1</input><br>
+                    <input type="checkbox" id="E2" value="1">Edición Criso 2</input><br>
+                    <input type="checkbox" id="E3" value="2">Edición Criso 3</input><br>
+                    <input type="checkbox" id="OG_ENG" value="3">Originales (ING)</input><br>
+                    <input type="checkbox" id="OG_ESP" value="4" checked>Originales (ESP)</input><br>
+                    <br><button onclick="init();">Guardar Cambios</button> 
+                    
+                </p>
+            </th> -->
+            <th class="w1"> </th>
+        </tr>
+        <!-- ID: 2 - Juego-->
+        <tr id="2" hidden="true">
+            <th class="w1">  </th>
+            <th class="light" align="center">
+                <h1>Mambo</h1>
+                <img class="imagen" src="names/Mambo.png" align="center" width="50vw">
+                <p class="w3">
+                    <txt> 
+                    La primera opción se llama Mambo.
+                    Déjate seducir por este succionador clitorial, no te dejes guiar por su mono diseño en tres colores y su forma... Tiene 12 intensidades desde lo más sutil a lo más cañero.... Las apariencias engañan. Además mantendrá tus secretos a salvo, es bastante silencioso. Un gran compañero de viaje, sumergible en el agua, para que te olvides de esa alcachofa durante un tiempo y pruebes nuevos ritmos, orgasmos, sensaciones, no lo dudes... 
+                    ¡Baila a ritmo de Mambo!    
+                    </txt> 
+                </p>
+            </th>    
+            <p class="w1" > 
+                    </p>
+            <!-- <th class="w1"> </th> -->
+            <th align="center"><p class=""><span id="text"></span></p></th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+        <!-- ID: 3 - Selector -->
+        <tr id="3" hidden>
+            <th class="w1">  </th>
+            <th class="light" align="center">
+                <h1>Lucas</h1>
+                <img class="imagen" src="names/Lucas.png" align="center" width="50vw">
+                <p class="w3">
+                    <txt> 
+                    En segunda opción te traemos a Lucas.
+                    Tu fiel compañero, con estimulación clitorial mediante su conejito, pero también su forma podrá llegar a modo de penetración  a tu punto G vaginal...
+                    Es un gran amante a tener en cuenta, que además te dará calor, ya que se calienta hasta 39°C para que sientas su ternura hasta debajo del agua... ¡Ya que también es sumergible! 
+                    Llévate a Lucas a la bañera, a la cama, al sofá o donde quieras tener un seductor encuentro, lleno de explosiones...    
+                    </txt> 
+                </p>
+            </th>    
+            <p class="w1" > 
+                    </p>
+            <!-- <th class="w1"> </th> -->
+            <th align="center"><p class=""><span id="text"></span></p></th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+        <!-- ID: 4 - WIP -->
+        <tr id="4" hidden>
+            <th class="w1">  </th>
+            <th class="light" align="center">
+                <h1>Coco</h1>
+                <img class="imagen" src="names/Coco.png" align="center" width="50vw">
+                <p class="w3">
+                <txt> 
+                    Por otro lado te presentamos a Coco.
+                    ¿Estas cansada de que no bajen al pilón, de que tarden poco en esa zona o de que no te den la intensidad necesaria? Con Coco nada será lo mismo, le encanta el sexo oral, y tiene 9 tipos de movimientos y de vibraciones... 
+                    ¡Es un gran experimentado en el asunto!
+                    Además es muy pequeño, fácil de portar, sumergible en el agua,  y realmente cómodo  de usar por su ergonómica forma....
+                    ¡No descartes a un compañero tan avanzado en el tema!
+                </txt> 
+                </p>
+            </th>    
+            <p class="w1" > 
+                    </p>
+            <!-- <th class="w1"> </th> -->
+            <th align="center"><p class=""><span id="text"></span></p></th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+        <!-- ID: 5 - WIP -->
+        <tr id="5" hidden>
+            <th class="w1">  </th>
+            <th class="light" align="center">
+                <h1>Oh</h1>
+                <img class="imagen" src="names/Oh.png" align="center" width="50vw">
+                <p class="w3">
+                    <txt> 
+                    En cuarta posición tenemos a... ¡Oh!
+                    Oh, es muy travieso, te permitirá jugar sola o en compañía de este huevo vibratorio dentro de ti. Manéjalo tú con el control remoto o prueba a que alguien te ayude en el juego...  Tiene 4 intensidades y 7 modos de vibración y el control remoto alcanza hasta 15 metros. Es especialmente de estimulación vaginal, pero tampoco descartes a este gran amigo, que te puede aportar diferentes experiencias. 
+                    ¡Con oh puedes divertirte contigo o con quien tú quieras!
+                    </txt> 
+                </p>
+            </th>    
+            <p class="w1" > 
+                    </p>
+            <!-- <th class="w1"> </th> -->
+            <th align="center"><p class=""><span id="text"></span></p></th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+        <tr id="6" hidden>
+            <th class="w1">  </th>
+            <th class="light" align="center">
+                <h1>Mona</h1>
+                <img class="imagen" src="names/Mona.png" align="center" width="50vw">
+                <p class="w3">
+                    <txt> 
+                    En quinta posición te presentamos una compañera, Mona.
+                    Ella es una bala vibradora, estilosa, pequeña y discreta. Con mucho glamour te dará una experiencia de estimulación tanto en el clítoris  como en cualquier parte erógena de tu cuerpo o el de otra persona. Sola, en compañía o durante la penetración, prueba a añadir a esta compañera para estimularte en esos momentos... 
+                    Tiene dos modos y ocho intensidades de vibración. 
+                    Puedes llevarla en tu bolso... Y que nadie se entere de vuestro romance...    
+                    </txt> 
+                </p>
+            </th>    
+            <p class="w1" > 
+                    </p>
+            <!-- <th class="w1"> </th> -->
+            <th align="center"><p class=""><span id="text"></span></p></th>
+            <!-- <th class="w1"> </th> -->
+        </tr>
+    </table>
+</body>
+
+</html>
